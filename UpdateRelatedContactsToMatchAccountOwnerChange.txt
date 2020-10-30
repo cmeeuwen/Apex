@@ -1,0 +1,46 @@
+trigger UpdateAccountsContactOwners on Account (after update) {
+    
+    // This Account Trigger will update all related Contacts to match the Account Owner
+    // If account owner is changed at the Account Level
+    // Written by: Chris Meeuwen
+    // Date: 10/29/2020
+    
+    // Get Account ID
+    Account ThisAccount = Trigger.new[0];
+    String AccountID = ThisAccount.Id;
+    
+    // Query Related Contacts
+    Contact[] GetRelatedContacts = [Select Id, AccountID, OwnerId from Contact Where AccountID = :AccountID];
+    
+    // For Each Queried Contact update Contact Owner
+    for (Contact a : GetRelatedContacts) {
+        
+        
+        // Error Handling in Try Catch block
+        try { 
+             
+             // update each related contacts owner
+             a.OwnerId = ThisAccount.OwnerId;
+             Update a;
+            
+            }
+        
+            Catch (Exception error) {
+                                     
+                                     System.debug('Unable to update Contact Owner ' + ThisAccount.OwnerId);
+                
+                                    }
+            
+                                    finally {
+                    
+                                             
+                                             System.debug('Closing Stream Writer - Finally Step of Try Catch Block');
+                      
+                                            } 
+        
+        
+        
+    }
+    
+
+}
