@@ -1,0 +1,103 @@
+trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
+	
+	// Trigger: Account with no open opportunities, Assign to NSC in 30 Days
+	// Written by: Chris Meeuwen - Chris.meeuwen@ruby.com
+	// 
+	// Scope:
+	// 
+	// If an Account that is not active, and has no open opportunities or Tasks. 
+	// Then Assign account to NSC (No Sales Contact User) in 30 days
+	// 
+	// Related MetaData:
+	// 
+	// 1. Hidden Account field: No Open Opties Assign to NSC in 30 days
+	// 2. Hidden Account field: Ops Status Trigger
+	// 3. Process: Assign to NSC in 30 Days if no opened opportunities and Closed / Lost
+	// 4. Process: Ops Closed Lost Review              
+
+    
+    for (Account A1 : Trigger.new) {
+        
+        String BIUserLastName = UserInfo.getLastName(); 
+		
+        If(A1.Customer_Status__c == 'Cancelled' || A1.Customer_Status__c == 'Never Active' && BIUserLastName != 'BI'){        
+        
+        // Create List of open Related Opportunity Records
+        List<Opportunity> GetRelatedOptsOpen = [Select ID, StageName 
+                                                From Opportunity 
+                                                Where accountid = :A1.Id 
+                                                AND StageName != 'Closed Lost' OR StageName != 'Add Line' Limit 1];
+        
+            
+        // Create List of Closed / Lost Related Opportunity Records
+        List<Opportunity> GetRelatedOptsCL = [Select ID, StageName, CloseDate 
+                                              From Opportunity 
+                                              Where accountid = :A1.Id 
+                                              AND StageName = 'Closed Lost' OR StageName = 'Add Line' order by CloseDate Desc Limit 1];
+            
+        // Create List of open Related Task Records
+        List<Task> GetRelatedTasksOpen = [Select ID, Status, Subject, Account__c, accountid
+                                          From Task 
+                                          Where accountid = :A1.Id 
+                                          AND Status != 'Completed' Limit 1];
+            
+        
+        // Open Opty Loop
+        if(!GetRelatedOptsOpen.isEmpty() || !GetRelatedTasksOpen.isEmpty()){
+            
+        
+        for(Opportunity OpenOp : GetRelatedOptsOpen) {
+           
+           // Hidden Checkbox field on Account that is set to false
+           // if account is an active customer with open opportunities
+           A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
+           
+           // Hidden Checkbox field to revaluate account if an
+           // opportunity is opened back up 
+           A1.Ops_Status_Trigger__c = False;
+            
+           
+           }
+            
+         for(Task OpenTask : GetRelatedTasksOpen){
+            
+            A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
+             
+            A1.Ops_Status_Trigger__c = False; 
+             
+            Break; 
+            }
+                    
+        }
+        
+        // Closed Lost Opty Loop
+        else{
+            
+            for(Opportunity Clop : GetRelatedOptsCL){
+                
+                
+                // Hidden Checkbox field on Account that triggers process
+                // to assign account to NSC in 30 days
+                A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = True;
+                
+                A1.Ops_Status_Trigger__c = False;
+                
+                break;
+                
+            } 
+            
+        }                        
+
+            
+            
+        }
+              
+    
+        
+    If(A1.Customer_Status__c == 'Active' || A1.Customer_Status__c == 'Future Cancel' || BIUserLastName == 'BI') {
+          																			   A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
+         																			  }   
+    
+ }
+        
+}
