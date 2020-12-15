@@ -5,8 +5,13 @@ trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
 	// 
 	// Scope:
 	// 
-	// If an Account that is not active, and has no open opportunities or Tasks. 
-	// Then Assign account to NSC (No Sales Contact User) in 30 days
+	// 1. If an Account that is not active, and has no open opportunities or Tasks. 
+	// Then Assign account to NSC (No Sales Contact User) in 30 days unless there is
+	// a csm on the account in which then the account would be assigned to the csm
+	// instead.
+	// 
+	// 2. If an AE opens a new opportunity or task process will automatically remove paused flow
+	// that reassigns account to NSC or CSM if there is a CSM on the account
 	// 
 	// Related MetaData:
 	// 
@@ -18,22 +23,39 @@ trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
     
     for (Account A1 : Trigger.new) {
         
+        // Checks is trigger is being activated by Ruby BI
         String BIUserLastName = UserInfo.getLastName(); 
 		
-        If(A1.Customer_Status__c == 'Cancelled' || A1.Customer_Status__c == 'Never Active' && BIUserLastName != 'BI'){        
+        // Trigger will not run if being modified by ruby BI user
+        If(BIUserLastName != 'BI'){        
         
+        // Oppty and tasks loop
+        
+        if(A1.Customer_Status__c == 'Cancelled' || A1.Customer_Status__c == 'Never Active'){
+            
+        
+        // Query Customer Success Managers to exclude from task query
+        List<User> GetCustomerSuccessManagers = [Select ID 
+                                                 From User
+                                                 Where Title = 'Customer Success Manager'];
+        
+        // New Open Task List - Add Tasks that are not owned by a CSM to this list
+        List<Task> OpenTasksNotOwnedByCSM = new List<Task>();
+            
         // Create List of open Related Opportunity Records
         List<Opportunity> GetRelatedOptsOpen = [Select ID, StageName 
                                                 From Opportunity 
                                                 Where accountid = :A1.Id 
-                                                AND StageName != 'Closed Lost' OR StageName != 'Add Line' Limit 1];
+                                                AND StageName != 'Closed Lost' Limit 1];
         
+        for(User CSM : GetCustomerSuccessManagers){
+          
+          List<Task> CSMTasks = [Select ID, Status, Subject, Account__c, accountId from Task Where accountId = :A1.Id AND Status != 'Completed' AND OwnerId != :CSM.Id Limit 1]; 
+          
+          OpenTasksNotOwnedByCSM.addall(CSMTasks);
             
-        // Create List of Closed / Lost Related Opportunity Records
-        List<Opportunity> GetRelatedOptsCL = [Select ID, StageName, CloseDate 
-                                              From Opportunity 
-                                              Where accountid = :A1.Id 
-                                              AND StageName = 'Closed Lost' OR StageName = 'Add Line' order by CloseDate Desc Limit 1];
+        }
+               
             
         // Create List of open Related Task Records
         List<Task> GetRelatedTasksOpen = [Select ID, Status, Subject, Account__c, accountid
@@ -41,63 +63,53 @@ trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
                                           Where accountid = :A1.Id 
                                           AND Status != 'Completed' Limit 1];
             
-        
-        // Open Opty Loop
-        if(!GetRelatedOptsOpen.isEmpty() || !GetRelatedTasksOpen.isEmpty()){
             
-        
-        for(Opportunity OpenOp : GetRelatedOptsOpen) {
+        // If there are any open related tasks or opportunities 
+        if(!GetRelatedOptsOpen.isEmpty() || !OpenTasksNotOwnedByCSM.isEmpty()){
+           
            
            // Hidden Checkbox field on Account that is set to false
            // if account is an active customer with open opportunities
            A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
+           
+           System.debug('Set NSC in 30 days to false ' + A1.Id);
            
            // Hidden Checkbox field to revaluate account if an
            // opportunity is opened back up 
            A1.Ops_Status_Trigger__c = False;
             
            
+        }
+        // If no open tasks or opportunities are found
+        Else{
+                
+              A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = True;
+            
+              System.debug('Set NSC in 30 days to true ' + A1.Id);
+                
+              A1.Ops_Status_Trigger__c = False;
+                
            }
             
-         for(Task OpenTask : GetRelatedTasksOpen){
             
-            A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
-             
-            A1.Ops_Status_Trigger__c = False; 
-             
-            Break; 
-            }
-                    
-        }
-        
-        // Closed Lost Opty Loop
-        else{
+         }
+         
+         else if(A1.Customer_Status__c != 'Cancelled' || A1.Customer_Status__c != 'Never Active') {
+                  
+                 System.debug('Account is still Active! Not Reassigning ' + A1.Id);
+                 
+                 A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;                     
+                
+                
+         }
+   
+      }
+        Else {
             
-            for(Opportunity Clop : GetRelatedOptsCL){
-                
-                
-                // Hidden Checkbox field on Account that triggers process
-                // to assign account to NSC in 30 days
-                A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = True;
-                
-                A1.Ops_Status_Trigger__c = False;
-                
-                break;
-                
-            } 
-            
-        }                        
-
-            
+            System.debug('Record was modified by Ruby BI - Aborting Trigger for ' + A1.Id);
             
         }
-              
     
-        
-    If(A1.Customer_Status__c == 'Active' || A1.Customer_Status__c == 'Future Cancel' || BIUserLastName == 'BI') {
-          																			   A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
-         																			  }   
-    
- }
+   }
         
 }
