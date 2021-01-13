@@ -2,77 +2,81 @@ trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
 	
 	// Trigger: Account with no open opportunities, Assign to NSC in 30 Days
 	// Written by: Chris Meeuwen - Chris.meeuwen@ruby.com
-	// 
-	// Scope:
-	// 
+	//------------------------------------------------------------------------------------------// 
+	// Use Case 1 Scope:
+	// =================
 	// 1. If an Account that is not active, and has no open opportunities or Tasks. 
-	// Then Assign account to NSC (No Sales Contact User) in 30 days unless there is
-	// a csm on the account in which then the account would be assigned to the csm
-	// instead.
+	//    Then unassign account in 30 days. Account unassignment handled by 
+	//    master process that is triggered by this apex trigger.
 	// 
-	// 2. If an AE opens a new opportunity or task process will automatically remove paused flow
-	// that reassigns account to NSC or CSM if there is a CSM on the account
+	// 
+	// 2. This will trigger the Account Unassignment Master Process and will assign
+	//    the account to NSC and mark the account as a recycled account in 30 days. 
+	//    This flag will exclude the account from the use case 1 apex automation
+	//    
+	// Use Case 2 Scope:
+	// =================
+	// 1. If a recycled account is assign to a sales rep and has no closed won opportunities
+	//    or open tasks assign acount to NSC in 90 days
+	// 
 	// 
 	// Related MetaData:
 	// 
 	// 1. Hidden Account field: No Open Opties Assign to NSC in 30 days
 	// 2. Hidden Account field: Ops Status Trigger
-	// 3. Process: Assign to NSC in 30 Days if no opened opportunities and Closed / Lost
-	// 4. Process: Ops Closed Lost Review              
-
+	// 3. Hidden Account field: Recycled Account
+	// 3. Process: Account Unassignment / Recycling Master Process
+	// 4. Process: Ops Closed Lost Review
+	// 5. Process: Task Ops Status Trigger on Account             
+    //------------------------------------------------------------------------------------------//
     
     for (Account A1 : Trigger.new) {
+        
         
         // Checks is trigger is being activated by Ruby BI
         String BIUserLastName = UserInfo.getLastName(); 
 		
+        
         // Trigger will not run if being modified by ruby BI user
-        If(BIUserLastName != 'BI'){        
+        If(BIUserLastName != 'BI' || BIUserLastName != 'Bot'){        
         
-        // Oppty and tasks loop
         
-        if(A1.Customer_Status__c == 'Cancelled' || A1.Customer_Status__c == 'Never Active'){
+        // Verify Owner of record
+        List<User> GetAccountOwner = [Select ID, FirstName, LastName from User where ID = :A1.OwnerId Limit 1];
+        String OwnerLastName = GetAccountOwner[0].LastName;
+        
+        
+        // Exclude Already Recycled Accounts from
+        // Initial 30 Day Unassignment Logic
+        If(A1.Recycled_Count__c == 0) {    
             
         
-        // Query Customer Success Managers to exclude from task query
-        List<User> GetCustomerSuccessManagers = [Select ID 
-                                                 From User
-                                                 Where Title = 'Customer Success Manager'];
-        
-        // New Open Task List - Add Tasks that are not owned by a CSM to this list
-        List<Task> OpenTasksNotOwnedByCSM = new List<Task>();
-            
         // Create List of open Related Opportunity Records
         List<Opportunity> GetRelatedOptsOpen = [Select ID, StageName 
                                                 From Opportunity 
                                                 Where accountid = :A1.Id 
-                                                AND StageName != 'Closed Lost' Limit 1];
-        
-        for(User CSM : GetCustomerSuccessManagers){
-          
-          List<Task> CSMTasks = [Select ID, Status, Subject, Account__c, accountId from Task Where accountId = :A1.Id AND Status != 'Completed' AND OwnerId != :CSM.Id Limit 1]; 
-          
-          OpenTasksNotOwnedByCSM.addall(CSMTasks);
-            
-        }
+                                                AND StageName != 'Closed Lost'];
                
             
         // Create List of open Related Task Records
         List<Task> GetRelatedTasksOpen = [Select ID, Status, Subject, Account__c, accountid
                                           From Task 
                                           Where accountid = :A1.Id 
-                                          AND Status != 'Completed' Limit 1];
+                                          AND Status != 'Completed'];
             
             
+        
         // If there are any open related tasks or opportunities 
-        if(!GetRelatedOptsOpen.isEmpty() || !OpenTasksNotOwnedByCSM.isEmpty()){
+        if(!GetRelatedOptsOpen.isEmpty() || !GetRelatedTasksOpen.isEmpty()){
            
            
            // Hidden Checkbox field on Account that is set to false
            // if account is an active customer with open opportunities
            A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
            
+           
            System.debug('Set NSC in 30 days to false ' + A1.Id);
+           
            
            // Hidden Checkbox field to revaluate account if an
            // opportunity is opened back up 
@@ -85,31 +89,81 @@ trigger AccountWithNoOpenOpptyAssignToNSCin30Days on Account (before update) {
                 
               A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = True;
             
+              
               System.debug('Set NSC in 30 days to true ' + A1.Id);
-                
+              
+            
               A1.Ops_Status_Trigger__c = False;
                 
            }
             
+        }    
+        
+        Else{
             
-         }
-         
-         else if(A1.Customer_Status__c != 'Cancelled' || A1.Customer_Status__c != 'Never Active') {
-                  
-                 System.debug('Account is still Active! Not Reassigning ' + A1.Id);
-                 
-                 A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;                     
-                
-                
-         }
-   
-      }
-        Else {
+            System.debug('Account ' + A1.Id + ' has already been recycled');
             
-            System.debug('Record was modified by Ruby BI - Aborting Trigger for ' + A1.Id);
+            
+            A1.No_Open_Opties_Assign_to_NSC_in_30_days__c = False;
+            
+        }        
+        
+        
+        // Use Case 2 Logic for Recycled Accounts
+        // -------------------------------------------    
+        If(A1.Recycled_Count__c != 0 && OwnerLastName != 'No Sales Contact'){
+          
+          // Create List of open Related Opportunity Records
+          List<Opportunity> RecycOpenOppty = [Select ID, StageName 
+                                              From Opportunity 
+                                              Where accountid = :A1.Id 
+                                              AND StageName != 'Closed Lost'];
+               
+            
+          // Create List of open Related Task Records
+          List<Task> RecycOpenTasks = [Select ID, Status, Subject, Account__c, accountid
+                                       From Task 
+                                       Where accountid = :A1.Id 
+                                       AND Status != 'Completed'];
+            
+          if(!RecycOpenOppty.isempty() || !RecycOpenTasks.isempty()){
+              
+              
+             A1.Recycled_Account_Assign_to_NSC_in_90_Day__c = False;
+             
+             System.debug('Account has open opportunities or tasks');
+             
+             A1.Ops_Status_Trigger__c = False;
+              
+          }
+          Else{
+              
+              A1.Recycled_Account_Assign_to_NSC_in_90_Day__c = True;
+              
+              System.debug('No Open Opportunities or tasks setting use case 2 assignment logic to true');
+              
+              A1.Ops_Status_Trigger__c = False;
+              	
+              }
+            
+            
             
         }
+        
+        Else{
+            
+            System.debug('End Of Use Case 2 Assignment Logic');
+            
+            }
+   
+        }
+                        
+        Else {
+            
+              System.debug('Record was modified by Ruby BI or a Bot - Aborting Trigger for ' + A1.Id);
+            
+             }
     
-   }
+      }
         
 }
