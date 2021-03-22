@@ -1,0 +1,312 @@
+Apex Class
+====================================================================================================
+
+public with sharing class TargetProcessCalloutService{
+
+    // Auth Token Variable
+    private final static string authToken = '<Paste Token Here>';
+    
+    // System Token
+    private final static string SystemToken = '<Paste Token Here>';
+    
+    // Basic Authentication
+    private final static string basicPass = '<Paste Base64 Username and password Here>';
+    
+    // Named Credential
+    private final static string sEndpoint = '<Paste URI Here>';
+    
+    // Timeout
+    private final static integer iTimeout = 2000;    
+ 
+    // Post Callout Method - User Stories
+    // ----------------------------------
+    public static HttpResponse PostTPUserStories(String JSONMARKUP){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type','application/json');
+        
+        //Basic Auth
+        //----------
+        theRequest.setHeader('Authorization', 'Basic ' + basicPass);
+        
+        theRequest.setEndpoint(sEndpoint + 'api/v1/UserStories');
+        
+        theRequest.setBody(JSONMARKUP);
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        return theResponse;
+        
+      }
+    
+    // Post Callout Method - Post Comment to User stories
+    // --------------------------------------------------
+    public static HttpResponse PostTPUserStoryComment(String JSONMARKUP){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type','application/json');
+        
+        //Basic Auth
+        //----------
+        theRequest.setHeader('Authorization', 'Basic ' + basicPass);
+        
+        theRequest.setEndpoint(sEndpoint + 'api/v1/Comments');
+        
+        theRequest.setBody(JSONMARKUP);
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        return theResponse;
+        
+      }
+    
+    // Post Callout Method - Bugs
+    // --------------------------
+    public static HttpResponse PostTPUserBugs(String JSONMARKUP){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type','application/json');
+        
+        //Basic Auth
+        //----------
+        theRequest.setHeader('Authorization', 'Basic ' + basicPass);
+        
+        theRequest.setEndpoint(sEndpoint + 'api/v1/Bugs');
+        
+        theRequest.setBody(JSONMARKUP);
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        return theResponse;
+        
+      }
+    
+    // Post Callout Method - Tasks
+    // ---------------------------
+    public static HttpResponse PostTPUserTasks(String JSONMARKUP){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type','application/json');
+        
+        //Basic Auth
+        //----------
+        theRequest.setHeader('Authorization', 'Basic ' + basicPass);
+        
+        theRequest.setEndpoint(sEndpoint + 'api/v1/tasks');
+        
+        theRequest.setBody(JSONMARKUP);
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        return theResponse;
+        
+      }
+    
+    // Post Callout Method - Projects
+    // ------------------------------
+    public static HttpResponse PostTPUserProjects(String JSONMARKUP){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type','application/json');
+        
+        //Basic Auth
+        //----------
+        theRequest.setHeader('Authorization', 'Basic ' + basicPass);
+        
+        theRequest.setEndpoint(sEndpoint + 'api/v1/Projects');
+        
+        theRequest.setBody(JSONMARKUP);
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        return theResponse;
+        
+      }
+    
+    
+}
+
+
+
+Test Class with 100% code Coverage
+====================================================================================================
+
+@isTest
+private class TPCalloutTest {
+    
+    @isTest static void testPostCalloutUserStories(){
+        
+    StaticResourceCalloutMock TPPostCall = new  StaticResourceCalloutMock();
+        
+    TPPostCall.setStaticResource('TPStaticResource');
+        
+    TPPostCall.setStatusCode(200);
+        
+    TPPostCall.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        
+    Test.setMock(HttpCalloutMock.class, TPPostCall);
+        
+    String JSONMARKUP = '{"Name":"test name","Project":{"ID":3}';
+        
+    HttpResponse result = TargetProcessCalloutService.PostTPUserStories(JSONMARKUP);
+        
+    //System.assertEquals(null, result, 'The callout returned a null response.');
+        
+    System.assertEquals(200,result.getStatusCode(),'The status code is not 200.');
+        
+    System.assertEquals('application/json;charset=UTF-8',result.getHeader('Content-Type'),'The content type value is not expected.'); 
+        
+        
+    }
+    
+    @isTest static void testPostCalloutComments(){
+        
+    StaticResourceCalloutMock TPPostCall = new  StaticResourceCalloutMock();
+        
+    TPPostCall.setStaticResource('TPStaticResource');
+        
+    TPPostCall.setStatusCode(200);
+        
+    TPPostCall.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        
+    Test.setMock(HttpCalloutMock.class, TPPostCall);
+        
+    String JSONMARKUP = '{"General":{"Id":123}, "Description":"This is a new comment"}';
+        
+    HttpResponse result = TargetProcessCalloutService.PostTPUserStoryComment(JSONMARKUP);
+        
+    //System.assertEquals(null, result, 'The callout returned a null response.');
+        
+    System.assertEquals(200,result.getStatusCode(),'The status code is not 200.');
+        
+    System.assertEquals('application/json;charset=UTF-8',result.getHeader('Content-Type'),'The content type value is not expected.'); 
+        
+        
+    }
+    
+    @isTest static void testPostCalloutBugs(){
+        
+    StaticResourceCalloutMock TPPostCall = new  StaticResourceCalloutMock();
+        
+    TPPostCall.setStaticResource('TPStaticResource');
+        
+    TPPostCall.setStatusCode(200);
+        
+    TPPostCall.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        
+    Test.setMock(HttpCalloutMock.class, TPPostCall);
+        
+    String JSONMARKUP = '{"UserStory":{"Id":123}, "Name":"This is a new bug", "Project":{"Id":2}}';
+        
+    HttpResponse result = TargetProcessCalloutService.PostTPUserBugs(JSONMARKUP);
+        
+    //System.assertEquals(null, result, 'The callout returned a null response.');
+        
+    System.assertEquals(200,result.getStatusCode(),'The status code is not 200.');
+        
+    System.assertEquals('application/json;charset=UTF-8',result.getHeader('Content-Type'),'The content type value is not expected.'); 
+        
+        
+    }
+    
+    @isTest static void testPostCalloutTasks(){
+        
+    StaticResourceCalloutMock TPPostCall = new  StaticResourceCalloutMock();
+        
+    TPPostCall.setStaticResource('TPStaticResource');
+        
+    TPPostCall.setStatusCode(200);
+        
+    TPPostCall.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        
+    Test.setMock(HttpCalloutMock.class, TPPostCall);
+        
+    String JSONMARKUP = '{"UserStory":{"Id":123}, "Name":"This is a new bug", "Project":{"Id":2}}';
+        
+    HttpResponse result = TargetProcessCalloutService.PostTPUserTasks(JSONMARKUP);
+        
+    //System.assertEquals(null, result, 'The callout returned a null response.');
+        
+    System.assertEquals(200,result.getStatusCode(),'The status code is not 200.');
+        
+    System.assertEquals('application/json;charset=UTF-8',result.getHeader('Content-Type'),'The content type value is not expected.'); 
+        
+        
+    }
+    
+    @isTest static void testPostCalloutProjects(){
+        
+    StaticResourceCalloutMock TPPostCall = new  StaticResourceCalloutMock();
+        
+    TPPostCall.setStaticResource('TPStaticResource');
+        
+    TPPostCall.setStatusCode(200);
+        
+    TPPostCall.setHeader('Content-Type', 'application/json;charset=UTF-8');
+        
+    Test.setMock(HttpCalloutMock.class, TPPostCall);
+        
+    String JSONMARKUP = '{\"Name\":\"Test Project\"}';
+        
+    HttpResponse result = TargetProcessCalloutService.PostTPUserProjects(JSONMARKUP);
+        
+    //System.assertEquals(null, result, 'The callout returned a null response.');
+        
+    System.assertEquals(200,result.getStatusCode(),'The status code is not 200.');
+        
+    System.assertEquals('application/json;charset=UTF-8',result.getHeader('Content-Type'),'The content type value is not expected.'); 
+        
+        
+    }
+
+}
