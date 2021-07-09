@@ -1,0 +1,190 @@
+Global class TargetProcessFeatureRequestBatchClass implements Database.Batchable<sObject>, Database.AllowsCallouts{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        
+        String query = 'Select Id, Feature_Request__c, Feature_Request_Notes__c, CaseNumber, AccountId, OwnerId, Product_Type__c, ' +
+                       'Wrap_Up_Code__c, Error_Notes__c, CreatedDate, Subject, Description, Case_Age_in_Days__c, Feature_Request_Summary__c ' +
+                       'From Case Where Case_Age_in_Days__c <= 7 ' +
+                       'AND Subject != \'Scheduled Updates Assignment - Open\' ' +
+                       'AND Subject != \'Scheduled Updates Assignment - Close\' ' +
+                       'AND Feature_Request__c != Null ' +
+                       'AND AccountId != Null';
+        
+        return Database.getQueryLocator(query);
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Case> FeatureReqCases){
+        
+        for(Case C1 : FeatureReqCases){
+            
+            List<User> GetOwnerName = [Select Id, firstname, Lastname from user Where Id = :C1.OwnerId ];
+            
+            
+            List<Account> GetAccountName = [Select Name, Id from Account Where Id = :C1.AccountId];
+            
+                       
+            String AccountName = GetAccountName.get(0).Name;
+            String WrapUpCode = C1.Wrap_Up_Code__c;
+            String FeatureReq = C1.Feature_Request__c;
+            String CaseURI = 'https://ruby.my.salesforce.com/' + C1.Id;
+            String Cnumber = C1.CaseNumber;
+            String AccountURI = 'https://ruby.my.salesforce.com/' + C1.AccountId;
+            String ErrorNotes = C1.Error_Notes__c;
+            String FeatureReqNotes = C1.Feature_Request_Notes__c;
+            String CaseDesciption = C1.Description;
+            String CaseOwnerName = GetOwnerName.get(0).firstname + ' ' + GetOwnerName.get(0).lastname;
+            String FeatureSummary = C1.Feature_Request_Summary__c;
+            String ProductTypeVal = C1.Product_Type__c;
+            
+            // Case Is Feature Request and Not Product Type Billing - Add Feature Summary to Name 
+            // ----------------------------------------------------------------------------------
+            if(FeatureReq == 'Other (Explain Below)' && ProductTypeVal != 'Billing'){
+            
+            String TPName = FeatureSummary + ' - ' + AccountName;
+            String TPDescription = '<b>Feature Request SF Case Number:</b> ' + CNumber + '<div>&nbsp;</div>' +
+                                   '<b>Case Owner:</b> ' + CaseOwnerName + '<div>&nbsp;</div>' +
+                                   '<b>Originating Salesforce Case:</b> ' + CaseURI + '<div>&nbsp;</div>'  +
+                                   '<b>Related Account - ' + AccountName + ':</b> ' + AccountURI + '<div>&nbsp;</div>' +
+                                   '<b>Feature Request:</b> ' + FeatureReq +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Feature Request Notes:</b> ' + FeatureReqNotes +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Wrap up Code:</b> ' + WrapUpCode +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Error / Complaint Notes:</b> ' + ErrorNotes +
+                                   '<div>&nbsp;</div>';
+                
+            // Production
+            // ----------  
+            String JSONMARKUP = '{\"Name\":"'+ TPName +'","Project":{"ID":54122}, "Description":"'+ TPDescription +'", "Status":"Unverified", "Product Requested":"'+ ProductTypeVal +'"}';
+            
+            
+            if(Test.isRunningTest()){
+            System.debug('Test is running! Will not execute callout.');
+            }
+            Else{
+                 // Requests Callout
+                 // ----------------
+                 System.debug(TargetProcessCalloutService.PostTPUserRequests(JSONMARKUP));
+                }
+                
+            }
+            
+            // Case Is Feature Request and Not Product Type Billing - Add Feature Request to Name
+            // ----------------------------------------------------------------------------------
+            Else if (FeatureReq != 'Other (Explain Below)' && ProductTypeVal != 'Billing') {
+                  
+                 String TPName = FeatureReq + ' - ' + AccountName;
+                 String TPDescription = '<b>Feature Request SF Case Number:</b> ' + CNumber + '<div>&nbsp;</div>' +
+                                        '<b>Case Owner:</b> ' + CaseOwnerName + '<div>&nbsp;</div>' +
+                                        '<b>Originating Salesforce Case:</b> ' + CaseURI + '<div>&nbsp;</div>'  +
+                                        '<b>Related Account - ' + AccountName + ':</b> ' + AccountURI + '<div>&nbsp;</div>' +
+                                        '<b>Feature Request:</b> ' + FeatureReq +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Feature Request Notes:</b> ' + FeatureReqNotes +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Wrap up Code:</b> ' + WrapUpCode +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Error / Complaint Notes:</b> ' + ErrorNotes +
+                                        '<div>&nbsp;</div>';
+                
+                
+            // Production
+            // ----------  
+            String JSONMARKUP = '{\"Name\":"'+ TPName +'","Project":{"ID":54122}, "Description":"'+ TPDescription +'", "Status":"Unverified", "Product Requested":"'+ ProductTypeVal +'"}';
+            
+            
+            if(Test.isRunningTest()){
+            System.debug('Test is running! Will not execute callout.');
+            }
+            Else{
+                 // Requests Callout
+                 // ----------------
+                 System.debug(TargetProcessCalloutService.PostTPUserRequests(JSONMARKUP));
+                }
+                   
+            }
+            
+            // Case is Feature Request and is Product Type Billing - Add Feature Summary to Name
+            // ---------------------------------------------------------------------------------
+            Else if(FeatureReq == 'Other (Explain Below)' && ProductTypeVal == 'Billing'){
+            
+            String TPName = FeatureSummary + ' - ' + AccountName;
+            String TPDescription = '<b>Feature Request SF Case Number:</b> ' + CNumber + '<div>&nbsp;</div>' +
+                                   '<b>Case Owner:</b> ' + CaseOwnerName + '<div>&nbsp;</div>' +
+                                   '<b>Originating Salesforce Case:</b> ' + CaseURI + '<div>&nbsp;</div>'  +
+                                   '<b>Related Account - ' + AccountName + ':</b> ' + AccountURI + '<div>&nbsp;</div>' +
+                                   '<b>Feature Request:</b> ' + FeatureReq +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Feature Request Notes:</b> ' + FeatureReqNotes +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Wrap up Code:</b> ' + WrapUpCode +
+                                   '<div>&nbsp;</div>' +
+                                   '<b>Error / Complaint Notes:</b> ' + ErrorNotes +
+                                   '<div>&nbsp;</div>';
+                
+            // Production
+            // ----------  
+            String JSONMARKUP = '{\"Name\":"'+ TPName +'","Project":{"ID":54122}, "Description":"'+ TPDescription +'", "Status":"Unverified", "Product Requested":"FORCE – Online Customer Portal"}';
+            
+            
+            if(Test.isRunningTest()){
+            System.debug('Test is running! Will not execute callout.');
+            }
+            Else{
+                 // Requests Callout
+                 // ----------------
+                 System.debug(TargetProcessCalloutService.PostTPUserRequests(JSONMARKUP));
+                }
+                
+            }
+            
+            // Case is Feature Request and is Product Type Billing - Add Feature Request to Name
+            // ---------------------------------------------------------------------------------
+            Else if(FeatureReq != 'Other (Explain Below)' && ProductTypeVal == 'Billing'){
+            
+                 String TPName = FeatureReq + ' - ' + AccountName;
+                 String TPDescription = '<b>Feature Request SF Case Number:</b> ' + CNumber + '<div>&nbsp;</div>' +
+                                        '<b>Case Owner:</b> ' + CaseOwnerName + '<div>&nbsp;</div>' +
+                                        '<b>Originating Salesforce Case:</b> ' + CaseURI + '<div>&nbsp;</div>'  +
+                                        '<b>Related Account - ' + AccountName + ':</b> ' + AccountURI + '<div>&nbsp;</div>' +
+                                        '<b>Feature Request:</b> ' + FeatureReq +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Feature Request Notes:</b> ' + FeatureReqNotes +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Wrap up Code:</b> ' + WrapUpCode +
+                                        '<div>&nbsp;</div>' +
+                                        '<b>Error / Complaint Notes:</b> ' + ErrorNotes +
+                                        '<div>&nbsp;</div>';
+                
+                
+                // Production
+                // ----------  
+                String JSONMARKUP = '{\"Name\":"'+ TPName +'","Project":{"ID":54122}, "Description":"'+ TPDescription +'", "Status":"Unverified", "Product Requested":"FORCE – Online Customer Portal"}';
+                
+                if(Test.isRunningTest()){
+                               System.debug('Test is running! Will not execute callout.');
+                          }
+                            Else{
+                                // Requests Callout
+                                // ----------------
+                                System.debug(TargetProcessCalloutService.PostTPUserRequests(JSONMARKUP));
+                              }
+                
+                
+            }
+            
+                        
+            
+        }
+        
+            
+    }
+    
+    global void finish(Database.BatchableContext bc){
+         
+    }
+    
+        
+}
