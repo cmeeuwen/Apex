@@ -1,0 +1,59 @@
+public class ContactOwnerMatchAccountSalesOwner {
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+        String RecordIdentifier = S1.get(0);
+        
+        ContactOwnerMatchAccountSalesOwner.StartContactOwnerSync(RecordIdentifier);
+                
+    }
+    
+    public static void StartContactOwnerSync(String RecordIdentifier){
+        
+        List<Account> GetAccountMeta = [Select Id, Sales__c From Account Where Id = :RecordIdentifier Limit 1];
+        
+        if(GetAccountMeta.get(0).Sales__c != Null){
+            
+            
+          // Get Related Contacts
+          // --------------------
+          List<Contact> GetRelatedContacts = [Select OwnerId, Id, AccountId 
+                                              From Contact 
+                                              Where AccountId = :GetAccountMeta.get(0).Id 
+                                              AND OwnerId != :GetAccountMeta.get(0).Sales__c];
+          
+          List<Contact> ContactsToUpdate = new List<Contact>();
+            
+            if(!GetRelatedContacts.isEmpty()){
+            
+            for(Contact C1 : GetRelatedContacts){
+                    
+                  System.debug('Updating Contact Owner ' + C1.Id + ' to match sales owner: ' + GetAccountMeta.get(0).Sales__c);
+                    
+                  C1.OwnerId = GetAccountMeta.get(0).Sales__c;
+                  
+                  ContactsToUpdate.add(C1);  
+                       
+            }
+                
+            } Else{System.debug('There are no related contacts to this account.');}
+           
+           // Bulk Syncronous update of related Contacts
+           // ------------------------------------------
+           if(!ContactsToUpdate.isEmpty()){
+                               update ContactsToUpdate;
+                            }
+                             Else{
+                                                System.debug('List to update is empty. No Related Contacts updated');
+                                                }
+            
+        }
+        Else{System.debug('Sales Owner field is null, End of Method');}
+        
+        
+        
+        
+    }
+
+}
