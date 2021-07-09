@@ -1,0 +1,91 @@
+trigger FirstReponseTime on FeedComment (after insert) {
+
+ for(FeedComment FC : Trigger.new){
+     
+     List<Ruby_SF_Support_Request__c> FindRelatedRequest = [Select Id, OwnerId, Initial_Response_Date__c, Requester__c, 
+                                                            Name, CreatedDate, Time_To_Respond_Days__c, Completed_Date__c
+                                                            From Ruby_SF_Support_Request__c
+                                                            Where Id = :FC.ParentId Limit 1 ];
+          
+     If(!FindRelatedRequest.isEmpty()){
+         
+         If(FC.CreatedById == FindRelatedRequest.get(0).OwnerId && FindRelatedRequest.get(0).Initial_Response_Date__c == Null ){
+           
+           System.debug('Related to Request ' + FindRelatedRequest.get(0).Name + ' and comment was created by ' + FC.CreatedById);  
+             
+           FindRelatedRequest.get(0).Initial_Response_Date__c = datetime.now();
+             
+           // Calculate initial response TTR in Days
+           // --------------------------------------
+           DateTime CRD = DateTime.newInstance(FindRelatedRequest.get(0).CreatedDate.year(), 
+                                               FindRelatedRequest.get(0).CreatedDate.month(), 
+                                               FindRelatedRequest.get(0).CreatedDate.day(), 
+                                               FindRelatedRequest.get(0).CreatedDate.hour(), 
+                                               FindRelatedRequest.get(0).CreatedDate.minute(), 
+                                               FindRelatedRequest.get(0).CreatedDate.second());
+           
+               
+             
+             
+           DateTime LRT = DateTime.newInstance(FC.CreatedDate.year(), 
+                                               FC.CreatedDate.month(), 
+                                               FC.CreatedDate.day(), 
+                                               FC.CreatedDate.hour(), 
+                                               FC.CreatedDate.minute(), 
+                                               FC.CreatedDate.second());
+             
+           Long dt1Long = CRD.getTime();
+           Long dt2Long = LRT.getTime();
+           Long milliseconds = dt2Long - dt1Long;
+           Long seconds = milliseconds / 1000;
+           Long minutes = seconds / 60;
+           Long hours = minutes / 60;
+           Long days = hours / 24;
+             
+           System.debug('Hour = ' + hours + ' is ' + minutes + ' minutes');  
+             
+           // Calculate initial response TTR in Minutes
+           // -----------------------------------------
+           if(days == 0){
+               
+             System.debug('0 Day Difference, calculating minutes.');  
+               
+             FindRelatedRequest.get(0).Time_To_Respond_Days__c = 0;
+             
+             FindRelatedRequest.get(0).Time_To_Respond_Minutes__c = minutes;
+               
+           }
+           Else{
+               
+             System.debug('Multiple Days have passed with no Chatter Response.');
+               
+             FindRelatedRequest.get(0).Time_To_Respond_Days__c = days;
+               
+             FindRelatedRequest.get(0).Time_To_Respond_Minutes__c = minutes;
+               
+           }
+           
+           
+             
+           // Update Request
+           // --------------
+           Update FindRelatedRequest.get(0);
+             
+               
+         }
+         Else{
+             
+              System.debug('Comment not created by Request owner or Initial Response Date is not null');
+             
+         }
+         
+     }
+     Else{
+         
+          System.debug('Not related to an Ruby SF Support Request');
+     
+     }
+    
+   }
+
+}
