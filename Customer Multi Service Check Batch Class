@@ -1,0 +1,336 @@
+Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, Customer_Activation_date__c, Customer_Status__c, Name, OwnerId, Service_Product_Type__c ' + 
+                       'From Account ' +
+                       'Where (Customer_Status__c = \'Active\' OR Customer_Status__c = \'Future Cancel\')';
+        
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Account> CheckForMultiServiceAccounts){
+        
+        List<Account> AccountsToUpdate = new List<Account>();
+        
+        for(Account A1 : CheckForMultiServiceAccounts){
+           
+           // Verify if Active Account has an active Zoura Subscription
+           // ---------------------------------------------------------
+           List<Zuora__Subscription__c> GetRelatedZouraSub = [Select Id, Zuora__Account__c, Zuora__Status__c, Name,
+                                                              Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,
+                                                              Zuora__TermStartDate__c, Zuora__TermEndDate__c
+                                                              From Zuora__Subscription__c
+                                                              Where Zuora__Account__c = :A1.Id
+                                                              AND Zuora__Status__c = 'Active'];
+           
+           // Verify That account has a charge
+           // --------------------------------
+           List<Zuora__Payment__c> CheckForCompletedPayment = [Select Id, Zuora__Account__c, Zuora__Status__c 
+                                                               From Zuora__Payment__c 
+                                                               Where Zuora__Account__c = :A1.Id
+                                                               AND Zuora__Status__c = 'Processed'
+                                                               Limit 1];
+            
+            if(!CheckForCompletedPayment.isEmpty()){
+            
+            if(!GetRelatedZouraSub.isEmpty()){ 
+                                              System.debug('Subscription for Account ' + A1.Name + ' is ' + GetRelatedZouraSub.get(0).Name + ' Finding Related Products');
+                
+                                              List<Zuora__SubscriptionProductCharge__c> GetSubscriptionRelatedProducts = [Select Id, Zuora__SubscriptionRatePlanChargeName__c, Zuora__Subscription__c
+                                                                                                                          From Zuora__SubscriptionProductCharge__c
+                                                                                                                          Where Zuora__Subscription__c = :GetRelatedZouraSub.get(0).Id
+                                                                                                                          AND (Zuora__SubscriptionRatePlanChargeName__c Like '%Call Ruby%' OR Zuora__SubscriptionRatePlanChargeName__c Like '%Chat Ruby%' 
+                                                                                                                          OR Zuora__SubscriptionRatePlanChargeName__c Like '%Receptionist Minutes%' OR Zuora__SubscriptionRatePlanChargeName__c Like '%Website Chat%'
+                                                                                                                          OR Zuora__SubscriptionRatePlanChargeName__c Like '%Minutes%' OR Zuora__SubscriptionRatePlanChargeName__c Like '%Minute%'
+                                                                                                                          OR Zuora__SubscriptionRatePlanChargeName__c Like '%Chatbot%')];
+                                              
+                							  Integer ChatProductCount = 0;
+                                                  
+                                              Integer RSProductCount = 0;                              
+                
+                   							  for(Zuora__SubscriptionProductCharge__c ZSPC1 : GetSubscriptionRelatedProducts){
+                                                  
+                                                 System.debug('Account ' + A1.Name + ' Has a Subscription Product of ' + ZSPC1.Zuora__SubscriptionRatePlanChargeName__c);
+                                                  
+                                                  
+                                                  String ProductType = ZSPC1.Zuora__SubscriptionRatePlanChargeName__c;
+                                                  
+                                                  If(ProductType.contains('Call Ruby') || ProductType.contains('Minutes') || ProductType.contains('Minute')){
+                                                      
+                                                    RSProductCount++;
+                                                      
+                                                  }
+                                                  Else If(ProductType.contains('Chat Ruby') || ProductType.contains('Website Chat') || ProductType.contains('Chatbot')){
+                                                      
+                                                    ChatProductCount++;
+                                                      
+                                                  }
+                                                    
+                                                }
+                
+                                                If(RSProductCount >= 1 && ChatProductCount == 0){
+                                                    
+                                                    // Receptionist Service Product Type
+                                                    // ---------------------------------
+                                                    if(A1.Service_Product_Type__c != 'Reception'){
+                                                    A1.Service_Product_Type__c = 'Reception';
+                                                      
+                                                    AccountsToUpdate.add(A1);
+                                                    }
+                                                    Else{System.debug('Service Product type for account is already Reception');}
+                                                      
+                                                }
+                                                Else If(RSProductCount == 0 && ChatProductCount >= 1){
+                                                    
+                                                    // Chat Product Type
+                                                    // -----------------
+                                                    if(A1.Service_Product_Type__c != 'Chat'){
+                                                    A1.Service_Product_Type__c = 'Chat';
+                                                    
+                                                    AccountsToUpdate.add(A1);
+                                                    }
+                                                    Else{System.debug('Service Product Type for account is already Chat');}
+                                                    
+                                                }
+                                                Else If(RSProductCount >= 1 && ChatProductCount >= 1){
+                                                    
+                                                    // Multi-Service Product Type
+                                                    // --------------------------
+                                                    if(A1.Service_Product_Type__c != 'Multi-Service'){
+                                                    A1.Service_Product_Type__c = 'Multi-Service';
+                                                    
+                                                    AccountsToUpdate.add(A1);
+                                                    }
+                                                    Else{System.debug('Service Product Type for account is already Multi-Service');}
+                                                    
+                                                }
+                							    Else{System.debug('Unable to determine Service Product Type');}
+                                              
+                                             }
+            Else{
+                 
+                 System.debug('No Related Subscription for Account ' + A1.Name);
+                 
+                 If(A1.Service_Product_Type__c != 'No Active Subscription'){
+                 A1.Service_Product_Type__c = 'No Active Subscription';
+                 AccountsToUpdate.add(A1);
+                 }
+                 Else{System.debug('Service Product Type Already Null');}
+                     
+                }
+                
+            }
+            Else{System.debug('No Active Payment Yet For Account: ' + A1.Name);}
+                
+        }
+        
+        if(!AccountsToUpdate.isEmpty()){
+            
+          Update AccountsToUpdate;
+            
+        }
+        Else{System.debug('No Accounts to update!');}
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
+
+// Test Class
+//-----------------------------------------------------------------------
+
+@isTest
+private class CustomerMultiServiceCheckTest {
+    
+@isTest static void AccountSubCheckTest(){
+       
+       List<Account> TestAccountsList = new list<Account>();
+        
+       for(Integer i=0;i<4;i++){
+          
+          System.debug('Test Account ' + i); 
+           
+          TestAccountsList.add(new Account(
+                                           Name = 'Test Account ' + i,
+                                           Customer_Status__c = 'Active',
+                					       HIPAA__c = False,
+                                           OwnerId = userinfo.getUserId()
+                                           )); 
+           
+       }
+    
+       insert TestAccountsList;
+       System.debug('Account List has been inserted');
+    
+       List<Account> UpdateAccountStatusToActive = [Select Id, Name, Customer_status__c From Account Where Name Like '%Test Account%'];
+       
+       List<Account> AccountsToUpdateStatus = new List<Account>();
+    
+       for(Account A1Test : UpdateAccountStatusToActive){
+           
+          System.debug('Account Name: ' + A1Test.Name + ' updating status to active');
+          
+          A1Test.Customer_Status__c = 'Active';
+           
+          AccountsToUpdateStatus.add(A1Test); 
+           
+           
+       }
+       
+       AccountsToUpdateStatus.get(3).Service_Product_Type__c = 'Chat';
+    
+       update AccountsToUpdateStatus;
+        
+        
+       // Generate Subscription Test Data
+       // -------------------------------
+       
+       
+       // Multiservice Subscription
+       // -------------------------
+       Zuora__Subscription__c ActiveZouraSub = new Zuora__Subscription__c(
+                                                                         Zuora__Status__c = 'Active',
+                                                                         Zuora__Account__c = TestAccountsList.get(0).Id
+                                                                         );
+        
+       // Chat Only Subscription
+       // ----------------------
+       Zuora__Subscription__c ChatOnlyZouraSub = new Zuora__Subscription__c(
+                                                                           Zuora__Status__c = 'Active',
+                                                                           Zuora__Account__c = TestAccountsList.get(1).Id
+       																	   );
+        
+       // RS Only Subscription
+       // --------------------
+       Zuora__Subscription__c RSOnlyZouraSub = new Zuora__Subscription__c(
+                                                                           Zuora__Status__c = 'Active',
+                                                                           Zuora__Account__c = TestAccountsList.get(2).Id
+       																	   );
+        
+       // Account with Cancelled Subscription
+       // -----------------------------------
+       Zuora__Subscription__c CancelledZouraSub = new Zuora__Subscription__c(
+                                                                            Zuora__Status__c = 'Cancelled',
+                                                                            Zuora__Account__c = TestAccountsList.get(3).Id
+                                                                            );
+    
+    
+    
+       // Insert Account Test Subscriptions
+       // --------------------------------- 
+       insert ActiveZouraSub;
+       insert ChatOnlyZouraSub;
+       insert RSOnlyZouraSub;
+       insert CancelledZouraSub;
+       
+       
+        
+        
+       // Generate Subscription Products
+       // ------------------------------
+       
+       
+       // Products for Multi Service Account Subscriptions
+       // ------------------------------------------------ 
+       Zuora__SubscriptionProductCharge__c ChatProduct1 = new Zuora__SubscriptionProductCharge__c(
+       																						     Zuora__Account__c = TestAccountsList.get(0).Id,
+                                                                                                 Zuora__Subscription__c = ActiveZouraSub.Id,
+                                                                                                 Zuora__SubscriptionRatePlanChargeName__c = 'Chat Ruby 10 - $30 Off'
+       																							 );
+        
+       Zuora__SubscriptionProductCharge__c RSProduct1 = new Zuora__SubscriptionProductCharge__c(
+       																						   Zuora__Account__c = TestAccountsList.get(0).Id,
+                                                                                               Zuora__Subscription__c = ActiveZouraSub.Id,
+                                                                                               Zuora__SubscriptionRatePlanChargeName__c = 'Call Ruby - 100 Minute Plan'
+                                                                                               );
+        
+      
+       // Products for Chat Only Account Subscriptions
+       // --------------------------------------------
+       Zuora__SubscriptionProductCharge__c ChatProduct2 = new Zuora__SubscriptionProductCharge__c(
+       																							 Zuora__Account__c = TestAccountsList.get(1).Id,
+                                                                                                 Zuora__Subscription__c = ChatOnlyZouraSub.Id,
+                                                                                                 Zuora__SubscriptionRatePlanChargeName__c = 'Chat Ruby 10 - $30 Off'
+       																							 );
+        
+       
+       // Product for RS Only Account Subscription
+       // ----------------------------------------
+       Zuora__SubscriptionProductCharge__c RSProduct2 = new Zuora__SubscriptionProductCharge__c(
+       																						   Zuora__Account__c = TestAccountsList.get(2).Id,
+                                                                                               Zuora__Subscription__c = RSOnlyZouraSub.Id,
+                                                                                               Zuora__SubscriptionRatePlanChargeName__c = 'Call Ruby - 100 Minute Plan'
+                                                                                               );
+        
+       
+       
+       // Insert Subscription Test Product Data
+       // -------------------------------------
+       insert ChatProduct1;
+       insert RSProduct1;
+       insert ChatProduct2;
+       insert RSProduct2;
+    
+    
+       // Generate Test Billing Account Records
+       // -------------------------------------
+       List<Zuora__CustomerAccount__c> TestBillingAccounts = new List<Zuora__CustomerAccount__c>();
+       
+       for(Integer P=0;P<4;P++){
+          
+          TestBillingAccounts.add(
+                                 New Zuora__CustomerAccount__c(
+                                                               Name = 'Test Billing Account ' + P,
+                                                               Zuora__Account__c = UpdateAccountStatusToActive.get(P).Id
+                                 					          )
+         
+          );
+          
+       }
+     
+       insert TestBillingAccounts;
+    
+
+       // Generate Test Payment Records
+       // -----------------------------
+       List<Zuora__Payment__c> TestPaymentList = new List<Zuora__Payment__c>();
+       
+       for(Integer k=0;k<4;k++){
+           
+           TestPaymentList.add(
+                              New Zuora__Payment__c(
+                              						Name = 'Test Payment ' + k,
+													Zuora__Status__c = 'Processed',
+                                                    Zuora__BillingAccount__c = TestBillingAccounts.get(k).Id,
+                                                    Zuora__Account__c = UpdateAccountStatusToActive.get(k).Id
+                                                   )
+           					  );
+           
+           
+       }
+       
+       insert TestPaymentList;
+
+    
+       test.startTest();
+    
+    
+       
+    
+       CustomerMultiServiceCheck MultiServiceCheckTestBatch = new CustomerMultiServiceCheck();
+       
+       Id batchId = Database.executeBatch(MultiServiceCheckTestBatch);    
+        
+       test.stopTest();
+        
+       System.assertEquals(4, [Select count() from Account where Customer_Status__c = 'Active']); 
+        
+    }
+
+}
