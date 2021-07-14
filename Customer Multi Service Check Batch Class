@@ -2,7 +2,7 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
     
     global Database.QueryLocator start(Database.BatchableContext bc){
         
-        String query = 'Select Id, Customer_Activation_date__c, Customer_Status__c, Name, OwnerId, Service_Product_Type__c ' + 
+        String query = 'Select Id, Customer_Activation_date__c, Customer_Status__c, Name, OwnerId, Service_Product_Type__c, Chat_Programming_Complete__c, RS_Programming_Complete__c, Chat__c, Reception__c  ' + 
                        'From Account ' +
                        'Where (Customer_Status__c = \'Active\' OR Customer_Status__c = \'Future Cancel\')';
         
@@ -12,6 +12,8 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
     
     global void execute(Database.BatchableContext bc, List<Account> CheckForMultiServiceAccounts){
         
+        // New List For Bulk Update Of Accounts
+        // ------------------------------------
         List<Account> AccountsToUpdate = new List<Account>();
         
         for(Account A1 : CheckForMultiServiceAccounts){
@@ -75,8 +77,17 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                                                     // Receptionist Service Product Type
                                                     // ---------------------------------
                                                     if(A1.Service_Product_Type__c != 'Reception'){
-                                                    A1.Service_Product_Type__c = 'Reception';
-                                                      
+                                                    
+                                                        A1.Service_Product_Type__c = 'Reception';
+                                                        A1.Reception__c = TRUE;
+                                                        
+                                                        if(A1.Chat__c == TRUE){
+                                                          
+                                                          A1.Chat__c = FALSE;
+                                                          A1.Chat_Programming_Complete__c = Null;
+                                                            
+                                                        }
+                                                        
                                                     AccountsToUpdate.add(A1);
                                                     }
                                                     Else{System.debug('Service Product type for account is already Reception');}
@@ -87,8 +98,17 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                                                     // Chat Product Type
                                                     // -----------------
                                                     if(A1.Service_Product_Type__c != 'Chat'){
-                                                    A1.Service_Product_Type__c = 'Chat';
                                                     
+                                                        A1.Service_Product_Type__c = 'Chat';
+                                                        A1.Chat__c = TRUE;
+                                                        
+                                                        if(A1.Reception__c == TRUE){
+                                                            
+                                                          A1.Reception__c = FALSE;
+                                                          A1.RS_Programming_Complete__c = Null;
+                                                            
+                                                        }
+                                                        
                                                     AccountsToUpdate.add(A1);
                                                     }
                                                     Else{System.debug('Service Product Type for account is already Chat');}
@@ -99,7 +119,10 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                                                     // Multi-Service Product Type
                                                     // --------------------------
                                                     if(A1.Service_Product_Type__c != 'Multi-Service'){
-                                                    A1.Service_Product_Type__c = 'Multi-Service';
+                                                    
+                                                        A1.Service_Product_Type__c = 'Multi-Service';
+                                                        A1.Reception__c = TRUE;
+                                                        A1.Chat__c = TRUE;
                                                     
                                                     AccountsToUpdate.add(A1);
                                                     }
@@ -114,7 +137,23 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                  System.debug('No Related Subscription for Account ' + A1.Name);
                  
                  If(A1.Service_Product_Type__c != 'No Active Subscription'){
-                 A1.Service_Product_Type__c = 'No Active Subscription';
+                 
+                     A1.Service_Product_Type__c = 'No Active Subscription';
+                     A1.Reception__c = FALSE;
+                     A1.Chat__c = FALSE;
+                     
+                     if(A1.Chat_Programming_Complete__c != Null){
+                       
+                       A1.Chat_Programming_Complete__c = Null;  
+                         
+                     }
+                     
+                     If(A1.RS_Programming_Complete__c != Null){
+                         
+                      A1.RS_Programming_Complete__c = Null;   
+                         
+                     }
+                     
                  AccountsToUpdate.add(A1);
                  }
                  Else{System.debug('Service Product Type Already Null');}
@@ -137,199 +176,6 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
     
     global void finish(Database.BatchableContext bc){
         
-        
-    }
-
-}
-
-// Test Class
-//-----------------------------------------------------------------------
-
-@isTest
-private class CustomerMultiServiceCheckTest {
-    
-@isTest static void AccountSubCheckTest(){
-       
-       List<Account> TestAccountsList = new list<Account>();
-        
-       for(Integer i=0;i<4;i++){
-          
-          System.debug('Test Account ' + i); 
-           
-          TestAccountsList.add(new Account(
-                                           Name = 'Test Account ' + i,
-                                           Customer_Status__c = 'Active',
-                					       HIPAA__c = False,
-                                           OwnerId = userinfo.getUserId()
-                                           )); 
-           
-       }
-    
-       insert TestAccountsList;
-       System.debug('Account List has been inserted');
-    
-       List<Account> UpdateAccountStatusToActive = [Select Id, Name, Customer_status__c From Account Where Name Like '%Test Account%'];
-       
-       List<Account> AccountsToUpdateStatus = new List<Account>();
-    
-       for(Account A1Test : UpdateAccountStatusToActive){
-           
-          System.debug('Account Name: ' + A1Test.Name + ' updating status to active');
-          
-          A1Test.Customer_Status__c = 'Active';
-           
-          AccountsToUpdateStatus.add(A1Test); 
-           
-           
-       }
-       
-       AccountsToUpdateStatus.get(3).Service_Product_Type__c = 'Chat';
-    
-       update AccountsToUpdateStatus;
-        
-        
-       // Generate Subscription Test Data
-       // -------------------------------
-       
-       
-       // Multiservice Subscription
-       // -------------------------
-       Zuora__Subscription__c ActiveZouraSub = new Zuora__Subscription__c(
-                                                                         Zuora__Status__c = 'Active',
-                                                                         Zuora__Account__c = TestAccountsList.get(0).Id
-                                                                         );
-        
-       // Chat Only Subscription
-       // ----------------------
-       Zuora__Subscription__c ChatOnlyZouraSub = new Zuora__Subscription__c(
-                                                                           Zuora__Status__c = 'Active',
-                                                                           Zuora__Account__c = TestAccountsList.get(1).Id
-       																	   );
-        
-       // RS Only Subscription
-       // --------------------
-       Zuora__Subscription__c RSOnlyZouraSub = new Zuora__Subscription__c(
-                                                                           Zuora__Status__c = 'Active',
-                                                                           Zuora__Account__c = TestAccountsList.get(2).Id
-       																	   );
-        
-       // Account with Cancelled Subscription
-       // -----------------------------------
-       Zuora__Subscription__c CancelledZouraSub = new Zuora__Subscription__c(
-                                                                            Zuora__Status__c = 'Cancelled',
-                                                                            Zuora__Account__c = TestAccountsList.get(3).Id
-                                                                            );
-    
-    
-    
-       // Insert Account Test Subscriptions
-       // --------------------------------- 
-       insert ActiveZouraSub;
-       insert ChatOnlyZouraSub;
-       insert RSOnlyZouraSub;
-       insert CancelledZouraSub;
-       
-       
-        
-        
-       // Generate Subscription Products
-       // ------------------------------
-       
-       
-       // Products for Multi Service Account Subscriptions
-       // ------------------------------------------------ 
-       Zuora__SubscriptionProductCharge__c ChatProduct1 = new Zuora__SubscriptionProductCharge__c(
-       																						     Zuora__Account__c = TestAccountsList.get(0).Id,
-                                                                                                 Zuora__Subscription__c = ActiveZouraSub.Id,
-                                                                                                 Zuora__SubscriptionRatePlanChargeName__c = 'Chat Ruby 10 - $30 Off'
-       																							 );
-        
-       Zuora__SubscriptionProductCharge__c RSProduct1 = new Zuora__SubscriptionProductCharge__c(
-       																						   Zuora__Account__c = TestAccountsList.get(0).Id,
-                                                                                               Zuora__Subscription__c = ActiveZouraSub.Id,
-                                                                                               Zuora__SubscriptionRatePlanChargeName__c = 'Call Ruby - 100 Minute Plan'
-                                                                                               );
-        
-      
-       // Products for Chat Only Account Subscriptions
-       // --------------------------------------------
-       Zuora__SubscriptionProductCharge__c ChatProduct2 = new Zuora__SubscriptionProductCharge__c(
-       																							 Zuora__Account__c = TestAccountsList.get(1).Id,
-                                                                                                 Zuora__Subscription__c = ChatOnlyZouraSub.Id,
-                                                                                                 Zuora__SubscriptionRatePlanChargeName__c = 'Chat Ruby 10 - $30 Off'
-       																							 );
-        
-       
-       // Product for RS Only Account Subscription
-       // ----------------------------------------
-       Zuora__SubscriptionProductCharge__c RSProduct2 = new Zuora__SubscriptionProductCharge__c(
-       																						   Zuora__Account__c = TestAccountsList.get(2).Id,
-                                                                                               Zuora__Subscription__c = RSOnlyZouraSub.Id,
-                                                                                               Zuora__SubscriptionRatePlanChargeName__c = 'Call Ruby - 100 Minute Plan'
-                                                                                               );
-        
-       
-       
-       // Insert Subscription Test Product Data
-       // -------------------------------------
-       insert ChatProduct1;
-       insert RSProduct1;
-       insert ChatProduct2;
-       insert RSProduct2;
-    
-    
-       // Generate Test Billing Account Records
-       // -------------------------------------
-       List<Zuora__CustomerAccount__c> TestBillingAccounts = new List<Zuora__CustomerAccount__c>();
-       
-       for(Integer P=0;P<4;P++){
-          
-          TestBillingAccounts.add(
-                                 New Zuora__CustomerAccount__c(
-                                                               Name = 'Test Billing Account ' + P,
-                                                               Zuora__Account__c = UpdateAccountStatusToActive.get(P).Id
-                                 					          )
-         
-          );
-          
-       }
-     
-       insert TestBillingAccounts;
-    
-
-       // Generate Test Payment Records
-       // -----------------------------
-       List<Zuora__Payment__c> TestPaymentList = new List<Zuora__Payment__c>();
-       
-       for(Integer k=0;k<4;k++){
-           
-           TestPaymentList.add(
-                              New Zuora__Payment__c(
-                              						Name = 'Test Payment ' + k,
-													Zuora__Status__c = 'Processed',
-                                                    Zuora__BillingAccount__c = TestBillingAccounts.get(k).Id,
-                                                    Zuora__Account__c = UpdateAccountStatusToActive.get(k).Id
-                                                   )
-           					  );
-           
-           
-       }
-       
-       insert TestPaymentList;
-
-    
-       test.startTest();
-    
-    
-       
-    
-       CustomerMultiServiceCheck MultiServiceCheckTestBatch = new CustomerMultiServiceCheck();
-       
-       Id batchId = Database.executeBatch(MultiServiceCheckTestBatch);    
-        
-       test.stopTest();
-        
-       System.assertEquals(4, [Select count() from Account where Customer_Status__c = 'Active']); 
         
     }
 
