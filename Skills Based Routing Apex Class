@@ -1,0 +1,135 @@
+public class SkillBasedRouting {
+    
+    @InvocableMethod
+    public static void routingCasesToAgents(List<String> caseIds){
+        
+        // List of cases to be worked on
+        // -----------------------------
+        List<Case> casesInserted = [Select Id, Subject From Case Where ID IN : caseIds];
+        
+        // SOQL Query to find Skills for routing
+        // -------------------------------------
+        List<Skill> SkillsForRouting = [Select Id, MasterLabel from Skill];
+        
+        // SOQL Query to find service channel Id based on developer name
+        // -------------------------------------------------------------
+        List<ServiceChannel> GetServiceChannelId = [Select Id, DeveloperName From ServiceChannel Where DeveloperName = 'EmailtoCaseChannel'];
+        
+        // List to add Pending Service Routing Records to for bulk insert
+        // --------------------------------------------------------------
+        List<PendingServiceRouting> PSRRecordstoInsert = New List<PendingServiceRouting>();
+        
+        // List for storing matching skills
+        // --------------------------------
+        List<String> MatchingSkillsIds = new List<String>();
+        
+        // List for Skill Requirements to insert
+        //--------------------------------------
+        List<SkillRequirement> SkillRequirementsToInsert = new List<SkillRequirement>();
+        
+        // List Of Duplicate PSR's to remove
+        List<PendingServiceRouting> DupePSRtoDelete = new List<PendingServiceRouting>();
+        
+        // Create PSR - Pending Service Routing Request
+        //---------------------------------------------
+        For(Case C1 : casesInserted){
+            
+           List<PendingServiceRouting> DoesPSRAlreadyExist = [Select Id, WorkItemId From PendingServiceRouting Where WorkItemId = : C1.Id];
+            
+           for(PendingServiceRouting DupePSR : DoesPSRAlreadyExist){
+                                                                    System.debug('Found Duplicate Pending Service Routing Record for case: ' + C1.Id);
+                                                                    DupePSRtoDelete.add(DupePSR);
+                                                                   }
+           
+           PendingServiceRouting PSR = new PendingServiceRouting(
+                                                                workItemId = C1.Id,
+                                                                RoutingType = 'SkillsBased',
+               												    RoutingPriority = 1,
+                                                                ServiceChannelId = GetServiceChannelId.get(0).Id,
+                                                                IsReadyForRouting = FALSE,
+                                                                CapacityWeight = 1,
+                                                                RoutingModel = 'MostAvailable'
+                                                                );
+            
+           PSRRecordstoInsert.add(PSR);
+           
+           // Find Skills Required for associated Case Based on Subject
+           // ---------------------------------------------------------
+           for(Skill SK1 : SkillsForRouting){
+            
+               if(C1.Subject.Contains(SK1.MasterLabel)){
+                 
+                 System.debug('Found Matching Skill: ' + SK1.MasterLabel);
+                 MatchingSkillsIds.add(SK1.Id);
+                   
+               }
+               Else{
+                   System.debug('Unable to find matching skill for subject: ' + C1.Subject);
+                   }
+               
+           }
+              
+        }
+        
+        // Remove Dupe PSR
+        // ---------------
+        If(!DupePSRtoDelete.isEmpty()){
+                                      System.debug('Removing Duplicate Pending Service Routing Records.');
+                                      Delete DupePSRtoDelete;
+                                      }
+                                      System.debug('No Duplicate Pending Service Routing Records Found.');
+        
+        // Insert List -- DML
+        //-------------------
+        If(!PSRRecordstoInsert.isEmpty()){
+                                         Insert PSRRecordstoInsert;
+                                         }
+                                         Else{
+                                             System.debug('List is empty no PSR records to insert!');
+                                             }
+        
+        
+        // Add Skills to the request for the case
+        //---------------------------------------
+        For(PendingServiceRouting PSR2 : PSRRecordstoInsert) {
+           
+           For(String MSID : MatchingSkillsIds){
+           
+           SkillRequirement SKRQ = new SkillRequirement(
+                                                       SkillId = MSID,
+                                                       RelatedRecordId = PSR2.Id,
+                                                       SKillLevel = 1
+                                                       );
+               
+           SkillRequirementsToInsert.add(SKRQ);
+            
+           }
+         
+        }
+        
+        // Insert List -- DML
+        //-------------------
+        If(!SkillRequirementsToInsert.isEmpty()){
+                                                Insert SkillRequirementsToInsert;
+                                                }
+        									    Else{System.debug('Skill Requirements List is Empty!');}
+
+       
+        
+        // Push it to Queue
+        //-----------------
+        List<PendingServiceRouting> PSRSetReadyForRouting = new List<PendingServiceRouting>();
+        For(PendingServiceRouting PSR3 : PSRRecordstoInsert){
+           
+           PSR3.IsReadyForRouting = TRUE;
+           PSRSetReadyForRouting.add(PSR3);
+            
+        }
+        If(!PSRSetReadyForRouting.isEmpty()){
+                                            Update PSRSetReadyForRouting;
+                                            }
+                                            Else{System.debug('No Pending Service Routing records to Update!');}
+        
+    }
+    
+}
