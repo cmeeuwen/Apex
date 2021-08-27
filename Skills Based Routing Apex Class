@@ -5,7 +5,7 @@ public class SkillBasedRouting {
         
         // List of cases to be worked on
         // -----------------------------
-        List<Case> casesInserted = [Select Id, Subject From Case Where ID IN : caseIds];
+        List<Case> casesInserted = [Select Id, Subject, Description From Case Where ID IN : caseIds];
         
         // SOQL Query to find Skills for routing
         // -------------------------------------
@@ -53,34 +53,52 @@ public class SkillBasedRouting {
             
            PSRRecordstoInsert.add(PSR);
            
-           // Find Skills Required for associated Case Based on Subject
-           // ---------------------------------------------------------
+           // Find Skills Required for associated Case Based on Subject or description
+           // ------------------------------------------------------------------------
            for(Skill SK1 : SkillsForRouting){
             
                if(C1.Subject.Contains(SK1.MasterLabel)){
                  
-                 System.debug('Found Matching Skill: ' + SK1.MasterLabel);
-                 MatchingSkillsIds.add(SK1.Id);
-                   
+                 System.debug('Found Matching Skill from Subject: ' + SK1.MasterLabel);
+                 
+                 If(!MatchingSkillsIds.Contains(SK1.Id)){
+                                                         MatchingSkillsIds.add(SK1.Id);
+                                                        }
+                                                        Else{
+                                                             System.debug('Duplicate Skill: ' + SK1.Id); 
+                                                            }
+                    
+                       
                }
-               Else{
-                   System.debug('Unable to find matching skill for subject: ' + C1.Subject);
+               else if(C1.Description.Contains(SK1.MasterLabel)){
+                   
+                 System.debug('Found Matching Skill from Description: ' + SK1.MasterLabel);
+                   
+                 If(!MatchingSkillsIds.Contains(SK1.Id)){
+                                                         MatchingSkillsIds.add(SK1.Id);  
+                                                        }
+                                                        Else{
+                                                             System.debug('Duplicate Skill: ' + SK1.Id);
+                                                            }
+               }
+               else{
+                    System.debug('Unable to find matching skill for case: ' + C1.Id);
                    }
                
            }
               
         }
         
-        // Remove Dupe PSR
-        // ---------------
+        // Remove Duplicate Pending Service Routing Records
+        // ------------------------------------------------
         If(!DupePSRtoDelete.isEmpty()){
                                       System.debug('Removing Duplicate Pending Service Routing Records.');
                                       Delete DupePSRtoDelete;
                                       }
                                       System.debug('No Duplicate Pending Service Routing Records Found.');
         
-        // Insert List -- DML
-        //-------------------
+        // Bulk Insert Pending Service Routing Record List -- DML
+        //-------------------------------------------------------
         If(!PSRRecordstoInsert.isEmpty()){
                                          Insert PSRRecordstoInsert;
                                          }
@@ -107,8 +125,8 @@ public class SkillBasedRouting {
          
         }
         
-        // Insert List -- DML
-        //-------------------
+        // Bulk Insert Skill Requirements Records List -- DML
+        //---------------------------------------------------
         If(!SkillRequirementsToInsert.isEmpty()){
                                                 Insert SkillRequirementsToInsert;
                                                 }
@@ -116,8 +134,8 @@ public class SkillBasedRouting {
 
        
         
-        // Push it to Queue
-        //-----------------
+        // Push Pending Service Routing Records to work Items Queue
+        //---------------------------------------------------------
         List<PendingServiceRouting> PSRSetReadyForRouting = new List<PendingServiceRouting>();
         For(PendingServiceRouting PSR3 : PSRRecordstoInsert){
            
