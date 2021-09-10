@@ -1,0 +1,418 @@
+public class TasksTimeZoneSync {
+    
+    //--------------------------------------------------------------
+    // Name: TaskTimeZoneSync
+    // 
+    // Synopsis: This Class Aligns a Tasks Timezone based on the
+    //           Timezone of related Leads, Contacts, or Accounts.
+    //           This Class is invoked by the Task Master Processes.
+    //           
+    // Scenarios:
+    // 
+    //   1. If Task is related to just a Lead or Contact. Then
+    //      Task will use that timezone.
+    //      
+    //   2. If Task is related to just an Account. Then Task
+    //      will use the related Account's Timezone.
+    //      
+    //   3. If Task is relate to both an Account and Lead or
+    //      Contact. Then the Task will prioritize and use
+    //      the related Lead or Contacts Timezone.
+    //           
+    // Written by: Chris Meeuwen - Chris.Meeuwen@ruby.com
+    // 
+    // Date: 07/16/2021
+    //
+    //--------------------------------------------------------------
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+        String RecordIdentifier = S1.get(0);
+        
+        TasksTimeZoneSync.RunTimezoneSync(RecordIdentifier);
+                
+    }
+    
+    public static void RunTimezoneSync(String RecordIdentifier){
+        
+        List<Task> TasksToUpdate = new List<Task>();
+        
+        List<Task> InvokedTask = [Select Id, WhoId, WhatId, Time_zone__c From Task Where Id = :RecordIdentifier Limit 1];
+        
+        for(Task T1 : InvokedTask){
+        
+        // If Related to field is not null
+        // -------------------------------
+        if(T1.WhatId != Null && T1.WhoId == Null && T1.Time_Zone__c == Null){
+            
+          String IsThisAnAccount = T1.WhatId;
+          
+          Boolean LRA = IsThisAnAccount.startsWith('001');
+            
+          if(LRA == True){
+              
+            List<Account> GetRelatedAccount = [Select Id, Time_zone__c, Name From Account Where Id = :T1.WhatId AND Time_Zone__c != Null Limit 1];
+            
+            if(!GetRelatedAccount.isEmpty()){  
+              
+              System.debug('Task is related to account ' + GetRelatedAccount.get(0).Name);  
+                
+              String AccountsTimezone = GetRelatedAccount.get(0).Time_zone__c;
+              
+              if(AccountsTimezone == 'Eastern'){
+                
+                System.debug('Timezone on related account is Eastern');  
+                T1.Time_Zone__c = '1 - Eastern';
+                TasksToUpdate.add(T1);
+                  
+              }
+              Else if(AccountsTimezone == 'Central'){
+                
+                System.debug('Timezone on related account is Central');  
+                T1.Time_Zone__c = '2 - Central';
+                TasksToUpdate.add(T1);
+                  
+              }
+              Else if(AccountsTimezone == 'Mountain' || AccountsTimezone == 'Arizona'){
+                
+                System.debug('Timezone on related account is Mountain');  
+                T1.Time_Zone__c = '3 - Mountain';
+                TasksToUpdate.add(T1);
+                  
+              }
+              Else if(AccountsTimezone == 'Pacific'){
+                
+                System.debug('Timezone on related account is Pacific');  
+                T1.Time_Zone__c = '5 - Pacific';
+                TasksToUpdate.add(T1); 
+                  
+              }
+              Else if(AccountsTimezone == 'Hawaii'){
+                
+                System.debug('Timezone on related account is Hawaii');  
+                T1.Time_Zone__c = '6 - Hawaii';
+                TasksToUpdate.add(T1); 
+                     
+              }
+              Else{
+                  System.debug('Unable to determine Related accounts Time Zone');
+                  }
+            
+            }
+            Else{System.debug('Account is either missing its timezone or unable to find account with query');}
+          
+          }
+          Else{
+               
+               System.debug('Task not related to an account');
+              
+          }  
+            
+        }
+        
+        // If Name field is not null
+        // -------------------------
+        Else if(T1.WhoId != Null && T1.WhatId == Null && T1.Time_Zone__c == Null){
+            
+            // Checks WhoId to see if related to a lead or contact
+            // ---------------------------------------------------
+            String IsThisALeadOrContact = T1.WhoId;
+        
+            Boolean LRL = IsThisALeadOrContact.startsWith('00Q');
+       
+            Boolean LRC = IsThisALeadOrContact.startsWith('003');
+            
+            // If related to Lead
+            // ------------------
+            if(LRL == True){
+                
+              List<Lead> GetRelatedLead = [Select Id, Time_Zone__c From Lead Where Id = :T1.WhoId And Time_Zone__c != Null Limit 1];
+              
+              if(!GetRelatedLead.isEmpty()){
+                  
+                System.debug('Task is related to Lead ' + GetRelatedLead.get(0).Id);  
+                  
+                String LeadTimeZone = GetRelatedLead.get(0).Time_Zone__c;
+                
+                if(LeadTimeZone == '1 - Eastern'){
+                  
+                  System.debug('Timezone on related Lead is Eastern');  
+                  T1.Time_Zone__c = '1 - Eastern';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(LeadTimeZone == '2 - Central'){
+                    
+                  System.debug('Timezone on related Lead is Central');
+                  T1.Time_Zone__c = '2 - Central';
+                  TasksToUpdate.add(T1);
+                      
+                }
+                Else if(LeadTimeZone == '4 - Arizona'){
+                    
+                  System.debug('Timezone on related Lead is Arizona');
+                  T1.Time_Zone__c = '4 - Arizona';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(LeadTimeZone == '3 - Mountain'){
+                    
+                  System.debug('Timezone on related Lead is Mountain');
+                  T1.Time_Zone__c = '3 - Mountain';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(LeadTimeZone == '5 - Pacific'){
+                    
+                  System.debug('Timezone on related Lead is Pacific');
+                  T1.Time_Zone__c = '5 - Pacific';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(LeadTimeZone == '6 - Hawaii'){
+                    
+                  System.debug('Timezone on related Lead is Hawaii');
+                  T1.Time_Zone__c = '6 - Hawaii';
+                  TasksToUpdate.add(T1);  
+                    
+                }
+                Else if(LeadTimeZone == '7 - Alaska'){
+                    
+                  System.debug('Timezone on related Lead is Alaska');
+                  T1.Time_Zone__c = '7 - Alaska';
+                  TasksToUpdate.add(T1);  
+                    
+                }
+                Else if(LeadTimeZone == 'Interational'){
+                    
+                  System.debug('Timezone on related Lead is Interational');
+                  T1.Time_Zone__c = 'International';
+                  TasksToUpdate.add(T1);  
+                    
+                }
+                Else if(LeadTimeZone == '--------------'){
+                                 
+                  System.debug('Timezone on related Lead is --------------');
+                  T1.Time_Zone__c = '--------------';
+                  TasksToUpdate.add(T1);  
+                    
+                }
+                Else{System.debug('Unable to determine related Leads Timezone');}
+                  
+              }
+              Else{System.debug('Lead is either missing its timezone or unable to find Lead with query');}
+                
+            }
+            // If related to Contact
+            // ---------------------
+            if(LRC == True){
+                
+              List<Contact> GetRelatedContact = [Select Id, Time_Zone__c From Contact Where Id = :T1.WhoId AND Time_Zone__c != Null Limit 1];
+              
+              if(!GetRelatedContact.isEmpty()){
+                
+                System.debug('Task is related to Contact ' + GetRelatedContact.get(0).Id);  
+                
+                String ContactTimeZone = GetRelatedContact.get(0).Time_Zone__c;
+                  
+                if(ContactTimeZone == '1 - Eastern'){
+                  
+                  System.debug('Timezone on related Contact is Eastern');
+                  T1.Time_Zone__c = '1 - Eastern';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '2 - Central'){
+                    
+                  System.debug('Timezone on related Contact is Central');
+                  T1.Time_Zone__c = '2 - Central';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '3 - Mountain'){
+                    
+                  System.debug('Timezone on related Contact is Mountain');
+                  T1.Time_Zone__c = '3 - Mountain';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '4 - Arizona'){
+                    
+                  System.debug('Timezone on related Contact is Arizona');
+                  T1.Time_Zone__c = '4 - Arizona';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '5 - Pacific'){
+                    
+                  System.debug('Timezone on related Contact is Pacific');
+                  T1.Time_Zone__c = '5 - Pacific';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '6 - Hawaii'){
+                    
+                  System.debug('Timezone on related Contact is Hawaii');
+                  T1.Time_Zone__c = '6 - Hawaii';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '7 - Alaska'){
+                    
+                  System.debug('Timezone on related Contact is Alaska');
+                  T1.Time_Zone__c = '7 - Alaska';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == 'Interational'){
+                    
+                  System.debug('Timezone on related Contact is Alaska');
+                  T1.Time_Zone__c = 'International';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '---------------'){
+                    
+                  System.debug('Timezone on related Contact is ---------------');
+                  T1.Time_Zone__c = '---------------';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else{System.debug('Unable to determine related Contacts Timezone');}
+                  
+              }
+              Else{System.debug('Contact is either missing its timezone or unable to find Contact with query');}
+                
+            }
+            
+            
+            
+        }
+        
+        // If Name and Related To not null
+        // 
+        // contact Timezone takes priority
+        // -------------------------------
+        Else if(T1.WhoId != Null && T1.WhatId != Null && T1.Time_Zone__c == Null){
+            
+            // Checks WhoId to see if related to a lead or contact
+            // ---------------------------------------------------
+            String IsThisALeadOrContact = T1.WhoId;
+       
+            Boolean LRC = IsThisALeadOrContact.startsWith('003');
+            
+            
+            // If related to Contact
+            // ---------------------
+            if(LRC == True){
+                
+              List<Contact> GetRelatedContact = [Select Id, Time_Zone__c From Contact Where Id = :T1.WhoId AND Time_Zone__c != Null Limit 1];
+              
+              if(!GetRelatedContact.isEmpty()){
+                  
+                System.debug('Task is related to Contact ' + GetRelatedContact.get(0).Id);
+                
+                String ContactTimeZone = GetRelatedContact.get(0).Time_Zone__c;
+                  
+                if(ContactTimeZone == '1 - Eastern'){
+                  
+                  System.debug('Timezone on related Contact is Eastern');
+                  T1.Time_Zone__c = '1 - Eastern';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '2 - Central'){
+                    
+                  System.debug('Timezone on related Contact is Central');
+                  T1.Time_Zone__c = '2 - Central';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '3 - Mountain'){
+                    
+                  System.debug('Timezone on related Contact is Mountain');
+                  T1.Time_Zone__c = '3 - Mountain';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '4 - Arizona'){
+                    
+                  System.debug('Timezone on related Contact is Arizona');
+                  T1.Time_Zone__c = '4 - Arizona';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '5 - Pacific'){
+                    
+                  System.debug('Timezone on related Contact is Pacific');
+                  T1.Time_Zone__c = '5 - Pacific';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '6 - Hawaii'){
+                    
+                  System.debug('Timezone on related Contact is Hawaii');
+                  T1.Time_Zone__c = '6 - Hawaii';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '7 - Alaska'){
+                    
+                  System.debug('Timezone on related Contact is Alaska');
+                  T1.Time_Zone__c = '7 - Alaska';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == 'Interational'){
+                    
+                  System.debug('Timezone on related Contact is Alaska');
+                  T1.Time_Zone__c = 'International';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else if(ContactTimeZone == '---------------'){
+                    
+                  System.debug('Timezone on related Contact is ---------------');
+                  T1.Time_Zone__c = '---------------';
+                  TasksToUpdate.add(T1);
+                    
+                }
+                Else{System.debug('Unable to determine related Contacts Timezone');}
+                  
+              }
+              Else{System.debug('Contact is either missing its timezone or unable to find Contact with query');}
+                
+            }
+            
+            
+            
+            
+        }
+        
+        // If unable to find related account or contact
+        // --------------------------------------------
+        Else{
+            
+            System.debug('Unable to determine related Lead, Contact, or Account');
+            
+        }
+            
+    }
+    
+    // If task list is not empty Bulk update
+    // -------------------------------------
+    if(!TasksToUpdate.isEmpty()){
+      
+        
+      update TasksToUpdate;  
+        
+    }
+    Else{System.debug('No Tasks to update');}
+        
+        
+        
+        
+    }
+
+}
