@@ -48,11 +48,11 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                                                                                                                           OR Zuora__SubscriptionRatePlanChargeName__c Like '%Minutes%' OR Zuora__SubscriptionRatePlanChargeName__c Like '%Minute%'
                                                                                                                           OR Zuora__SubscriptionRatePlanChargeName__c Like '%Chatbot%')];
                                               
-                							  Integer ChatProductCount = 0;
+                                Integer ChatProductCount = 0;
                                                   
                                               Integer RSProductCount = 0;                              
                 
-                   							  for(Zuora__SubscriptionProductCharge__c ZSPC1 : GetSubscriptionRelatedProducts){
+                                   for(Zuora__SubscriptionProductCharge__c ZSPC1 : GetSubscriptionRelatedProducts){
                                                   
                                                  System.debug('Account ' + A1.Name + ' Has a Subscription Product of ' + ZSPC1.Zuora__SubscriptionRatePlanChargeName__c);
                                                   
@@ -129,7 +129,7 @@ Global class CustomerMultiServiceCheck implements Database.Batchable<sObject>{
                                                     Else{System.debug('Service Product Type for account is already Multi-Service');}
                                                     
                                                 }
-                							    Else{System.debug('Unable to determine Service Product Type');}
+                                  Else{System.debug('Unable to determine Service Product Type');}
                                               
                                              }
             Else{
