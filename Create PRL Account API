@@ -1,0 +1,903 @@
+public class CallPRLAccountCreate {
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+        CallPRLAccountCreate.GetInfoToPostToPrl(S1);          
+                
+    }
+    
+    
+    public static void GetInfoToPostToPrl(List<String> S1){
+        
+
+        
+        for(String RelatedOpportunity : S1){
+            
+           // JSON String Templates
+           // 
+           //  1. Templates to store base json string
+           // 
+           //  2. Placeholders in template will be replaced before callout
+           //  
+           //  -----------------------------------------------------------
+           //  
+           //  Placeholder Strings
+           //  -------------------
+           //  AccountNamePlaceHolder - Added
+           //  PromoCodePlaceHolder - Added
+           //  HIPAAPlaceholder - Added
+           //  StartDatePlaceholder - Added
+           //  AccountWebsitePlaceholder - Added
+           //  AccountPhonePlaceholder - Added
+           //  AccountFaxPlaceholder - Added
+           //  AccountPublishedNumberPH - Added
+           //  AboutCompanyPlaceholder - Added
+           //  ContactFirstNamePH - Added
+           //  ContactLastNamePH - Added
+           //  ContactEmailPH - Added
+           //  ContactPhonePH - Added
+           //  BillingStreetPH - Added
+           //  BillingCityPH - Added
+           //  BillingStatePH - Added
+           //  BillingZipPH - Added
+           //  BillingCountryPH - Added
+           //  OkToGiveEmailPH - Added
+           //  OkToGivePhonePH - Added
+           //  OkTogiveAddressPH - Added
+           //  SFAccountIdPH - Added
+           //  GreetingPH - Added
+           //  RoboCallPH - Added
+           //  CompanyBusinessHoursPH - Added
+           //  TimeZonePlaceholder - Added
+           // 
+           // ---------------------
+            
+           String JSONMARKUPTemplateRS = '{"account_name": "AccountNamePlaceHolder","industry_name": "Attorney/Legal","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "+1'+ 'AccountPhonePlaceholder' +'","company_fax_number": "AccountFaxPlaceholder",' +
+                                         '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "+1'+ 'AccountPublishedNumberPH' +'","company_about": "AboutCompanyPlaceholder",' +
+                                         '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": "ContactEmailPH","owner_phone_number": "+1'+ 'ContactPhonePH' +'",' +
+                                         '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                         '"billing_postal_code": "BillingZipPH","billing_country_code": "BillingCountryPH","billing_ok_to_give_out_address": OkTogiveAddressPH,"external_account_id": "SFAccountIdPH","request_username": "'+ userinfo.getUserName() +'",' +
+                                         '"receptionist_service": {"service_billing_account_id": "abc123","service_billing_subscription_id": "abc123-01","greeting": "GreetingPH",' +
+                                         '"robocall_blocking": '+ 'RoboCallPH' +'}}';
+            
+           String JSONMARKUPTemplateChat = '{"account_name": "AccountNamePlaceHolder","industry_name": "Attorney/Legal","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "+1'+ 'AccountPhonePlaceholder' +'","company_fax_number": "AccountFaxPlaceholder",' +
+                                           '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "+1'+ 'AccountPublishedNumberPH' +'","company_about": "AboutCompanyPlaceholder",' +
+                                           '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": "ContactEmailPH","owner_phone_number": "+1'+ 'ContactPhonePH' +'",' +
+                                           '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": true,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                           '"billing_postal_code": "BillingZipPH","billing_country_code": "US","billing_ok_to_give_out_address": true,"external_account_id": "SFAccountIdPH","request_username": "'+ userinfo.getUserName() +'",' +
+                                           '"chat_full_service": {"service_billing_account_id": "abc123","service_billing_subscription_id": "abc123-02"}}';
+           
+            
+           String JSONMARKUPTemplateMulti = '{"account_name": "AccountNamePlaceHolder","industry_name": "Attorney/Legal","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "+1'+ 'AccountPhonePlaceholder' +'","company_fax_number": "AccountFaxPlaceholder",' +
+                                            '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "+1'+ 'AccountPublishedNumberPH' +'","company_about": "AboutCompanyPlaceholder",' +
+                                            '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": "ContactEmailPH","owner_phone_number": "+1'+ 'ContactPhonePH' +'",' +
+                                            '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                            '"billing_postal_code": "BillingZipPH","billing_country_code": "BillingCountryPH","billing_ok_to_give_out_address": OkTogiveAddressPH,"external_account_id": "SFAccountIdPH","request_username": "'+ userinfo.getUserName() +'",' +
+                                            '"receptionist_service": {"service_billing_account_id": "abc123","service_billing_subscription_id": "abc123-01","greeting": "GreetingPH",' +
+                                            '"robocall_blocking": '+ 'RoboCallPH' +'}, "chat_full_service": {"service_billing_account_id": "abc123","service_billing_subscription_id": "abc123-02"}}';
+
+
+                 
+            
+           System.debug('Locating Account Related with Opportunity id: ' + RelatedOpportunity);
+           
+           // SOQL Query for Assocaited Opportunity
+           // -------------------------------------
+           List<Opportunity> GetOpportunityInfo = [Select Id, AccountId, Greeting__c, Product__c, About_Company__c, Business_Hours__c 
+                                                   From Opportunity 
+                                                   Where Id = :RelatedOpportunity];
+            
+           String OpProductType = GetOpportunityInfo.get(0).Product__c;
+            
+           System.debug('Opportunity Product Type of: ' + OpProductType);
+            
+           String GetAccountId = GetOpportunityInfo.get(0).AccountId;
+            
+           System.debug('Account Id is: ' + GetAccountId);
+           
+           // SOQL Query for Associated Account
+           //---------------------------------- 
+           List<Account> GetAccountInfo = [Select Id, Industry, BillingAddress, BillingCity, BillingCountry, BillingState, BillingStreet, BillingPostalCode, Name, Contact__c,
+                                           Promo_Code__c, HIPAA__c, Website, Phone, Fax, Using_Robocall_filtering__c, Ok_to_give_out_address__c
+                                           From Account 
+                                           Where Id = :GetAccountId];
+            
+          // SOQL Query for Associated Onboarding
+          // ------------------------------------
+             
+             System.debug('Related Contact Id: ' + GetAccountInfo.get(0).Contact__c);
+               
+             // SOQL Query for Related Contact
+             // ------------------------------
+             List<Contact> GetContactInfo = [Select Id, FirstName, LastName, Phone, Email, Time_Zone__c, OK_to_give_out_email_address__c, OK_to_give_out_phone__c
+                                             From Contact 
+                                             Where Id = : GetAccountInfo.get(0).Contact__c];
+               
+             System.debug('Sending Callout for PRL Account Creation for new account: ' + GetAccountInfo.get(0).Name);
+             
+             String SFAccountId = GetAccountInfo.get(0).Id; 
+             
+             //         Data Normalization
+             // 
+             // 1. Corrects all caps entries for 
+             //    Street Addresses.
+             // 
+             // 2. Correct format of a website
+             //    entry.
+             //    
+             // 3. Replace Dashes with periods
+             //    for published numbers and
+             //    faxes
+             // 
+             // 
+             //===========================================================================================================================================//
+             
+             // Format Account Phone
+             // --------------------
+             String AccountPhone = GetAccountInfo.get(0).Phone;
+             String ConvertListtoString = AccountPhone.toLowerCase();
+             System.debug('Phone number SF unformatted: ' + AccountPhone);
+             
+             String AccountPhoneRemoveWhiteSpace = ConvertListtoString.deleteWhitespace();
+             String AccountPhoneRemoveFirstPeren = AccountPhoneRemoveWhiteSpace.replace('(', '');
+             String AccountPhoneRemoveSecondPeren = AccountPhoneRemoveFirstPeren.replace(')', '');
+             String AccountReplaceDashesWithPeriods = AccountPhoneRemoveSecondPeren.replace('-', '');
+             System.debug('Formatted Phone Number: ' + AccountReplaceDashesWithPeriods + ' Adding to JSON String');
+             // RS JSON String
+             // --------------
+             String AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('AccountPhonePlaceholder', AccountReplaceDashesWithPeriods);
+             String AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('AccountPublishedNumberPH', AccountReplaceDashesWithPeriods);
+             // Chat JSON String
+             // ----------------
+             String AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('AccountPhonePlaceholder', AccountReplaceDashesWithPeriods);
+             String AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('AccountPublishedNumberPH', AccountReplaceDashesWithPeriods);
+            
+             // Multi Service JSON String
+             // -------------------------
+             String AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('AccountPhonePlaceholder', AccountReplaceDashesWithPeriods);
+             String AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('AccountPublishedNumberPH', AccountReplaceDashesWithPeriods);
+              
+             //=========================================================================================================================================//
+            
+             // Format Contact Phone
+             // -------------------------------------------------------------------------------------------------------------------------
+             String ContactPhone = GetContactInfo.get(0).Phone;
+             String ContactPhoneConvertToString = ContactPhone.toLowerCase();
+             System.debug('Contact Phone number SF Unformatted: ' + ContactPhone);
+             
+             String ContactPhoneRemoveWhiteSpace = ContactPhoneConvertToString.deleteWhitespace();
+             String ContactPhoneRemoveFirstPeren = ContactPhoneRemoveWhiteSpace.replace('(', '');
+             String ContactPhoneRemoveSecondPeren = ContactPhoneRemoveFirstPeren.replace(')', '');
+             String ContactPhoneReplaceDashes = ContactPhoneRemoveFirstPeren.replace('-', '');
+             System.debug('Contact Phone number formatted: ' + ContactPhoneReplaceDashes + ' Adding to JSON String');
+             // RS JSON String
+             // --------------
+             String AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', ContactPhoneReplaceDashes);
+             // Chat JSON String
+             // ---------------- 
+             String AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', ContactPhoneReplaceDashes);
+            
+             // Multi Service JSON String
+             // -------------------------
+             String AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', ContactPhoneReplaceDashes);
+            
+             //========================================================================================================================================//
+             
+             // Format Website - PRL doesn't accept this formatting (Built for when they want all websites with www.website.com format)
+             //-------------------------------------------------------------------------------------------------------------------------
+             String AccountWebsite = GetAccountInfo.get(0).Website;
+             String ConvertWebsiteListValueToString = AccountWebsite.toLowerCase();
+             System.debug('Website SF unformatted: ' + AccountWebsite);
+             
+             String WebsiteRemoveHTTP = ConvertWebsiteListValueToString.replace('http', '');
+             String WebsiteRemoveSAndDoubleColon = WebsiteRemoveHTTP.replace('s://', '');
+             String WebsiteRemoveDoubleColonAndSlashes = WebsiteRemoveSAndDoubleColon.replace('://', '');
+             System.debug('Formatted website: ' + WebsiteRemoveDoubleColonAndSlashes);
+             // RS JSON String
+             // --------------
+             String AddAccountWebsiteToJSON = AddContactPhoneToJSON.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+             // Chat JSON String
+             // ----------------
+             String AddAccountWebsiteToJSONChat = AddContactPhoneToJSONChat.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+            
+             // Multi Service JSON String
+             // -------------------------
+             String AddAccountWebsiteToJSONMulti = AddContactPhoneToJSONMulti.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+              
+             
+             //========================================================================================================================================//
+
+             // Start Date Zulu format
+             // ----------------------
+             DateTime TodaysDateTime = datetime.now();
+             String ConvertDateTimeToString = string.valueOf(TodaysDateTime.addHours(8));
+             String AddFirstChar = ConvertDateTimeToString.replaceFirst(' ', 'T');
+             System.debug(AddFirstChar + 'Z');
+             // RS JSON String
+             // --------------
+             String AddStartDate = AddAccountWebsiteToJSON.replace('StartDatePlaceholder', AddFirstChar);
+             System.debug('Adding Start Date: ' + AddFirstChar + 'Z');
+             // Chat JSON String
+             // ----------------
+             String AddStartDateChat = AddAccountWebsiteToJSONChat.replace('StartDatePlaceholder', AddFirstChar);
+            
+             // Multi Service JSON String
+             String AddStartDateMulti = AddAccountWebsiteToJSONMulti.replace('StartDatePlaceholder', AddFirstChar);
+             
+             //========================================================================================================================================//
+            
+             // Format Account FAX
+             // ----------------------------------------------------------------------------------------
+             
+             String AddAccountFax = '';
+             String AddAccountFaxChat = '';
+             String AddAccountFaxMulti = '';
+             
+             If(GetAccountInfo.get(0).Fax != Null){
+             String AccountFax = GetAccountInfo.get(0).Fax;
+             String AccountFaxConvertToString = AccountFax.toLowerCase();
+             System.debug('Account Fax Number Unformatted: ' + AccountFaxConvertToString);
+             
+             String FaxRemoveWhitespace = AccountFaxConvertToString.deleteWhitespace();
+             String StripPlusOne = FaxRemoveWhitespace.replace('+1', '');
+             String RemoveFirstPeren = StripPlusOne.replace('(', '');
+             String RemoveLastPeren = RemoveFirstPeren.replace(')', '');
+             String RemoveDashesFromFax = RemoveLastPeren.replace('-', '');
+             System.debug('Formatted Fax Number: ' + RemoveDashesFromFax);
+             
+             //RS JSON String
+             //--------------
+             AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder', '+1' + RemoveDashesFromFax);
+             System.debug('Adding Fax: +1' + RemoveDashesFromFax);
+             
+             // Chat JSON String
+             // ----------------
+             AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '+1' + RemoveDashesFromFax);
+                 
+             // Multi Service JSON String
+             // -------------------------
+             AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '+1' + RemoveDashesFromFax);
+                 
+             }
+             Else{
+                 AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder','');
+                 AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '');
+                 AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '');
+                 System.debug('Account Fax is Null');
+                 }
+            
+             // Boolean Field Logic
+             //-----------------------------------------------------------------------------------------
+             
+             // RS - HIPAA
+             // ----------------------------------------------------------------------------------------
+             String FlagHippa = '';
+             String FlagHippaChat = '';
+             String FlagHippaMulti = '';
+            
+             if(GetAccountInfo.get(0).HIPAA__c == True){
+               
+               FlagHippa = AddAccountFax.replace('HIPAAPlaceholder', 'true');
+               FlagHippaChat = AddAccountFaxChat.replace('HIPAAPlaceholder', 'true');
+               FlagHippaMulti = AddAccountFaxMulti.replace('HIPAAPlaceholder', 'true');
+                
+             }
+             Else{
+                 FlagHippa = AddAccountFax.replace('HIPAAPlaceholder', 'false');
+                 FlagHippaChat = AddAccountFaxChat.replace('HIPAAPlaceholder', 'false');
+                 FlagHippaMulti = AddAccountFaxMulti.replace('HIPAAPlaceholder', 'false');
+                 }
+             
+             
+             String FlagUsingRoboCall = '';
+             String FlagUsingRoboCallChat = '';
+             String FlagUsingRoboCallMulti = '';
+            
+             If(GetAccountInfo.get(0).Using_Robocall_filtering__c == True){
+                 
+               FlagUsingRoboCall = FlagHippa.replace('RoboCallPH', 'true');
+               FlagUsingRoboCallChat = FlagHippaChat.replace('RoboCallPH', 'true');
+               FlagUsingRoboCallMulti = FlagHippaMulti.replace('RoboCallPH', 'true');
+                 
+             }
+             Else{
+                 
+               FlagUsingRoboCall = FlagHippa.replace('RoboCallPH', 'false');
+               FlagUsingRoboCallChat = FlagHippaChat.replace('RoboCallPH', 'false');
+               FlagUsingRoboCallMulti = FlagHippaMulti.replace('RoboCallPH', 'false');
+                 
+             }
+             
+
+            
+             //=======================================================================================================================================//
+             
+             
+             // Company info
+             // ----------------------------------------------------------------------------------------
+             
+             // RS - Company Name
+             // -----------------
+             String AccountCompanyName = GetAccountInfo.get(0).Name;
+             String AddCompanyName = FlagUsingRoboCall.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // Chat - Company Name
+             // -------------------
+             String AddCompanyNameChat = FlagUsingRoboCallChat.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // Multi - Company Name
+             // --------------------
+             String AddCompanyNameMulti = FlagUsingRoboCallMulti.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // RS - Billing Street
+             // --------------------
+             String GetBillingStreet = GetAccountInfo.get(0).BillingStreet;
+             String AddBillingStreet = AddCompanyName.replace('BillingStreetPH', GetBillingStreet);
+             
+             // Chat - Billing Street
+             // ---------------------- 
+             String AddBillingStreetChat = AddCompanyNameChat.replace('BillingStreetPH', GetBillingStreet);
+            
+             // Multi - Billing Street
+             // ----------------------
+             String AddBillingStreetMulti = AddCompanyNameMulti.replace('BillingStreetPH', GetBillingStreet);
+            
+             // RS - Billing City
+             // -----------------
+             String GetBillingCity = GetAccountInfo.get(0).BillingCity;
+             System.debug('The Billing City is: ' + GetBillingCity);
+             String AddBillingCity = AddBillingStreet.replace('BillingCityPH', GetBillingCity);
+             
+             // Chat - Billing City
+             // -------------------
+             String AddBillingCityChat = AddBillingStreetChat.replace('BillingCityPH', GetBillingCity);
+            
+             // Multi - Billing City
+             // --------------------
+             String AddBillingCityMulti = AddBillingStreetMulti.replace('BillingCityPH', GetBillingCity);
+            
+             // RS - Billing State
+             // ------------------
+             String GetBillingState = GetAccountInfo.get(0).BillingState;
+             String AddBillingState = AddBillingCity.replace('BillingStatePH', GetBillingState);
+            
+             // Chat - Billing State
+             // --------------------
+             String AddBillingStateChat = AddBillingCityChat.replace('BillingStatePH', GetBillingState);
+            
+             // Multi - Billing State
+             // ---------------------
+             String AddBillingStateMulti = AddBillingCityMulti.replace('BillingStatePH', GetBillingState);
+            
+             // RS - Billing Zip
+             // ----------------
+             String GetBillingZip = GetAccountInfo.get(0).BillingPostalCode;
+             String AddBillingZip = AddBillingState.replace('BillingZipPH', GetBillingZip);
+            
+             // Chat - Billing Zip
+             // ------------------
+             String AddBillingZipChat = AddBillingStateChat.replace('BillingZipPH', GetBillingZip);
+            
+             // Multi - Billing Zip
+             // -------------------
+             String AddBillingZipMulti = AddBillingStateMulti.replace('BillingZipPH', GetBillingZip);
+             
+             //=======================================================================================================================================//
+              
+             // Billing Country Logic
+             // ---------------------
+             String AddAccountBillingCountry = '';
+             String AddAccountBillingCountryChat = '';
+             String AddAccountBillingCountryMulti = '';
+             
+             If(GetAccountInfo.get(0).BillingCountry == 'United States' || GetAccountInfo.get(0).BillingCountry == 'USA' || GetAccountInfo.get(0).BillingCountry == 'US'){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'US');
+                 
+             }             
+             Else If(GetAccountInfo.get(0).BillingCountry == 'Canada' || GetAccountInfo.get(0).BillingCountry == 'CAN' || GetAccountInfo.get(0).BillingCountry == 'CA'){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'CA');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'CA');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'CA');
+                 
+             }
+             Else If(GetAccountInfo.get(0).BillingCountry == 'Mexico'){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'MX');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'MX');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'MX');
+                     
+             }
+             Else{
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'US');
+                 
+             }
+            
+             // About Company Logic
+             // --------------------------------------------------------------------------------------------------------------------------------------
+            
+             String AddAboutCompany = '';
+             String AddAboutCompanyChat = '';
+             String AddAboutCompanyMulti = '';
+            
+             If(GetOpportunityInfo.get(0).About_Company__c != Null){
+                 
+               // RS - About Company
+               // ------------------
+               String GetAboutCompany = GetOpportunityInfo.get(0).About_Company__c;
+               System.debug('There are: ' + GetAboutCompany.countMatches(' ') + ' lines in the about company textarea');
+               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', GetAboutCompany);
+            
+               // Chat - About Company
+               // --------------------
+               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', GetAboutCompany);
+                 
+               // Multi - About Company
+               // ---------------------
+               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', GetAboutCompany);
+                   
+             }
+             Else{
+                 
+               // RS - About Company
+               // ------------------
+               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', '');
+            
+               // Chat - About Company
+               // --------------------
+               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', '');
+                 
+               // Multi - About Company
+               // ---------------------
+               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', '');
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+             
+            
+             // Promo Code Logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+            
+             String AddPromoCode = '';
+             String AddPromoCodeChat = '';
+             String AddPromoCodeMulti = '';
+            
+             If(GetAccountInfo.get(0).Promo_Code__c != Null){
+                 
+                 String GetPromoCode = GetAccountInfo.get(0).Promo_Code__c;
+                 
+                 // RS - Promo Code
+                 // ---------------
+                 AddPromoCode = AddAboutCompany.replace('PromoCodePlaceHolder', GetPromoCode);
+                 
+                 // Chat - Promo Code
+                 // -----------------
+                 AddPromoCodeChat = AddAboutCompanyChat.replace('PromoCodePlaceHolder', GetPromoCode);
+                 
+                 // Multi - Promo Code
+                 // ------------------
+                 AddPromoCodeMulti = AddAboutCompanyMulti.replace('PromoCodePlaceHolder', GetPromoCode);
+                   
+             }
+             Else{
+                 
+                 // RS - Promo Code
+                 // ---------------
+                 AddPromoCode = AddAboutCompany.replace('PromoCodePlaceHolder', '');
+                 
+                 // Chat - Promo Code
+                 // -----------------
+                 AddPromoCodeChat = AddAboutCompanyChat.replace('PromoCodePlaceHolder', '');
+                 
+                 // Multi - Promo Code
+                 // ------------------
+                 AddPromoCodeMulti = AddAboutCompanyMulti.replace('PromoCodePlaceHolder', '');
+                 
+             }
+             
+
+            
+             //=======================================================================================================================================//
+             
+            
+             // Greeting Logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AddGreeting = '';
+             String AddGreetingChat = '';
+             String AddGreetingMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Greeting__c != Null){
+                 
+               String GetGreeting = GetOpportunityInfo.get(0).Greeting__c;  
+                 
+               AddGreeting = AddPromoCode.replace('GreetingPH', GetGreeting);
+               AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', GetGreeting);
+               AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', GetGreeting);
+                 
+                 
+             }
+             Else{
+                 
+               AddGreeting = AddPromoCode.replace('GreetingPH', '');
+               AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', '');
+               AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', '');
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+             
+             // Business hours logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AddBusinessHours = '';
+             String AddBusinessHoursChat = '';
+             String AddBusinessHoursMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Business_Hours__c != Null){
+               
+               String GetBusinessHours = GetOpportunityInfo.get(0).Business_Hours__c;
+                 
+               // RS - Business Hours
+               // -------------------
+               AddBusinessHours = AddGreeting.replace('CompanyBusinessHoursPH', GetBusinessHours);
+               
+               // Chat - Business Hours
+               // --------------------- 
+               AddBusinessHoursChat = AddGreetingChat.replace('CompanyBusinessHoursPH', GetBusinessHours);
+                 
+               // Multi - Business Hours
+               // ----------------------
+               AddBusinessHoursMulti = AddGreetingMulti.replace('CompanyBusinessHoursPH', GetBusinessHours);
+                 
+                 
+             }
+             Else{
+                 
+               // RS - Business Hours
+               // -------------------
+               AddBusinessHours = AddGreeting.replace('CompanyBusinessHoursPH', '');
+               
+               // Chat - Business Hours
+               // --------------------- 
+               AddBusinessHoursChat = AddGreetingChat.replace('CompanyBusinessHoursPH', '');
+                 
+               // Multi - Business Hours
+               // ----------------------
+               AddBusinessHoursMulti = AddGreetingMulti.replace('CompanyBusinessHoursPH', '');
+                 
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+            
+             // Timezone Mapping Logic
+             // ----------------------------------------------------------------------------------------
+             String AddTimeZone = '';
+             String AddTimeZoneChat = '';
+             String AddTimeZoneMulti = '';
+            
+             String GetTimeZone = GetContactInfo.get(0).Time_Zone__c;
+             
+             If(GetContactInfo.get(0).Time_Zone__c == '1 - Eastern'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/New_York');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/New_York');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/New_York');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '2 - Central'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Chicago');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Chicago');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Chicago');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '3 - Mountain'){
+                
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Denver');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Denver');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Denver');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '4 - Arizona'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Pheonix');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Pheonix');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Pheonix');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '5 - Pacific'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '6 - Hawaii'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+                 
+             }
+             Else If(GetContactInfo.get(0).Time_Zone__c == '7 - Alaska'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Anchorage');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Anchorage');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Anchorage');
+                    
+             }
+             Else {
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Los_Angeles'); 
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                                  
+             }
+             
+             
+             //=======================================================================================================================================//
+             
+             
+             // Primary Contact Information
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             
+             // RS - Contact First Name
+             // -----------------------
+             String GetContactFirstName = GetContactInfo.get(0).FirstName;
+             String AddContactFirstName = AddTimeZone.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // Chat - Contact First Name
+             // -------------------------
+             String AddContactFirstNameChat = AddTimeZoneChat.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // Multi - Contact First Name
+             // --------------------------
+             String AddContactFirstNameMulti = AddTimeZoneMulti.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // RS - Contact Last Name
+             // ----------------------
+             String GetContactLastName = GetContactInfo.get(0).LastName;
+             String AddContactLastName = AddContactFirstName.replace('ContactLastNamePH', GetContactLastName);
+              
+             // Chat - Contact Last Name
+             // ------------------------
+             String AddContactLastNameChat = AddContactFirstNameChat.replace('ContactLastNamePH', GetContactLastName);
+            
+             // Multi - Contact Last Name
+             // -------------------------
+             String AddContactLastNameMulti = AddContactFirstNameMulti.replace('ContactLastNamePH', GetContactLastName);
+            
+             // RS - Contact Email
+             // ------------------
+             String GetContactEmail = GetContactInfo.get(0).Email;
+             String AddContactEmail = AddContactLastName.replace('ContactEmailPH', GetContactEmail);
+             
+             // Chat - Contact Email
+             // --------------------
+             String AddContactEmailChat = AddContactLastNameChat.replace('ContactEmailPH', GetContactEmail);
+            
+             // Multi - Contact Email
+             // ---------------------
+             String AddContactEmailMulti = AddContactLastNameMulti.replace('ContactEmailPH', GetContactEmail);
+            
+             // RS - Ok to give out Address
+             // ---------------------------
+             Boolean GetOTGAFlag = GetAccountInfo.get(0).Ok_to_give_out_address__c;
+             String ConvertOTGAToString = String.valueOf(GetOTGAFlag);
+             System.debug('Ok to give out address: ' + ConvertOTGAToString);
+             String FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', ConvertOTGAToString);
+             
+             // Chat - Ok to give out Address
+             // -----------------------------
+             String FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', ConvertOTGAToString);
+            
+             // Multi - Ok to give out Address
+             // ------------------------------
+             String FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', ConvertOTGAToString);
+            
+             // RS - Ok to give out Email
+             // -------------------------
+             Boolean GetOTGOEFlag = GetContactInfo.get(0).OK_to_give_out_email_address__c;
+             String ConvertOTGEToString = String.valueOf(GetOTGOEFlag);
+             System.debug('Ok to give out Email: ' + ConvertOTGEToString);
+             String FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', ConvertOTGEToString);
+             
+             // Chat - Ok to give out Email
+             // ---------------------------
+             String FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', ConvertOTGEToString);
+            
+             // Multi - Ok to give out Email
+             // ----------------------------
+             String FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', ConvertOTGEToString);
+            
+             // RS - Ok to give out Phone
+             // -------------------------
+             Boolean GetOTGOPFlag = GetContactInfo.get(0).OK_to_give_out_phone__c;
+             String ConvertOTGOPToString = String.valueOf(GetOTGOPFlag);
+             System.debug('Ok to give out Phone: ' + ConvertOTGOPToString);
+             String FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', ConvertOTGOPToString);
+              
+             // Chat - Ok to give out Phone
+             // ---------------------------
+             String FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', ConvertOTGOPToString);
+            
+             // Multi - Ok to give out Phone
+             // ----------------------------
+             String FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', ConvertOTGOPToString);
+            
+             //=======================================================================================================================================//
+             
+            
+             // Add External Account Id
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String GetAccountIDForJSON = GetAccountInfo.get(0).Id;
+             
+             // RS - External Account Id
+             // ------------------------
+             String AddExternalAccountId = FlagOTGOP.replace('SFAccountIdPH', GetAccountIDForJSON);
+             
+             // Chat - External Account Id
+             // --------------------------
+             String AddExternalAccountIdChat = FlagOTGOPChat.replace('SFAccountIdPH', GetAccountIDForJSON);
+            
+             // Multi - External Account Id
+             // ---------------------------
+             String AddExternalAccountIdMulti = FlagOTGOPMulti.replace('SFAccountIdPH', GetAccountIDForJSON);
+             
+             //=======================================================================================================================================//
+             
+             // Callout based on opportunity Product
+             // ------------------------------------
+             If(OpProductType.startsWith('Receptionist')){
+                 
+                 System.debug('Creating PRL Account of type: Receptionist');
+                 
+                 String JSONMARKUP = AddExternalAccountId;                 
+             
+                 System.debug('Verifying RS JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+             }
+             Else If(OpProductType.startsWith('Chat')){
+                 
+                 System.debug('Creating PRL Account of type: Chat');
+                     
+                 String JSONMARKUP = AddExternalAccountIdChat;
+                                
+                 System.debug('Verifying Chat JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+                 
+             }
+             Else If(OpProductType.startsWith('Multi Service')){
+                 
+                 System.debug('Creating PRL Account of type: Multi Service');
+                     
+                 String JSONMARKUP = AddExternalAccountIdMulti;
+                                
+                 System.debug('Verifying Chat JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+                 
+             }
+             Else{
+                 
+                 System.debug('Unable to determine product type');
+                 
+                 }            
+            
+
+                                 
+            
+            
+            
+        } 
+        
+    }
+    
+    @future(Callout = True)
+    public static void FurtureCallout(String JSONMARKUP, String SFAccountId){
+        
+        System.debug(JSONMARKUP + ' ' + SFAccountId + ' passed to future callout');
+        
+        if(Test.isRunningTest()){
+                                 System.debug('Test is running! Will not execute callout.');
+                                }
+                                Else{
+                                     PRLAccountsIntegration.CreatePRLAccounts(JSONMARKUP, SFAccountId);
+                                    }
+        
+        
+    }
+
+}
