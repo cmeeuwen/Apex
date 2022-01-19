@@ -7,7 +7,6 @@ public class CallPRLAccountCreate {
                 
     }
     
-    
     public static void GetInfoToPostToPrl(List<String> S1){
         
 
@@ -64,7 +63,7 @@ public class CallPRLAccountCreate {
            String JSONMARKUPTemplateChat = '{"account_name": "AccountNamePlaceHolder","industry_name": "Attorney/Legal","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "+1'+ 'AccountPhonePlaceholder' +'","company_fax_number": "AccountFaxPlaceholder",' +
                                            '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "+1'+ 'AccountPublishedNumberPH' +'","company_about": "AboutCompanyPlaceholder",' +
                                            '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": "ContactEmailPH","owner_phone_number": "+1'+ 'ContactPhonePH' +'",' +
-                                           '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": true,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                           '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
                                            '"billing_postal_code": "BillingZipPH","billing_country_code": "US","billing_ok_to_give_out_address": true,"external_account_id": "SFAccountIdPH","request_username": "'+ userinfo.getUserName() +'",' +
                                            '"chat_full_service": {"service_billing_account_id": "abc123","service_billing_subscription_id": "abc123-02"}}';
            
@@ -333,15 +332,17 @@ public class CallPRLAccountCreate {
              // RS - Billing Street
              // --------------------
              String GetBillingStreet = GetAccountInfo.get(0).BillingStreet;
-             String AddBillingStreet = AddCompanyName.replace('BillingStreetPH', GetBillingStreet);
+             String SerializeBillingStreetLineBreaks = GetBillingStreet.replace('\n', '\\n');
+             String SerializeBillingStreetCarriageReturns = SerializeBillingStreetLineBreaks.replace('\r', '\\r');
+             String AddBillingStreet = AddCompanyName.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
              
              // Chat - Billing Street
              // ---------------------- 
-             String AddBillingStreetChat = AddCompanyNameChat.replace('BillingStreetPH', GetBillingStreet);
+             String AddBillingStreetChat = AddCompanyNameChat.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
             
              // Multi - Billing Street
              // ----------------------
-             String AddBillingStreetMulti = AddCompanyNameMulti.replace('BillingStreetPH', GetBillingStreet);
+             String AddBillingStreetMulti = AddCompanyNameMulti.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
             
              // RS - Billing City
              // -----------------
@@ -432,16 +433,18 @@ public class CallPRLAccountCreate {
                // RS - About Company
                // ------------------
                String GetAboutCompany = GetOpportunityInfo.get(0).About_Company__c;
-               System.debug('There are: ' + GetAboutCompany.countMatches(' ') + ' lines in the about company textarea');
-               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', GetAboutCompany);
+               String SerializeAboutCompLineBreaks = GetAboutCompany.replace('\n', '\\n');
+               String SerializeAboutCompCarriageReturns = SerializeAboutCompLineBreaks.replace('\r', '\\r');
+
+               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', SerializeAboutCompCarriageReturns);
             
                // Chat - About Company
                // --------------------
-               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', GetAboutCompany);
+               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', SerializeAboutCompCarriageReturns);
                  
                // Multi - About Company
                // ---------------------
-               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', GetAboutCompany);
+               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', SerializeAboutCompCarriageReturns);
                    
              }
              Else{
@@ -517,11 +520,15 @@ public class CallPRLAccountCreate {
             
              If(GetOpportunityInfo.get(0).Greeting__c != Null){
                  
-               String GetGreeting = GetOpportunityInfo.get(0).Greeting__c;  
+               String GetGreeting = GetOpportunityInfo.get(0).Greeting__c;
+               String ReplaceLineBreaks = GetGreeting.replace('\n', '\\n');
+               String ReplaceCReturns = ReplaceLineBreaks.replace('\r', '\\r');
                  
-               AddGreeting = AddPromoCode.replace('GreetingPH', GetGreeting);
-               AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', GetGreeting);
-               AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', GetGreeting);
+               System.debug(ReplaceCReturns);
+                 
+               AddGreeting = AddPromoCode.replace('GreetingPH', ReplaceCReturns);
+               AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', ReplaceCReturns);
+               AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', ReplaceCReturns);
                  
                  
              }
@@ -755,50 +762,135 @@ public class CallPRLAccountCreate {
              // ---------------------
              String AddContactEmailMulti = AddContactLastNameMulti.replace('ContactEmailPH', GetContactEmail);
             
-             // RS - Ok to give out Address
+             // Ok to give out Address
              // ---------------------------
-             Boolean GetOTGAFlag = GetAccountInfo.get(0).Ok_to_give_out_address__c;
-             String ConvertOTGAToString = String.valueOf(GetOTGAFlag);
-             System.debug('Ok to give out address: ' + ConvertOTGAToString);
-             String FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', ConvertOTGAToString);
+             String FlagOTGA = '';
+             String FlagOTGAChat = '';
+             String FlagOTGAMulti = '';
              
-             // Chat - Ok to give out Address
-             // -----------------------------
-             String FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', ConvertOTGAToString);
+             If(GetAccountInfo.get(0).Ok_to_give_out_address__c == True){
+                 
+               System.debug('Ok to give out billing address address: ' + GetAccountInfo.get(0).Ok_to_give_out_address__c);
+                 
+               // - RS
+               // ----  
+               FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', 'true');
+                 
+               // - Chat
+               // ------
+               FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', 'true');
+               
+               
+               // - Multi
+               // -------
+               FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', 'true');
+                 
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out billing address address: ' + GetAccountInfo.get(0).Ok_to_give_out_address__c);
+                 
+                 // - RS
+                 // ----  
+                 FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', 'false');
+                 
+                 // - Chat
+                 // ------
+                 FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', 'false');
+               
+                 // - Multi
+                 // -------
+                 FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', 'false');
+                 
+                 }
+
             
-             // Multi - Ok to give out Address
-             // ------------------------------
-             String FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', ConvertOTGAToString);
-            
-             // RS - Ok to give out Email
+             // Ok to give out Email
              // -------------------------
-             Boolean GetOTGOEFlag = GetContactInfo.get(0).OK_to_give_out_email_address__c;
-             String ConvertOTGEToString = String.valueOf(GetOTGOEFlag);
-             System.debug('Ok to give out Email: ' + ConvertOTGEToString);
-             String FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', ConvertOTGEToString);
+             String FlagOTGE = '';
+             String FlagOTGEChat = '';
+             String FlagOTGEMulti = '';
              
-             // Chat - Ok to give out Email
-             // ---------------------------
-             String FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', ConvertOTGEToString);
+             If(GetContactInfo.get(0).OK_to_give_out_email_address__c == True){
+                 
+               System.debug('Ok to give out email: ' + GetContactInfo.get(0).OK_to_give_out_email_address__c);
+             
+               // RS - Ok to give out Email
+               // -------------------------
+               FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', 'true');
+             
+               // Chat - Ok to give out Email
+               // ---------------------------
+               FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', 'true');
             
-             // Multi - Ok to give out Email
-             // ----------------------------
-             String FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', ConvertOTGEToString);
+               // Multi - Ok to give out Email
+               // ----------------------------
+               FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', 'true');
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out email: ' + GetContactInfo.get(0).OK_to_give_out_email_address__c);
+                 
+                 // RS - Ok to give out Email
+                 // -------------------------
+                 FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', 'false');
+             
+                 // Chat - Ok to give out Email
+                 // ---------------------------
+                 FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', 'false');
+            
+                 // Multi - Ok to give out Email
+                 // ----------------------------
+                 FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', 'false');
+                 
+                 }
+             
+             
             
              // RS - Ok to give out Phone
              // -------------------------
-             Boolean GetOTGOPFlag = GetContactInfo.get(0).OK_to_give_out_phone__c;
-             String ConvertOTGOPToString = String.valueOf(GetOTGOPFlag);
-             System.debug('Ok to give out Phone: ' + ConvertOTGOPToString);
-             String FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', ConvertOTGOPToString);
-              
-             // Chat - Ok to give out Phone
-             // ---------------------------
-             String FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', ConvertOTGOPToString);
+             String FlagOTGOP = '';
+             String FlagOTGOPChat = '';
+             String FlagOTGOPMulti = '';
             
-             // Multi - Ok to give out Phone
-             // ----------------------------
-             String FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', ConvertOTGOPToString);
+             If(GetContactInfo.get(0).OK_to_give_out_phone__c == True){
+                 
+               System.debug('Ok to give out phone: ' + GetContactInfo.get(0).OK_to_give_out_phone__c);
+                 
+               // RS - Ok to give out Phone
+               // -------------------------
+               FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', 'true');
+              
+               // Chat - Ok to give out Phone
+               // ---------------------------
+               FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', 'true');
+            
+               // Multi - Ok to give out Phone
+               // ----------------------------
+               FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', 'true');
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out Phone: ' + GetContactInfo.get(0).OK_to_give_out_phone__c);
+                 
+                 // RS - Ok to give out Phone
+                 // -------------------------
+                 FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', 'false');
+              
+                 // Chat - Ok to give out Phone
+                 // ---------------------------
+                 FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', 'false');
+            
+                 // Multi - Ok to give out Phone
+                 // ----------------------------
+                 FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', 'false');
+                 
+                 }
+             
+             
             
              //=======================================================================================================================================//
              
