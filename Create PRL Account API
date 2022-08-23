@@ -265,17 +265,17 @@ public class CallPRLAccountCreate {
              }
              Else{
                  
-                 AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('AccountPhonePlaceholder', '');
-                 AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('AccountPublishedNumberPH', '');
+                 AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('"AccountPhonePlaceholder"', '');
                  // Chat JSON String
                  // ----------------
-                 AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('AccountPhonePlaceholder', '');
-                 AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('AccountPublishedNumberPH', '');
+                 AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('"AccountPhonePlaceholder"', '');
             
                  // Multi Service JSON String
                  // -------------------------
-                 AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('AccountPhonePlaceholder', '');
-                 AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('AccountPublishedNumberPH', '');
+                 AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('"AccountPhonePlaceholder"', '');
                  
                  }
               
@@ -691,14 +691,14 @@ public class CallPRLAccountCreate {
                  
                  // RS JSON String
                  // --------------
-                 AddAccountWebsiteToJSON = AddContactPhoneToJSON.replace('AccountWebsitePlaceholder', 'http://nowebsite.com');
+                 AddAccountWebsiteToJSON = AddContactPhoneToJSON.replace('"AccountWebsitePlaceholder"', 'null');
                  // Chat JSON String
                  // ----------------
-                 AddAccountWebsiteToJSONChat = AddContactPhoneToJSONChat.replace('AccountWebsitePlaceholder', 'http://nowebsite.com');
+                 AddAccountWebsiteToJSONChat = AddContactPhoneToJSONChat.replace('"AccountWebsitePlaceholder"', 'null');
             
                  // Multi Service JSON String
                  // -------------------------
-                 AddAccountWebsiteToJSONMulti = AddContactPhoneToJSONMulti.replace('AccountWebsitePlaceholder', 'http://nowebsite.com');
+                 AddAccountWebsiteToJSONMulti = AddContactPhoneToJSONMulti.replace('"AccountWebsitePlaceholder"', 'null');
                  
                  }
               
@@ -1365,7 +1365,7 @@ public class CallPRLAccountCreate {
                AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Phoenix');
                  
              }
-            Else If(GetAccountInfo.get(0).Time_Zone__c == '5 - Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific (+0)'){
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '5 - Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific (+0)'){
                  
                // RS - Timezone
                // -------------
@@ -2595,6 +2595,8 @@ public class CallPRLAccountCreate {
                  
                  CallPRLAccountSendNotif.SendFailureNotification(AccountId);
                  
+                 
+                 
                  }
 
             
@@ -2608,7 +2610,7 @@ public class CallPRLAccountCreate {
         
         System.debug(JSONMARKUP + ' ' + SFAccountId + ' passed to future callout');
         
-        if(Test.isRunningTest()){
+        if(system.Test.isRunningTest()){
                                  System.debug('Test is running! Will not execute callout.');
                                 }
                                 Else{
