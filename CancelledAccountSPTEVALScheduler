@@ -1,0 +1,9 @@
+global class CancelledAccountSPTEVALScheduler implements Schedulable{
+    
+    Global void execute(SchedulableContext sc){
+        
+        Id BatchId = Database.executeBatch(new CancelledAccountSPTEvalBatch(), 40);
+        
+    }
+
+}
