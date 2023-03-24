@@ -1,0 +1,116 @@
+public class CalculateDaysToCloseExcludeWeekends {
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+        String RecordIdentifier = S1.get(0);
+        
+        CalculateDaysToCloseExcludeWeekends.CalculateDaysToClose(RecordIdentifier);
+        
+                
+    }
+    
+    public static void CalculateDaysToClose(String RecordIdentifier){
+        
+        // SOQL to Find Ruby SF Support Request
+        // ------------------------------------
+        List<Ruby_SF_Support_Request__c> FindSupportRecord = [Select Id, Completed_Date__c, CreatedDate, Days_to_Close__c 
+                                                              From Ruby_SF_Support_Request__c 
+                                                              Where Id = :RecordIdentifier Limit 1];
+        
+        // Store Created Date of Request in variable
+        // -----------------------------------------
+        Date RequestCreatedDate = Date.valueOf(FindSupportRecord.get(0).CreatedDate);
+        
+        Integer CreatedDayOfTheYear = RequestCreatedDate.dayOfYear();
+        
+        System.debug(RequestCreatedDate + ' and is the ' + CreatedDayOfTheYear + ' day of the year');
+        
+        // Store Completed Date of Request in variable
+        // -------------------------------------------
+        Date RequestCompletedDate = FindSupportRecord.get(0).Completed_Date__c;
+        
+        Integer CompletedDayOfTheYear = RequestCompletedDate.dayOfYear();
+        
+        System.debug(RequestCompletedDate + ' and is the ' + CompletedDayOfTheYear + ' day of the year');
+        
+        // Verify if Created Date is the same day as the completed date
+        // ------------------------------------------------------------
+        Boolean IsItTheSameDay = RequestCreatedDate.isSameDay(RequestCompletedDate);
+        
+        System.debug('It is ' + IsItTheSameDay);
+        
+        if(IsItTheSameDay != True){
+        
+        // Calculate the Difference in days and store in variable
+        // ------------------------------------------------------
+        Integer DTCTDWW = (CompletedDayOfTheYear - CreatedDayOfTheYear);
+        
+        System.debug('Days to close including weekends ' + DTCTDWW);
+        
+        // New Variable to Store amount of work days
+        // -----------------------------------------
+        Integer WeekdaysToClose = 0;
+        
+        // New Variable to Store ammount of Weekend days
+        // ---------------------------------------------
+        Integer WeekenddaysToClose = 0;
+        
+        for(Integer i = 1; i <= DTCTDWW; i++){
+            
+            Date dCreate = RequestCreatedDate.addDays(i);
+            Datetime dt = (Date)dCreate;
+            String dayOfWeek = dt.format('EEEE');
+            
+            System.debug('Day: ' + i + ' : ' + dayOfWeek + ' : ' + dCreate + ' is the ' + dCreate.dayOfYear() + ' day of the year');
+            
+            if(dayOfWeek != 'Saturday' && dayOfWeek != 'Sunday' && 
+              (dCreate.dayOfYear() != 1 || dCreate.dayOfYear() != 151 || dCreate.dayOfYear() != 186 || dCreate.dayOfYear() != 250 || dCreate.dayOfYear() != 316 || dCreate.dayOfYear() != 330 || dCreate.dayOfYear() != 359 || dCreate.dayOfYear() != 366)){
+              
+                
+                  // Add to Integer Variable Containing the number of weekdays to close
+                  // ------------------------------------------------------------------  
+                  WeekdaysToClose++;
+                    
+            
+                 
+                
+                
+            }
+            Else {
+              
+               
+                  // Add to Integer Variable Containing the number of weekends to close
+                  // ------------------------------------------------------------------    
+                  WeekenddaysToClose++;
+                    
+               
+                
+                
+            }
+            
+            
+        }
+        
+        System.debug('Total Week Days: ' + WeekdaysToClose);
+        
+        System.debug('Total Weekend or Holiday Days: ' + WeekenddaysToClose);
+        
+        FindSupportRecord.get(0).Days_to_Close__c = WeekdaysToClose;
+        
+        Update FindSupportRecord.get(0);
+            
+        }
+        Else{
+            
+            System.debug('0 Days to close!');
+            
+            FindSupportRecord.get(0).Days_to_Close__c = 0;
+            
+            update FindSupportRecord.get(0);
+            
+        }
+        
+    }
+
+}
