@@ -1,0 +1,11 @@
+Global class AtRiskMissedInterviewEvalBatchScheduler implements Schedulable{
+    
+    Global void execute(SchedulableContext sc){
+        
+           AtRiskMissedInterviewEvalBatch ARMIEB = new AtRiskMissedInterviewEvalBatch();
+		   Id batchId = Database.executeBatch(ARMIEB, 40);
+    
+    
+    }    
+
+}
