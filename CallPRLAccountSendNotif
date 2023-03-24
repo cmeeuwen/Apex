@@ -1,0 +1,98 @@
+// Class For Email notifications if a PRL Account Create Fails or Succeeds
+//========================================================================
+
+public class CallPRLAccountSendNotif {
+    
+    public static void SendFailureNotification(String AccountId){
+        
+        List<Account> GetAccount = [Select Id, Name, Phone, PRL_API_Callout_Response__c, PRL_Callout_Status_Code__c From Account Where Id = : AccountId];
+        
+         // Build Mail Message
+         // ------------------
+         String[] toAddress = new String[] {'youremail'};
+         String[] ccAddress = new String[] {'ccdemails'};
+         Messaging.reserveSingleEmailCapacity(1);
+         Messaging.SingleEmailMessage NotifyAdmin = new Messaging.SingleEmailMessage();
+         NotifyAdmin.setToAddresses(toAddress);
+         NotifyAdmin.setUseSignature(true);
+         String AccountName = GetAccount.get(0).Name;
+         String RelatedAccountId = GetAccount.get(0).Id;
+         String RelatedAccountPhone = GetAccount.get(0).Phone;
+         NotifyAdmin.setSenderDisplayName('New Prl Account Creation Failure');
+         NotifyAdmin.setSubject('The Following Account Failed to create in PRL: ' + AccountName);
+         NotifyAdmin.setCcAddresses(ccAddress);
+         
+         NotifyAdmin.setPlainTextBody('Hello Salesforce Team, ' + 
+                                      '\n' +
+                                      '\n' +
+                                      'This email is to inform you that the following Account failed to create in PRL.' +
+                                      '\n' +
+                                      '\n' +
+                                      'Name: ' + GetAccount.get(0).Name +
+                                      '\n' +
+                                      '\n' +
+                                      'Account Create Failure Response: ' + GetAccount.get(0).PRL_API_Callout_Response__c +
+                                      '\n' +
+                                      '\n' +
+                                      'Callout Response Status code: ' + GetAccount.get(0).PRL_Callout_Status_Code__c +
+                                      '\n' +
+                                      '\n' +
+                                      'SF Account URL: ' + 'https://ruby.my.salesforce.com/' + GetAccount.Get(0).Id);
+        
+        Try{
+           Messaging.sendEmail(new Messaging.SingleEmailMessage[] { NotifyAdmin });  
+           }
+           Catch(DMLException e){
+                                 System.debug('An error occured when trying to send email notification: ' + e.getMessage());
+                                }
+        
+        
+    }
+    
+    public static void SendSuccessNotification(String AccountId){
+        
+        List<Account> GetAccount = [Select Id, Name, Phone, PRL_API_Callout_Response__c, PRL_Callout_Status_Code__c From Account Where Id = : AccountId];
+        
+         // Build Mail Message
+         // ------------------
+         String[] toAddress = new String[] {'youremail'};
+         //String[] ccAddress = new String[] {'ccemails'};
+         Messaging.reserveSingleEmailCapacity(1);
+         Messaging.SingleEmailMessage NotifyAdmin = new Messaging.SingleEmailMessage();
+         NotifyAdmin.setToAddresses(toAddress);
+         NotifyAdmin.setUseSignature(true);
+         String AccountName = GetAccount.get(0).Name;
+         String RelatedAccountId = GetAccount.get(0).Id;
+         String RelatedAccountPhone = GetAccount.get(0).Phone;
+         NotifyAdmin.setSenderDisplayName('New Prl Account Creation Success');
+         NotifyAdmin.setSubject('The Following Account was created in PRL: ' + AccountName);
+         //NotifyAdmin.setCcAddresses(ccAddress);
+         
+         NotifyAdmin.setPlainTextBody('Hello Salesforce Team, ' + 
+                                      '\n' +
+                                      '\n' +
+                                      'This email is to inform you that the following Account was Successfully created in PRL.' +
+                                      '\n' +
+                                      '\n' +
+                                      'Name: ' + GetAccount.get(0).Name +
+                                      '\n' +
+                                      '\n' +
+                                      'Account Create Response: ' + GetAccount.get(0).PRL_API_Callout_Response__c +
+                                      '\n' +
+                                      '\n' +
+                                      'Callout Response Status Code: ' + GetAccount.get(0).PRL_Callout_Status_Code__c +
+                                      '\n' +
+                                      '\n' +
+                                      'SF Account URL: ' + 'https://ruby.my.salesforce.com/' + GetAccount.Get(0).Id);
+        
+        Try{
+           Messaging.sendEmail(new Messaging.SingleEmailMessage[] { NotifyAdmin });  
+		   //system.debug('Removed Success Notifications as logic is working');
+           }
+           Catch(DMLException e){
+                                 System.debug('An error occured when trying to send email notification: ' + e.getMessage());
+                                }
+        
+    }
+
+}
