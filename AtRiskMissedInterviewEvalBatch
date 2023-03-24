@@ -1,0 +1,115 @@
+Global class AtRiskMissedInterviewEvalBatch implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, Name, Missed_Interview__c, Status__c, Missed_Interview_Task_Sent__c, At_Risk_Catergory__c, Zombie_Reason_Notes__c, At_Risk_Reason__c, At_Risk_Reason_Detail__c, At_Risk_Start_Date__c, CreatedDate ' + 
+                       'From Onboarding__c ' +
+                       'Where At_Risk_Start_Date__c != Null ' +
+                       'And At_Risk_Reason_Detail__c = \'Missed Interview\' ' +
+                       'And Missed_Interview_Task_Sent__c = False ' +
+                       'And Status__c != \'Onboarding Complete\' ';
+        
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Onboarding__c> CheckOnboardingRecords){
+        
+        List<Onboarding__c> OnboardingRecordsToUpdate = new List<Onboarding__c>();
+        
+        
+        For(Onboarding__c O1 : CheckOnboardingRecords){
+            
+           System.debug('Onboarding Name: ' + O1.Name);
+            
+           // Todays Date
+           // -----------------------------------------
+           Date GetToday = date.today();
+           Integer TodaysDayOfTheYear = GetToday.dayOfYear();
+            
+           // At Risk Start Date
+           // ----------------------------------------- 
+           Date GetAtRiskStartDate = O1.At_Risk_Start_Date__c;
+           Integer AtRiskStartDateDayOfTheYear = GetAtRiskStartDate.dayOfYear();            
+            
+           // Check if it is the same day
+           // ----------------------------------------
+           Boolean IsItTheSameDay = GetToday.isSameDay(GetAtRiskStartDate);
+            
+           If(IsItTheSameDay != True){
+               
+             // New Variable to Store amount of work days
+             // -----------------------------------------
+             Integer WeekdaysToClose = 0;
+        
+             // New Variable to Store ammount of Weekend days
+             // ---------------------------------------------
+             Integer WeekenddaysToClose = 0;
+               
+             Integer DTCTDWW = (TodaysDayOfTheYear - AtRiskStartDateDayOfTheYear);
+               
+             System.debug('Difference in days: ' + DTCTDWW);
+               
+             for(Integer i = 1; i <= DTCTDWW; i++){
+                 
+                Date tDate = GetAtRiskStartDate.addDays(i);
+                Datetime dt = (Date)tDate;
+                String dayOfWeek = dt.format('EEEE');
+                 
+                System.debug('Day of the week: ' + dayOfWeek);
+                
+                 if(!dayOfWeek.containsIgnoreCase('Saturday') && !dayOfWeek.containsIgnoreCase('Sunday') && (tDate.dayOfYear() != 1 || tDate.dayOfYear() != 151 || tDate.dayOfYear() != 186 || tDate.dayOfYear() != 250 || tDate.dayOfYear() != 316 || tDate.dayOfYear() != 330 || tDate.dayOfYear() != 359 || tDate.dayOfYear() != 366)){
+                    
+                     // Add to Integer Variable Containing the number of weekdays to close
+                     // ------------------------------------------------------------------  
+                     WeekdaysToClose++;
+                     
+                 }
+                 Else{
+                     
+                     // Add to Integer Variable Containing the number of weekends to close
+                     // ------------------------------------------------------------------    
+                     WeekenddaysToClose++;
+                  
+                     }
+             
+             }
+               
+             System.debug('Total Week Days: ' + WeekdaysToClose);
+        
+             System.debug('Total Weekend or Holiday Days: ' + WeekenddaysToClose);
+             
+             O1.Missed_Interview__c = WeekdaysToClose;
+               
+             OnboardingRecordsToUpdate.add(O1);
+               
+           }
+           Else{
+               
+               System.debug('0 days since Missed Interview');
+               
+               O1.Missed_Interview__c = 0;
+               
+               OnboardingRecordsToUpdate.add(O1);
+               
+               } 
+            
+        }
+        
+        If(!OnboardingRecordsToUpdate.IsEmpty()){
+            
+          Update OnboardingRecordsToUpdate;  
+            
+        }
+        Else{
+            System.debug('No Onboarding Records to Update');
+            }
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
