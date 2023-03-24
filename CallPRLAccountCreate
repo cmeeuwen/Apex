@@ -1,0 +1,3007 @@
+public class CallPRLAccountCreate {
+    
+    Final string CompiledCountryCode;
+    
+    Final String FinalStop;
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+        CallPRLAccountCreate.GetInfoToPostToPrl(S1);          
+                
+    }
+    
+    public static void GetInfoToPostToPrl(List<String> S1){
+        
+        for(String RelatedOpportunity : S1){
+            
+           {
+           // JSON String Templates
+           // 
+           //  1. Payload Templates to store base json string
+           // 
+           //  2. Placeholders in template will be replaced before callout
+           //  
+           //  -----------------------------------------------------------
+           //  
+           //  Placeholder Strings
+           //  -------------------
+           //  AccountNamePlaceHolder - Added
+           //  PromoCodePlaceHolder - Added
+           //  HIPAAPlaceholder - Added
+           //  StartDatePlaceholder - Added
+           //  AccountWebsitePlaceholder - Added
+           //  AccountPhonePlaceholder - Added
+           //  AccountFaxPlaceholder - Added
+           //  AccountPublishedNumberPH - Added
+           //  AboutCompanyPlaceholder - Added
+           //  ContactFirstNamePH - Added
+           //  ContactLastNamePH - Added
+           //  ContactEmailPH - Added
+           //  ContactPhonePH - Added
+           //  BillingStreetPH - Added
+           //  BillingStreet2PH - Added
+           //  BillingCityPH - Added
+           //  BillingStatePH - Added
+           //  BillingZipPH - Added
+           //  BillingCountryPH - Added
+           //  OkToGiveEmailPH - Added
+           //  OkToGivePhonePH - Added
+           //  OkTogiveAddressPH - Added
+           //  SFAccountIdPH - Added
+           //  GreetingPH - Added
+           //  RoboCallPH - Added
+           //  CompanyBusinessHoursPH - Added
+           //  TimeZonePlaceholder - Added
+           //  RequesterPH - Added
+           //  IndustryPH - Added
+           //  AdditionalContactsPH - Added
+           //  AdditionalPNPH - Added
+           //  HowForwardingPH - Added
+           //  ZuoraBillingActIdPH - Added
+           //  ZuoraSubIdPH - Added
+           //  
+           // ---------------------
+           }
+            
+           String JSONMARKUPTemplateRS = '{"account_name": "AccountNamePlaceHolder","industry_name": "IndustryPH","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "AccountPhonePlaceholder","company_fax_number": "AccountFaxPlaceholder",' +
+                                         '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "AccountPublishedNumberPH","company_about": "AboutCompanyPlaceholder",' +
+                                         '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": [ContactEmailPH],"owner_phone_numbers": [ContactPhonePH],' +
+                                         '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "BillingStreet2PH","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                         '"billing_postal_code": "BillingZipPH","billing_country_code": "BillingCountryPH","billing_ok_to_give_out_address": OkTogiveAddressPH,"external_account_id": "SFAccountIdPH","request_username": "RequesterPH",' +
+                                         '"company_how_forwarding": "HowForwardingPH","receptionist_service": {"service_billing_account_id": "ZuoraBillingActIdPH","service_billing_subscription_id": "ZuoraSubIdPH","greeting": "GreetingPH",' +
+                                         '"robocall_blocking": '+ 'RoboCallPH' +'}AdditionalContactsPH AdditionalPNPH}';
+            
+           String JSONMARKUPTemplateChat = '{"account_name": "AccountNamePlaceHolder","industry_name": "IndustryPH","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "AccountPhonePlaceholder","company_fax_number": "AccountFaxPlaceholder",' +
+                                           '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "AccountPublishedNumberPH","company_about": "AboutCompanyPlaceholder",' +
+                                           '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": [ContactEmailPH],"owner_phone_numbers": [ContactPhonePH],' +
+                                           '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "BillingStreet2PH","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                           '"company_how_forwarding": "HowForwardingPH","billing_postal_code": "BillingZipPH","billing_country_code": "US","billing_ok_to_give_out_address": true,"external_account_id": "SFAccountIdPH","request_username": "RequesterPH",' +
+                                           '"chat_full_service": {"service_billing_account_id": "ZuoraBillingActIdPH","service_billing_subscription_id": "ZuoraSubIdPH"}AdditionalContactsPH AdditionalPNPH}';
+           
+            
+           String JSONMARKUPTemplateMulti = '{"account_name": "AccountNamePlaceHolder","industry_name": "IndustryPH","promo_code": "PromoCodePlaceHolder","is_hipaa_account": '+ 'HIPAAPlaceholder' +',"start_date": "StartDatePlaceholder' +'Z","company_website": "AccountWebsitePlaceholder","company_main_phone_number": "AccountPhonePlaceholder","company_fax_number": "AccountFaxPlaceholder",' +
+                                            '"company_business_hours": "CompanyBusinessHoursPH","company_timezone": "TimeZonePlaceholder","company_published_number": "AccountPublishedNumberPH","company_about": "AboutCompanyPlaceholder",' +
+                                            '"owner_given_name": "ContactFirstNamePH","owner_family_name": "ContactLastNamePH","owner_email_address": [ContactEmailPH],"owner_phone_numbers": [ContactPhonePH],' +
+                                            '"owner_ok_to_give_out_email_address": OkToGiveEmailPH,"owner_ok_to_give_out_phone_number": OkToGivePhonePH,"billing_address_line_1": "BillingStreetPH","billing_address_line_2": "BillingStreet2PH","billing_city": "BillingCityPH","billing_state": "BillingStatePH",' +
+                                            '"billing_postal_code": "BillingZipPH","billing_country_code": "BillingCountryPH","billing_ok_to_give_out_address": OkTogiveAddressPH,"external_account_id": "SFAccountIdPH","request_username": "RequesterPH",' +
+                                            '"company_how_forwarding": "HowForwardingPH","receptionist_service": {"service_billing_account_id": "ZuoraBillingActIdPH","service_billing_subscription_id": "ZuoraSubIdPH","greeting": "GreetingPH",' +
+                                            '"robocall_blocking": '+ 'RoboCallPH' +'}, "chat_full_service": {"service_billing_account_id": "ZuoraBillingActIdPH","service_billing_subscription_id": "ZuoraSubIdPH"}AdditionalContactsPH AdditionalPNPH}';
+
+
+           
+             // SOQL Query for Assocaited Opportunity
+             // -------------------------------------
+             System.debug('Locating Account Related with Opportunity id: ' + RelatedOpportunity);
+            
+             List<Opportunity> GetOpportunityInfo = [Select Id, AccountId, Greeting__c, Product__c, About_Company__c, Business_Hours__c, Using_Robocall_Filtering__c, Greeting_2022__c, How_forwarding__c, Phone_Provider__c 
+                                                      From Opportunity 
+                                                      Where Id = :RelatedOpportunity];
+            
+             String OpProductType = '';
+              
+             If(GetOpportunityInfo.get(0).Product__c != Null){
+               
+                OpProductType = GetOpportunityInfo.get(0).Product__c;
+                  
+              }
+             Else{
+                  
+                  System.debug('No Product Type Selected');
+                  
+                  }
+            
+             System.debug('Opportunity Product Type of: ' + OpProductType);
+           
+             // SOQL Query for Associated Account
+             //---------------------------------- 
+             String GetAccountId = GetOpportunityInfo.get(0).AccountId;
+            
+             System.debug('Account Id is: ' + GetAccountId);  
+            
+             List<Account> GetAccountInfo = [Select Id, Industry, BillingAddress, BillingCity, BillingCountry, BillingState, BillingStreet, BillingPostalCode, Name, Contact__c,
+                                             Promo_Code__c, HIPAA__c, Website, Phone, Fax, Using_Robocall_filtering__c, Ok_to_give_out_address__c, Additional_Phone__c, Time_Zone__c
+                                             From Account 
+                                             Where Id = :GetAccountId];
+            
+             String SOQLAccountBillingCountry = GetAccountInfo.get(0).BillingCountry;
+            
+             // SOQL Query for Zuora Billing Account
+             // ------------------------------------
+             List<Zuora__CustomerAccount__c> DoesBillingAccountExist = [Select Id, Zuora__Account__c, Zuora__Zuora_Id__c, Zuora__Status__c 
+                                                                        From Zuora__CustomerAccount__c
+                                                                        Where Zuora__Account__c = : GetAccountId
+                                                                        AND Zuora__Status__c = 'Active' Limit 1];
+            
+                            
+             // SOQL Query for Related Contact
+             // ------------------------------
+             System.debug('Related Contact Id: ' + GetAccountInfo.get(0).Contact__c); 
+            
+             List<Contact> GetContactInfo = [Select Id, FirstName, LastName, Phone, Email, Time_Zone__c, OK_to_give_out_email_address__c, OK_to_give_out_phone__c,
+                                             Phone_2__c, Phone_3__c, Alternate_Email_1__c, Alternate_Email_2__c, Responsible_Party__c
+                                             From Contact 
+                                             Where Id = : GetAccountInfo.get(0).Contact__c];
+            
+             GetContactInfo.get(0).Responsible_Party__c = 'True';
+            
+             Update GetContactInfo.get(0);
+            
+             // SOQL Query Additional Contacts
+             // ------------------------------
+             List<Contact> GetAdditionalContacts = [Select Id, FirstName, LastName, Phone, Email, OK_to_give_out_email_address__c, OK_to_give_out_phone__c, AccountId, Create_in_PRL__c,
+                                                    Phone_2__c, Phone_3__c, Alternate_Email_1__c, Alternate_Email_2__c
+                                                    From Contact
+                                                    Where AccountId = : GetAccountId
+                                                    AND Create_in_PRL__c = True
+                                                    AND Responsible_Party__c != 'True'];
+               
+             System.debug('Sending Callout for PRL Account Creation for new account: ' + GetAccountInfo.get(0).Name);
+             
+             String SFAccountId = GetAccountInfo.get(0).Id; 
+             
+             //         Data Normalization
+             // 
+             // 1. Corrects all caps entries for 
+             //    Street Addresses.
+             // 
+             // 2. Correct format of a website
+             //    entry.
+             //    
+             // 3. Replace Dashes with periods
+             //    for published numbers and
+             //    faxes
+             // 
+             // 
+             //===========================================================================================================================================//
+             
+             // Format Account Phone
+             // --------------------
+             String AddAccountPhoneToJSON = '';
+             String AddAccountPublishedPhoneToJSON = '';
+             String AddAccountPhoneToJSONChat = '';
+             String AddAccountPublishedPhoneToJSONChat = '';
+             String AddAccountPhoneToJSONMulti = '';
+             String AddAccountPublishedPhoneToJSONMulti = '';
+            
+             If(GetAccountInfo.get(0).Phone != Null){
+             
+             String AccountPhone = GetAccountInfo.get(0).Phone;
+             String ConvertListtoString = AccountPhone.toLowerCase();
+             System.debug('Phone number SF unformatted: ' + AccountPhone);
+             
+             // Phone Formatting Logic 2.0
+             // ==========================
+             String RemoveFirstOne = '';
+             String RemovePlus52 = ConvertListtoString.replace('+52', '');
+             String WhiteSpaceRemoval = RemovePlus52.deleteWhitespace();
+             String RemoveSpecialCharacters = WhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+             System.debug('Semi-formatted: ' + RemoveSpecialCharacters);
+        
+             If(RemoveSpecialCharacters.startsWith('1')){
+              
+               System.debug('Phone Started with 1');
+              
+               RemoveFirstOne = RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+             }
+             Else{
+              
+                 System.debug('Phone did not start with 1');
+              
+                 RemoveFirstOne = RemoveSpecialCharacters;
+              }      
+                 
+
+             System.debug('Formatted Phone Number: ' + RemoveFirstOne + ' Adding to JSON String');
+                
+                // For US and Canda Account Phone
+                // ==============================
+                If(SOQLAccountBillingCountry.equalsIgnoreCase('United States') || SOQLAccountBillingCountry.equalsIgnoreCase('USA') || SOQLAccountBillingCountry.equalsIgnoreCase('US') || SOQLAccountBillingCountry.equalsIgnoreCase('United States Of America') || 
+                   SOQLAccountBillingCountry.equalsIgnoreCase('U.S.') || SOQLAccountBillingCountry.equalsIgnoreCase('Canada') || SOQLAccountBillingCountry.equalsIgnoreCase('CAN') || SOQLAccountBillingCountry.equalsIgnoreCase('CA')) {    
+             
+                   // RS JSON String
+                   // --------------
+                   AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('AccountPhonePlaceholder', '+1' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('AccountPublishedNumberPH', '');
+             
+                   // Chat JSON String
+                   // ----------------
+                   AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('AccountPhonePlaceholder', '+1' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('AccountPublishedNumberPH', '');
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('AccountPhonePlaceholder', '+1' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('AccountPublishedNumberPH', '');
+                
+                }
+                // For Mexico Account Phone
+                // ========================
+                Else If(SOQLAccountBillingCountry.equalsIgnoreCase('Mexico') || SOQLAccountBillingCountry.equalsIgnoreCase('MX')){
+                
+                   // RS JSON String
+                   // --------------
+                   AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('AccountPhonePlaceholder', '+52' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('AccountPublishedNumberPH', '');
+             
+                   // Chat JSON String
+                   // ----------------
+                   AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('AccountPhonePlaceholder', '+52' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('AccountPublishedNumberPH', '');
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('AccountPhonePlaceholder', '+52' + RemoveFirstOne);
+                   AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('AccountPublishedNumberPH', '');
+                    
+                }
+                // For International Account Phone
+                // ===============================
+                Else{
+                    
+                     // RS JSON String
+                     // --------------
+                     AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('AccountPhonePlaceholder', '+' + RemoveFirstOne);
+                     AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('AccountPublishedNumberPH', '');
+             
+                     // Chat JSON String
+                     // ----------------
+                     AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('AccountPhonePlaceholder', '+' + RemoveFirstOne);
+                     AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('AccountPublishedNumberPH', '');
+            
+                     // Multi Service JSON String
+                     // -------------------------
+                     AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('AccountPhonePlaceholder', '+' + RemoveFirstOne);
+                     AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('AccountPublishedNumberPH', '');
+                
+                    }
+                 
+                 
+             }
+             Else{
+                 
+                 AddAccountPhoneToJSON = JSONMARKUPTemplateRS.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSON = AddAccountPhoneToJSON.replace('"AccountPhonePlaceholder"', '');
+                 // Chat JSON String
+                 // ----------------
+                 AddAccountPhoneToJSONChat = JSONMARKUPTemplateChat.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSONChat = AddAccountPhoneToJSONChat.replace('"AccountPhonePlaceholder"', '');
+            
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddAccountPhoneToJSONMulti = JSONMARKUPTemplateMulti.replace('"AccountPhonePlaceholder"', 'null');
+                 AddAccountPublishedPhoneToJSONMulti = AddAccountPhoneToJSONMulti.replace('"AccountPhonePlaceholder"', '');
+                 
+                 }
+              
+             //=========================================================================================================================================//
+            
+             // Format RP Contact Phone
+             // -------------------------------------------------------------------------------------------------------------------------
+             List<String> RPPhones = new List<String>();
+            
+             String AddContactPhoneToJSON = '';
+             String AddContactPhoneToJSONChat = '';
+             String AddContactPhoneToJSONMulti = '';
+             
+             If(GetContactInfo.get(0).Phone != Null){
+                 
+               String ContactPhone = GetContactInfo.get(0).Phone;
+               String ContactPhoneConvertToString = ContactPhone.toLowerCase();
+               System.debug('Contact Phone number SF Unformatted: ' + ContactPhone);
+                 
+               // Phone Formatting Logic 2.0
+               // ==========================
+               String RPRemoveFirstOne = '';
+               String RPRemovePlus52 = ContactPhoneConvertToString.replace('+52', '');
+               String RPWhiteSpaceRemoval = RPRemovePlus52.deleteWhitespace();
+               String RPRemoveSpecialCharacters = RPWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               System.debug('Semi-formatted: ' + RPRemoveSpecialCharacters);
+        
+               If(RPRemoveSpecialCharacters.startsWith('1')){
+              
+                 System.debug('Phone Started with 1');
+              
+                 RPRemoveFirstOne = RPRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               }
+               Else{
+              
+                   System.debug('Phone did not start with 1');
+              
+                   RPRemoveFirstOne = RPRemoveSpecialCharacters;
+                   
+                  }    
+               
+                 
+               System.debug('Primary Contact Phone ' + RPRemoveFirstOne);
+            
+               // Additional Phone Numbers Responsible Party
+               // ------------------------------------------
+               If(SOQLAccountBillingCountry.equalsIgnoreCase('United States') || SOQLAccountBillingCountry.equalsIgnoreCase('USA') || SOQLAccountBillingCountry.equalsIgnoreCase('US') || SOQLAccountBillingCountry.equalsIgnoreCase('United States Of America') ||
+                  SOQLAccountBillingCountry.equalsIgnoreCase('U.S.') || SOQLAccountBillingCountry.equalsIgnoreCase('Canada') || SOQLAccountBillingCountry.equalsIgnoreCase('CAN') || SOQLAccountBillingCountry.equalsIgnoreCase('CA')) {
+               
+                  RPPhones.add('"+1' + RPRemoveFirstOne + '"');
+            
+                  If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                      										   
+                      										   // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }   
+        
+                                                         
+                                                               RPPhones.add('"+1' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                   System.debug('Phone 2 is null');
+                                                                  }
+                  If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                      
+                      										  // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  }   
+                      										
+                                    
+                                                         
+                                                              RPPhones.add('"+1' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                System.debug('Phone 3 is null');
+                                                               }
+               
+                 String FinalPhones = string.join(RPPhones, ',');
+            
+                 System.debug('Responible Party Contact Phone Numbers: ' + FinalPhones);
+            
+                 System.debug('Contact Phone number formatted: ' + RPRemoveFirstOne + ' Adding to JSON String');
+               
+                 // RS JSON String
+                 // --------------
+                 AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                 // Chat JSON String
+                 // ---------------- 
+                 AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);
+               
+               }
+                 
+               Else If(SOQLAccountBillingCountry.equalsIgnoreCase('Mexico') || SOQLAccountBillingCountry.equalsIgnoreCase('MX')){
+                   
+                 RPPhones.add('"+52' + RPRemoveFirstOne + '"');
+            
+                  If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                      
+                                                               // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }   
+        
+                                                         
+                                                               RPPhones.add('"+52' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                 System.debug('Phone 2 is null');
+                                                                }
+                  If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                      
+                       										  // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  } 										  
+                                                           
+                                                         
+                                                              RPPhones.add('"+52' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                System.debug('Phone 3 is null');
+                                                               }
+               
+                  String FinalPhones = string.join(RPPhones, ',');
+            
+                  System.debug('Responible Party Contact Phone Numbers: ' + FinalPhones);
+            
+                  System.debug('Contact Phone number formatted: ' + RPRemoveFirstOne + ' Adding to JSON String');
+               
+                  // RS JSON String
+                  // --------------
+                  AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                  // Chat JSON String
+                  // ---------------- 
+                  AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                  // Multi Service JSON String
+                  // -------------------------
+                  AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);  
+                   
+                   
+               }
+               
+                 
+               Else{
+               
+                   RPPhones.add('"+' + RPRemoveFirstOne + '"');
+            
+                   If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                       
+                                                               // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }   
+                       
+                                                         
+                                                               RPPhones.add('"+' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                               Else{
+                                                                 System.debug('Phone 2 is null');
+                                                                }
+                   If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                       
+                                                              // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  }
+                                   
+                                                         
+                                                              RPPhones.add('"+' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                               Else{
+                                                                System.debug('Phone 3 is null');
+                                                               }
+               
+                   String FinalPhones = string.join(RPPhones, ',');
+            
+                   System.debug('Responible Party Contact Phone Numbers: ' + FinalPhones);
+            
+                   System.debug('Contact Phone number formatted: ' + RPRemoveFirstOne + ' Adding to JSON String');
+               
+                   // RS JSON String
+                   // --------------
+                   AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                   
+                   // Chat JSON String
+                   // ---------------- 
+                   AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);
+                   
+                   
+               }
+                 
+             }
+             Else{
+                   
+                 If(GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                    GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('CA')){
+                    
+                   If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                        
+                        									   // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }
+                                                         
+                                                               RPPhones.add('"+1' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                   System.debug('Phone 2 is null');
+                                                                  }
+                   If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                       
+                       										  // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  }                                    
+                                                         
+                                                              RPPhones.add('"+1' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                  System.debug('Phone 3 is null');
+                                                                  }
+               
+                   String FinalPhones = string.join(RPPhones, ',');
+            
+                   // RS JSON String
+                   // --------------
+                   AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                   // Chat JSON String
+                   // ---------------- 
+                   AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);
+                        
+                 }
+                 Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                     
+                   If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                         
+                         									   // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }
+                                                         
+                                                               RPPhones.add('"+52' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                   System.debug('Phone 2 is null');
+                                                                  }
+                   If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                       
+                       										  // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  }                               
+                                                         
+                                                              RPPhones.add('"+52' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                  System.debug('Phone 3 is null');
+                                                                  }
+               
+                   String FinalPhones = string.join(RPPhones, ',');
+            
+                   // RS JSON String
+                   // --------------
+                   AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                   // Chat JSON String
+                   // ---------------- 
+                   AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);
+                     
+                     
+                 }
+                 Else{
+                 
+                   If(GetContactInfo.get(0).Phone_2__c != Null){
+                                                         
+                                                               String Phone2 = GetContactInfo.get(0).Phone_2__c;
+                                                               String Phone2Convert = Phone2.toLowerCase();
+                         
+                                                               // Phone Formatting Logic 2.0
+               												   // ==========================
+               												   String RPSecondPhoneRemoveFirstOne = '';
+               												   String RPSecondPhoneRemovePlus52 = Phone2Convert.replace('+52', '');
+               									               String RPSecondPhoneWhiteSpaceRemoval = RPSecondPhoneRemovePlus52.deleteWhitespace();
+               												   String RPSecondPhoneRemoveSpecialCharacters = RPSecondPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												   System.debug('Semi-formatted: ' + RPSecondPhoneRemoveSpecialCharacters);
+                      
+                      										   If(RPSecondPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												   }
+               												   Else{
+              
+                   													System.debug('Phone did not start with 1');
+              
+                   													RPSecondPhoneRemoveFirstOne = RPSecondPhoneRemoveSpecialCharacters;
+                   
+                  												   }
+                                                         
+                                                               RPPhones.add('"+' + RPSecondPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                   System.debug('Phone 2 is null');
+                                                                  }
+                   If(GetContactInfo.get(0).Phone_3__c != Null){
+                                                         
+                                                              String Phone3 = GetContactInfo.get(0).Phone_3__c;
+                                                              String Phone3Convert = Phone3.toLowerCase();
+                       
+                       										  // Phone Formatting Logic 2.0
+               												  // ==========================
+               												  String RPThirdPhoneRemoveFirstOne = '';
+               												  String RPThirdPhoneRemovePlus52 = Phone3Convert.replace('+52', '');
+               									              String RPThirdPhoneWhiteSpaceRemoval = RPThirdPhoneRemovePlus52.deleteWhitespace();
+               												  String RPThirdPhoneRemoveSpecialCharacters = RPThirdPhoneWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+               												  System.debug('Semi-formatted: ' + RPThirdPhoneRemoveSpecialCharacters);
+                      
+                      										  If(RPThirdPhoneRemoveSpecialCharacters.startsWith('1')){
+              
+                 												 System.debug('Phone Started with 1');
+              
+                 												 RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               												  }
+               											      Else{
+              
+                   												   System.debug('Phone did not start with 1');
+              
+                   												   RPThirdPhoneRemoveFirstOne = RPThirdPhoneRemoveSpecialCharacters;
+                   
+                  												  }
+                                     
+                                                              RPPhones.add('"+' + RPThirdPhoneRemoveFirstOne + '"');
+                                                         
+                                                              }
+                                                              Else{
+                                                                  System.debug('Phone 3 is null');
+                                                                  }
+               
+                   String FinalPhones = string.join(RPPhones, ',');
+            
+                   // RS JSON String
+                   // --------------
+                   AddContactPhoneToJSON = AddAccountPublishedPhoneToJSON.replace('ContactPhonePH', FinalPhones);
+                   // Chat JSON String
+                   // ---------------- 
+                   AddContactPhoneToJSONChat = AddAccountPublishedPhoneToJSONChat.replace('ContactPhonePH', FinalPhones);
+            
+                   // Multi Service JSON String
+                   // -------------------------
+                   AddContactPhoneToJSONMulti = AddAccountPublishedPhoneToJSONMulti.replace('ContactPhonePH', FinalPhones);
+                     
+                 }
+               
+                 }
+            
+             //========================================================================================================================================//
+             
+             // Format Website - PRL doesn't accept this formatting (Built for when they want all websites with www.website.com format)
+             //-------------------------------------------------------------------------------------------------------------------------
+             String AddAccountWebsiteToJSON = '';
+             String AddAccountWebsiteToJSONChat = '';
+             String AddAccountWebsiteToJSONMulti = '';
+            
+             If(GetAccountInfo.get(0).Website != Null){
+             String AccountWebsite = GetAccountInfo.get(0).Website;
+             String ConvertWebsiteListValueToString = AccountWebsite.toLowerCase();
+             System.debug('Website SF unformatted: ' + AccountWebsite);
+             
+             String WebsiteRemoveHTTP = ConvertWebsiteListValueToString.replace('http', '');
+             String WebsiteRemoveSAndDoubleColon = WebsiteRemoveHTTP.replace('s://', '');
+             String WebsiteRemoveDoubleColonAndSlashes = WebsiteRemoveSAndDoubleColon.replace('://', '');
+             System.debug('Formatted website: ' + WebsiteRemoveDoubleColonAndSlashes);
+             // RS JSON String
+             // --------------
+             AddAccountWebsiteToJSON = AddContactPhoneToJSON.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+             // Chat JSON String
+             // ----------------
+             AddAccountWebsiteToJSONChat = AddContactPhoneToJSONChat.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+            
+             // Multi Service JSON String
+             // -------------------------
+             AddAccountWebsiteToJSONMulti = AddContactPhoneToJSONMulti.replace('AccountWebsitePlaceholder', 'http://' + WebsiteRemoveDoubleColonAndSlashes);
+             }
+             Else{
+                 
+                 // RS JSON String
+                 // --------------
+                 AddAccountWebsiteToJSON = AddContactPhoneToJSON.replace('"AccountWebsitePlaceholder"', 'null');
+                 // Chat JSON String
+                 // ----------------
+                 AddAccountWebsiteToJSONChat = AddContactPhoneToJSONChat.replace('"AccountWebsitePlaceholder"', 'null');
+            
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddAccountWebsiteToJSONMulti = AddContactPhoneToJSONMulti.replace('"AccountWebsitePlaceholder"', 'null');
+                 
+                 }
+              
+             
+             //========================================================================================================================================//
+
+             // Start Date Zulu format
+             // ----------------------
+             DateTime TodaysDateTime = datetime.now();
+             String ConvertDateTimeToString = string.valueOf(TodaysDateTime.addHours(8));
+             String AddFirstChar = ConvertDateTimeToString.replaceFirst(' ', 'T');
+             System.debug(AddFirstChar + 'Z');
+             // RS JSON String
+             // --------------
+             String AddStartDate = AddAccountWebsiteToJSON.replace('StartDatePlaceholder', AddFirstChar);
+             System.debug('Adding Start Date: ' + AddFirstChar + 'Z');
+             // Chat JSON String
+             // ----------------
+             String AddStartDateChat = AddAccountWebsiteToJSONChat.replace('StartDatePlaceholder', AddFirstChar);
+            
+             // Multi Service JSON String
+             String AddStartDateMulti = AddAccountWebsiteToJSONMulti.replace('StartDatePlaceholder', AddFirstChar);
+             
+             //========================================================================================================================================//
+            
+             // Format Account FAX
+             // ----------------------------------------------------------------------------------------
+             
+             String AddAccountFax = '';
+             String AddAccountFaxChat = '';
+             String AddAccountFaxMulti = '';
+             
+             If(GetAccountInfo.get(0).Fax != Null){
+             
+             String AccountFax = GetAccountInfo.get(0).Fax;
+             String AccountFaxConvertToString = AccountFax.toLowerCase();
+             System.debug('Account Fax Number Unformatted: ' + AccountFaxConvertToString);
+                 
+              // Phone Formatting Logic 2.0
+             // ==========================
+             String FaxRemoveFirstOne = '';
+             String FaxRemovePlus52 = AccountFaxConvertToString.replace('+52', '');
+             String FaxWhiteSpaceRemoval = FaxRemovePlus52.deleteWhitespace();
+             String FaxRemoveSpecialCharacters = FaxWhitespaceRemoval.replaceAll('[^0-9]', '');
+                 
+             System.debug('Semi-formatted: ' + FaxRemoveSpecialCharacters);
+        
+             If(FaxRemoveSpecialCharacters.startsWith('1')){
+              
+               System.debug('Phone Started with 1');
+              
+               FaxRemoveFirstOne = FaxRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+             }
+             Else{
+              
+                 System.debug('Phone did not start with 1');
+              
+                 FaxRemoveFirstOne = FaxRemoveSpecialCharacters;
+              }      
+             
+             System.debug('Formatted Fax Number: ' + FaxRemoveFirstOne);
+             
+             If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+               
+                 //RS JSON String
+                 //--------------
+                 AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder', '+1' + FaxRemoveFirstOne);
+                 System.debug('Adding Fax: +1' + FaxRemoveFirstOne);
+             
+                 // Chat JSON String
+                 // ----------------
+                 AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '+1' + FaxRemoveFirstOne);
+                 
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '+1' + FaxRemoveFirstOne);
+
+             }
+
+             Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                 
+                 //RS JSON String
+                 //--------------
+                 AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder', '+52' + FaxRemoveFirstOne);
+                 System.debug('Adding Fax: +52' + FaxRemoveFirstOne);
+             
+                 // Chat JSON String
+                 // ----------------
+                 AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '+52' + FaxRemoveFirstOne);
+                 
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '+52' + FaxRemoveFirstOne);
+
+
+             }
+
+             Else{
+                 
+                 //RS JSON String
+                 //--------------
+                 AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder', '+' + FaxRemoveFirstOne);
+                 System.debug('Adding Fax: +' + FaxRemoveFirstOne);
+             
+                 // Chat JSON String
+                 // ----------------
+                 AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '+' + FaxRemoveFirstOne);
+                 
+                 // Multi Service JSON String
+                 // -------------------------
+                 AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '+' + FaxRemoveFirstOne);
+
+
+              }
+                 
+             }
+             Else{
+                 AddAccountFax = AddStartDate.replace('AccountFaxPlaceholder','');
+                 AddAccountFaxChat = AddStartDateChat.replace('AccountFaxPlaceholder', '');
+                 AddAccountFaxMulti = AddStartDateMulti.replace('AccountFaxPlaceholder', '');
+                 System.debug('Account Fax is Null');
+                 }
+            
+             // Boolean Field Logic
+             //-----------------------------------------------------------------------------------------
+             
+             // RS - HIPAA
+             // ----------------------------------------------------------------------------------------
+             String FlagHippa = '';
+             String FlagHippaChat = '';
+             String FlagHippaMulti = '';
+            
+             if(GetAccountInfo.get(0).HIPAA__c == True){
+               
+               FlagHippa = AddAccountFax.replace('HIPAAPlaceholder', 'true');
+               FlagHippaChat = AddAccountFaxChat.replace('HIPAAPlaceholder', 'true');
+               FlagHippaMulti = AddAccountFaxMulti.replace('HIPAAPlaceholder', 'true');
+                
+             }
+             Else{
+                 FlagHippa = AddAccountFax.replace('HIPAAPlaceholder', 'false');
+                 FlagHippaChat = AddAccountFaxChat.replace('HIPAAPlaceholder', 'false');
+                 FlagHippaMulti = AddAccountFaxMulti.replace('HIPAAPlaceholder', 'false');
+                 }
+             
+             
+             String FlagUsingRoboCall = '';
+             String FlagUsingRoboCallChat = '';
+             String FlagUsingRoboCallMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Using_Robocall_filtering__c == True){
+                 
+               FlagUsingRoboCall = FlagHippa.replace('RoboCallPH', 'true');
+               FlagUsingRoboCallChat = FlagHippaChat.replace('RoboCallPH', 'true');
+               FlagUsingRoboCallMulti = FlagHippaMulti.replace('RoboCallPH', 'true');
+                 
+             }
+             Else{
+                 
+               FlagUsingRoboCall = FlagHippa.replace('RoboCallPH', 'false');
+               FlagUsingRoboCallChat = FlagHippaChat.replace('RoboCallPH', 'false');
+               FlagUsingRoboCallMulti = FlagHippaMulti.replace('RoboCallPH', 'false');
+                 
+             }
+             
+
+            
+             //=======================================================================================================================================//
+             
+             
+             // Company info
+             // ----------------------------------------------------------------------------------------
+             
+             // RS - Company Name
+             // -----------------
+             String AccountCompanyName = GetAccountInfo.get(0).Name;
+             String AddCompanyName = FlagUsingRoboCall.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // Chat - Company Name
+             // -------------------
+             String AddCompanyNameChat = FlagUsingRoboCallChat.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // Multi - Company Name
+             // --------------------
+             String AddCompanyNameMulti = FlagUsingRoboCallMulti.replace('AccountNamePlaceHolder', AccountCompanyName);
+            
+             // RS - Billing Street
+             // --------------------
+             String GetBillingStreet = GetAccountInfo.get(0).BillingStreet;
+             String SerializeBillingStreetLineBreaks = GetBillingStreet.replace('\n', '\\n');
+             String SerializeBillingStreetCarriageReturns = SerializeBillingStreetLineBreaks.replace('\r', '\\r');
+             
+             // Split Address Lines
+             // -------------------
+             String AddressLine1 = '';
+             String AddressLine2 = '';
+            
+             List<String> StreetAddressList = GetBillingStreet.split('\r\n', 0);
+          
+              For(String AddressString : StreetAddressList){
+                 
+                  System.debug('String is: ' + AddressString); 
+                
+
+                  If(String.isEmpty(AddressLine1) && AddressString != ''){
+                    
+                    System.debug('Address Line 1: ' + AddressString);
+                    
+                    AddressLine1 = AddressString;
+                    
+                  }
+                  Else If(String.isEmpty(AddressLine2) && AddressString != ''){
+                          
+                         System.debug('Line 1 already populated');
+                         System.debug('Address Line 2: ' + AddressString);
+                    
+                         AddressLine2 = AddressString;
+                  }
+                  Else{
+                       System.debug('Address line 1 and 2 populated');
+                      }
+                 
+             }
+
+             
+             //String AddBillingStreet = AddCompanyName.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
+             String AddBillingStreet = AddCompanyName.replace('BillingStreetPH', AddressLine1);
+             
+             // Chat - Billing Street
+             // ---------------------- 
+             //String AddBillingStreetChat = AddCompanyNameChat.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
+             String AddBillingStreetChat = AddCompanyNameChat.replace('BillingStreetPH', AddressLine1);
+            
+             // Multi - Billing Street
+             // ----------------------
+             //String AddBillingStreetMulti = AddCompanyNameMulti.replace('BillingStreetPH', SerializeBillingStreetCarriageReturns);
+             String AddBillingStreetMulti = AddCompanyNameMulti.replace('BillingStreetPH', AddressLine1);
+            
+             // RS - Billing City
+             // -----------------
+             String GetBillingCity = GetAccountInfo.get(0).BillingCity;
+             System.debug('The Billing City is: ' + GetBillingCity);
+             String AddBillingCity = AddBillingStreet.replace('BillingCityPH', GetBillingCity);
+             
+             // Chat - Billing City
+             // -------------------
+             String AddBillingCityChat = AddBillingStreetChat.replace('BillingCityPH', GetBillingCity);
+            
+             // Multi - Billing City
+             // --------------------
+             String AddBillingCityMulti = AddBillingStreetMulti.replace('BillingCityPH', GetBillingCity);
+            
+             // RS - Billing State
+             // ------------------
+             String AddBillingState = '';
+             String AddBillingStateChat = '';
+             String AddBillingStateMulti = '';
+             
+             If(GetAccountInfo.get(0).BillingState != Null){
+                 
+               If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                  GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                  
+                  String GetBillingState = GetAccountInfo.get(0).BillingState;
+                      
+                  String CheckBillState = GetBillingState;
+                      
+                  String USAccountId = GetAccountInfo.get(0).Id;
+                      
+                  CallPRLAccountBillingStateEval.CheckBillingState(CheckBillState, USAccountId);
+                      
+                  List<Account> GetAccountUpdatedCountryCode = [Select Id, BillingState From Account Where Id = :USAccountId];
+                     
+                  String FinalBillingState = GetAccountUpdatedCountryCode.get(0).BillingState;
+                      
+                  System.debug('Evaluated billing state result: ' + FinalBillingState);
+                    
+                  // RS - Billing State
+                  // ------------------    
+                  AddBillingState = AddBillingCity.replace('BillingStatePH', FinalBillingState);
+            
+                  // Chat - Billing State
+                  // --------------------
+                  AddBillingStateChat = AddBillingCityChat.replace('BillingStatePH', FinalBillingState);
+            
+                  // Multi - Billing State
+                  // ---------------------
+                  AddBillingStateMulti = AddBillingCityMulti.replace('BillingStatePH', FinalBillingState);
+
+
+               }
+
+               Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                   
+                  AddBillingState = AddBillingCity.replace('BillingStatePH', '');
+            
+                  // Chat - Billing State
+                  // --------------------
+                  AddBillingStateChat = AddBillingCityChat.replace('BillingStatePH', '');
+            
+                  // Multi - Billing State
+                  // ---------------------
+                  AddBillingStateMulti = AddBillingCityMulti.replace('BillingStatePH', '');
+
+
+               }
+
+               Else{
+                   
+                   AddBillingState = AddBillingCity.replace('BillingStatePH', '');
+            
+                   // Chat - Billing State
+                   // --------------------
+                   AddBillingStateChat = AddBillingCityChat.replace('BillingStatePH', '');
+            
+                   // Multi - Billing State
+                   // ---------------------
+                   AddBillingStateMulti = AddBillingCityMulti.replace('BillingStatePH', '');
+                   
+                   }
+                 
+                 
+             }
+             Else{
+                 
+                 AddBillingState = AddBillingCity.replace('BillingStatePH', '');
+            
+                 // Chat - Billing State
+                 // --------------------
+                 AddBillingStateChat = AddBillingCityChat.replace('BillingStatePH', '');
+            
+                 // Multi - Billing State
+                 // ---------------------
+                 AddBillingStateMulti = AddBillingCityMulti.replace('BillingStatePH', '');
+                
+                 }
+            
+             // RS - Billing Zip
+             // ----------------
+             String GetBillingZip = GetAccountInfo.get(0).BillingPostalCode;
+             String AddBillingZip = AddBillingState.replace('BillingZipPH', GetBillingZip);
+            
+             // Chat - Billing Zip
+             // ------------------
+             String AddBillingZipChat = AddBillingStateChat.replace('BillingZipPH', GetBillingZip);
+            
+             // Multi - Billing Zip
+             // -------------------
+             String AddBillingZipMulti = AddBillingStateMulti.replace('BillingZipPH', GetBillingZip);
+             
+             //=======================================================================================================================================//
+              
+             // Billing Country Logic
+             // ---------------------
+             String AddAccountBillingCountry = '';
+             String AddAccountBillingCountryChat = '';
+             String AddAccountBillingCountryMulti = '';
+             
+             If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') ||
+                GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America')){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'US');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'US');
+                 
+             }             
+             Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'CA');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'CA');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'CA');
+                 
+             }
+             Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                 
+               AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'MX');
+               AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'MX');
+               AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'MX');
+                     
+             }
+             Else{
+               
+                 If(GetAccountInfo.get(0).BillingCountry != Null){
+                   
+                     String CheckCountryCode = GetAccountInfo.get(0).BillingCountry;
+                     
+                     String ForeignAccountId = GetAccountInfo.get(0).Id;
+                   
+                     CallPRLAccountCountryCodeEval.CheckForCountry(CheckCountryCode, ForeignAccountId);
+                     
+                     List<Account> GetAccountUpdatedCountryCode = [Select Id, BillingCountry From Account Where Id = :ForeignAccountId];
+                     
+                     String FinalCountryCode = GetAccountUpdatedCountryCode.get(0).BillingCountry;
+                     
+                     System.debug('Country code updated to: ' + FinalCountryCode);
+                     
+                     // International logic return
+                     AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', FinalCountryCode);
+                     AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', FinalCountryCode);
+                     AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', FinalCountryCode);
+                                          
+                    
+                     
+                 }
+                 Else{
+                     AddAccountBillingCountry = AddBillingZip.replace('BillingCountryPH', 'US');
+                     AddAccountBillingCountryChat = AddBillingZipChat.replace('BillingCountryPH', 'US');
+                     AddAccountBillingCountryMulti = AddBillingZipMulti.replace('BillingCountryPH', 'US');
+                     }
+                  
+             }
+            
+             // About Company Logic
+             // --------------------------------------------------------------------------------------------------------------------------------------
+            
+             String AddAboutCompany = '';
+             String AddAboutCompanyChat = '';
+             String AddAboutCompanyMulti = '';
+            
+             If(GetOpportunityInfo.get(0).About_Company__c != Null){
+                 
+               // RS - About Company
+               // ------------------
+               String GetAboutCompany = GetOpportunityInfo.get(0).About_Company__c;
+               String SerializeAboutCompLineBreaks = GetAboutCompany.replace('\n', '\\n');
+               String SerializeAboutCompCarriageReturns = SerializeAboutCompLineBreaks.replace('\r', '\\r');
+               String SerializeAboutRemoveFirstSpace = SerializeAboutCompCarriageReturns.replaceall('\t', '');
+                 
+               System.debug(SerializeAboutRemoveFirstSpace);
+
+               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', SerializeAboutRemoveFirstSpace);
+            
+               // Chat - About Company
+               // --------------------
+               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', SerializeAboutRemoveFirstSpace);
+                 
+               // Multi - About Company
+               // ---------------------
+               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', SerializeAboutRemoveFirstSpace);
+                   
+             }
+             Else{
+                 
+               // RS - About Company
+               // ------------------
+               AddAboutCompany = AddAccountBillingCountry.replace('AboutCompanyPlaceholder', '');
+            
+               // Chat - About Company
+               // --------------------
+               AddAboutCompanyChat = AddAccountBillingCountryChat.replace('AboutCompanyPlaceholder', '');
+                 
+               // Multi - About Company
+               // ---------------------
+               AddAboutCompanyMulti = AddAccountBillingCountryMulti.replace('AboutCompanyPlaceholder', '');
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+             
+            
+             // Promo Code Logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+            
+             String AddPromoCode = '';
+             String AddPromoCodeChat = '';
+             String AddPromoCodeMulti = '';
+            
+             If(GetAccountInfo.get(0).Promo_Code__c != Null){
+                 
+                 String GetPromoCode = GetAccountInfo.get(0).Promo_Code__c;
+                 
+                 // RS - Promo Code
+                 // ---------------
+                 AddPromoCode = AddAboutCompany.replace('PromoCodePlaceHolder', GetPromoCode);
+                 
+                 // Chat - Promo Code
+                 // -----------------
+                 AddPromoCodeChat = AddAboutCompanyChat.replace('PromoCodePlaceHolder', GetPromoCode);
+                 
+                 // Multi - Promo Code
+                 // ------------------
+                 AddPromoCodeMulti = AddAboutCompanyMulti.replace('PromoCodePlaceHolder', GetPromoCode);
+                   
+             }
+             Else{
+                 
+                 // RS - Promo Code
+                 // ---------------
+                 AddPromoCode = AddAboutCompany.replace('PromoCodePlaceHolder', '');
+                 
+                 // Chat - Promo Code
+                 // -----------------
+                 AddPromoCodeChat = AddAboutCompanyChat.replace('PromoCodePlaceHolder', '');
+                 
+                 // Multi - Promo Code
+                 // ------------------
+                 AddPromoCodeMulti = AddAboutCompanyMulti.replace('PromoCodePlaceHolder', '');
+                 
+             }
+             
+
+            
+             //=======================================================================================================================================//
+             
+            
+             // Greeting Logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AddGreeting = '';
+             String AddGreetingChat = '';
+             String AddGreetingMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Greeting_2022__c != Null){
+               
+               If(GetOpportunityInfo.get(0).Greeting_2022__c == 'Hello, (Company Name). How may I help you?'){
+                   
+                    AddGreeting = AddPromoCode.replace('GreetingPH', 'Hello, ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                    AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', 'Hello, ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                    AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', 'Hello, ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                     
+               }
+               Else If(GetOpportunityInfo.get(0).Greeting_2022__c == '(Company Name). This is (Receptionists Name). How may I help you?'){
+                   
+                    AddGreeting = AddPromoCode.replace('GreetingPH', GetAccountInfo.get(0).Name + '. This is ___________ . How may I help you?');
+                    AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', GetAccountInfo.get(0).Name + '. This is ___________ . How may I help you?');
+                    AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', GetAccountInfo.get(0).Name + '. This is ___________ . How may I help you?');
+                     
+               }
+               Else If(GetOpportunityInfo.get(0).Greeting_2022__c == 'Thank you for calling (Company Name). How may I help you?'){
+                   
+                    AddGreeting = AddPromoCode.replace('GreetingPH', 'Thank you for calling ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                    AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', 'Thank you for calling ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                    AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', 'Thank you for calling ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                   
+               }
+               Else If(GetOpportunityInfo.get(0).Greeting_2022__c == 'Welcome to (Company Name). How may I help you?'){
+                   
+                   AddGreeting = AddPromoCode.replace('GreetingPH', 'Welcome to ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                   AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', 'Welcome to ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                   AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', 'Welcome to ' + GetAccountInfo.get(0).Name + '. How may I help you?');
+                      
+               }
+               Else If(GetOpportunityInfo.get(0).Greeting_2022__c == 'Custom greeting'){
+                   
+                   AddGreeting = AddPromoCode.replace('GreetingPH', 'Custom greeting');
+                   AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', 'Custom greeting');
+                   AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', 'Custom greeting');
+                   
+               }
+               Else{
+                   
+                   System.debug('Unable to determine greeting selection');
+                   
+                   }
+                 
+                 
+             }
+             Else{
+                 
+               AddGreeting = AddPromoCode.replace('GreetingPH', '');
+               AddGreetingChat = AddPromoCodeChat.replace('GreetingPH', '');
+               AddGreetingMulti = AddPromoCodeMulti.replace('GreetingPH', '');
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+             
+             // Business hours logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AddBusinessHours = '';
+             String AddBusinessHoursChat = '';
+             String AddBusinessHoursMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Business_Hours__c != Null){
+               
+               String GetBusinessHours = GetOpportunityInfo.get(0).Business_Hours__c;
+                 
+               // RS - Business Hours
+               // -------------------
+               AddBusinessHours = AddGreeting.replace('CompanyBusinessHoursPH', GetBusinessHours);
+               
+               // Chat - Business Hours
+               // --------------------- 
+               AddBusinessHoursChat = AddGreetingChat.replace('CompanyBusinessHoursPH', GetBusinessHours);
+                 
+               // Multi - Business Hours
+               // ----------------------
+               AddBusinessHoursMulti = AddGreetingMulti.replace('CompanyBusinessHoursPH', GetBusinessHours);
+                 
+                 
+             }
+             Else{
+                 
+               // RS - Business Hours
+               // -------------------
+               AddBusinessHours = AddGreeting.replace('CompanyBusinessHoursPH', '');
+               
+               // Chat - Business Hours
+               // --------------------- 
+               AddBusinessHoursChat = AddGreetingChat.replace('CompanyBusinessHoursPH', '');
+                 
+               // Multi - Business Hours
+               // ----------------------
+               AddBusinessHoursMulti = AddGreetingMulti.replace('CompanyBusinessHoursPH', '');
+                 
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+            
+             // Timezone Mapping Logic
+             // ----------------------------------------------------------------------------------------
+             String AddTimeZone = '';
+             String AddTimeZoneChat = '';
+             String AddTimeZoneMulti = '';
+            
+             String GetTimeZone = GetAccountInfo.get(0).Time_Zone__c;
+             
+             If(GetAccountInfo.get(0).Time_Zone__c == '1 - Eastern' || GetAccountInfo.get(0).Time_Zone__c == 'Eastern' || GetAccountInfo.get(0).Time_Zone__c == 'Eastern (+3)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/New_York');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/New_York');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/New_York');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '2 - Central' || GetAccountInfo.get(0).Time_Zone__c == 'Central' || GetAccountInfo.get(0).Time_Zone__c == 'Central (+2)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Chicago');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Chicago');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Chicago');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '3 - Mountain' || GetAccountInfo.get(0).Time_Zone__c == 'Mountain' || GetAccountInfo.get(0).Time_Zone__c == 'Mountain (+1)'){
+                
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Denver');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Denver');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Denver');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '4 - Arizona' || GetAccountInfo.get(0).Time_Zone__c == 'Arizona' || GetAccountInfo.get(0).Time_Zone__c == 'Arizona (+1 or +0, No DST)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Phoenix');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Phoenix');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Phoenix');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '5 - Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific' || GetAccountInfo.get(0).Time_Zone__c == 'Pacific (+0)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '6 - Hawaii' || GetAccountInfo.get(0).Time_Zone__c == 'Hawaii' || GetAccountInfo.get(0).Time_Zone__c == 'Hawaii (-2 or -3, No DST)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'Pacific/Honolulu');
+                 
+             }
+             Else If(GetAccountInfo.get(0).Time_Zone__c == '7 - Alaska' || GetAccountInfo.get(0).Time_Zone__c == 'Alaska' || GetAccountInfo.get(0).Time_Zone__c == 'Alaska (-1)'){
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Anchorage');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Anchorage');
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Anchorage');
+                    
+             }
+             Else {
+                 
+               // RS - Timezone
+               // -------------
+               AddTimeZone = AddBusinessHours.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+               
+               // Chat - Timezone
+               // ---------------
+               AddTimeZoneChat = AddBusinessHoursChat.replace('TimeZonePlaceholder', 'America/Los_Angeles'); 
+                 
+               // Multi - Timezone
+               // ----------------
+               AddTimeZoneMulti = AddBusinessHoursMulti.replace('TimeZonePlaceholder', 'America/Los_Angeles');
+                                  
+             }
+             
+             
+             //=======================================================================================================================================//
+             
+             
+             // Primary Contact Information
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             
+             // RS - Contact First Name
+             // -----------------------
+             String GetContactFirstName = GetContactInfo.get(0).FirstName;
+             String AddContactFirstName = AddTimeZone.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // Chat - Contact First Name
+             // -------------------------
+             String AddContactFirstNameChat = AddTimeZoneChat.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // Multi - Contact First Name
+             // --------------------------
+             String AddContactFirstNameMulti = AddTimeZoneMulti.replace('ContactFirstNamePH', GetContactFirstName);
+            
+             // RS - Contact Last Name
+             // ----------------------
+             String GetContactLastName = GetContactInfo.get(0).LastName;
+             String AddContactLastName = AddContactFirstName.replace('ContactLastNamePH', GetContactLastName);
+              
+             // Chat - Contact Last Name
+             // ------------------------
+             String AddContactLastNameChat = AddContactFirstNameChat.replace('ContactLastNamePH', GetContactLastName);
+            
+             // Multi - Contact Last Name
+             // -------------------------
+             String AddContactLastNameMulti = AddContactFirstNameMulti.replace('ContactLastNamePH', GetContactLastName);
+            
+             // Responsible Party - Multiple Emails
+             // -----------------------------------
+             String GetContactEmail = GetContactInfo.get(0).Email; 
+            
+             List<String> RPContactEmails = new List<String>();
+             
+             RPContactEmails.add('"' + GetContactEmail + '"');
+            
+             If(GetContactInfo.get(0).Alternate_Email_1__c != Null){
+                 
+                 String AltEmail1 = GetContactInfo.get(0).Alternate_Email_1__c;
+                 
+                 RPContactEmails.add('"' + AltEmail1 + '"');
+                 }
+                 Else{
+                     System.debug('No Email 2');
+                     }
+            
+             If(GetContactInfo.get(0).Alternate_Email_2__c != Null){
+                 
+                 String AltEmail2 = GetContactInfo.get(0).Alternate_Email_2__c;
+                 
+                 RPContactEmails.add('"' + AltEmail2 + '"');
+                 }
+                 Else{
+                     System.debug('No Email 3');
+                     }
+             
+             String FinalEmailAddys = string.join(RPContactEmails, ',');
+            
+             System.debug('Responible Party Contact Email Addresses: ' + FinalEmailAddys);
+            
+             // RS - Contact Email
+             // ------------------
+             String AddContactEmail = AddContactLastName.replace('ContactEmailPH', FinalEmailAddys);
+             
+             // Chat - Contact Email
+             // --------------------
+             String AddContactEmailChat = AddContactLastNameChat.replace('ContactEmailPH', FinalEmailAddys);
+            
+             // Multi - Contact Email
+             // ---------------------
+             String AddContactEmailMulti = AddContactLastNameMulti.replace('ContactEmailPH', FinalEmailAddys);
+            
+             // Ok to give out Address
+             // ---------------------------
+             String FlagOTGA = '';
+             String FlagOTGAChat = '';
+             String FlagOTGAMulti = '';
+             
+             If(GetAccountInfo.get(0).Ok_to_give_out_address__c == True){
+                 
+               System.debug('Ok to give out billing address address: ' + GetAccountInfo.get(0).Ok_to_give_out_address__c);
+                 
+               // - RS
+               // ----  
+               FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', 'true');
+                 
+               // - Chat
+               // ------
+               FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', 'true');
+               
+               
+               // - Multi
+               // -------
+               FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', 'true');
+                 
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out billing address address: ' + GetAccountInfo.get(0).Ok_to_give_out_address__c);
+                 
+                 // - RS
+                 // ----  
+                 FlagOTGA = AddContactEmail.replace('OkTogiveAddressPH', 'false');
+                 
+                 // - Chat
+                 // ------
+                 FlagOTGAChat = AddContactEmailChat.replace('OkTogiveAddressPH', 'false');
+               
+                 // - Multi
+                 // -------
+                 FlagOTGAMulti = AddContactEmailMulti.replace('OkTogiveAddressPH', 'false');
+                 
+                 }
+
+            
+             // Ok to give out Email
+             // -------------------------
+             String FlagOTGE = '';
+             String FlagOTGEChat = '';
+             String FlagOTGEMulti = '';
+             
+             If(GetContactInfo.get(0).OK_to_give_out_email_address__c == True){
+                 
+               System.debug('Ok to give out email: ' + GetContactInfo.get(0).OK_to_give_out_email_address__c);
+             
+               // RS - Ok to give out Email
+               // -------------------------
+               FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', 'true');
+             
+               // Chat - Ok to give out Email
+               // ---------------------------
+               FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', 'true');
+            
+               // Multi - Ok to give out Email
+               // ----------------------------
+               FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', 'true');
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out email: ' + GetContactInfo.get(0).OK_to_give_out_email_address__c);
+                 
+                 // RS - Ok to give out Email
+                 // -------------------------
+                 FlagOTGE = FlagOTGA.replace('OkToGiveEmailPH', 'false');
+             
+                 // Chat - Ok to give out Email
+                 // ---------------------------
+                 FlagOTGEChat = FlagOTGAChat.replace('OkToGiveEmailPH', 'false');
+            
+                 // Multi - Ok to give out Email
+                 // ----------------------------
+                 FlagOTGEMulti = FlagOTGAMulti.replace('OkToGiveEmailPH', 'false');
+                 
+                 }
+             
+             
+            
+             // RS - Ok to give out Phone
+             // -------------------------
+             String FlagOTGOP = '';
+             String FlagOTGOPChat = '';
+             String FlagOTGOPMulti = '';
+            
+             If(GetContactInfo.get(0).OK_to_give_out_phone__c == True){
+                 
+               System.debug('Ok to give out phone: ' + GetContactInfo.get(0).OK_to_give_out_phone__c);
+                 
+               // RS - Ok to give out Phone
+               // -------------------------
+               FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', 'true');
+              
+               // Chat - Ok to give out Phone
+               // ---------------------------
+               FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', 'true');
+            
+               // Multi - Ok to give out Phone
+               // ----------------------------
+               FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', 'true');
+                 
+             }
+             Else{
+                 
+                 System.debug('Ok to give out Phone: ' + GetContactInfo.get(0).OK_to_give_out_phone__c);
+                 
+                 // RS - Ok to give out Phone
+                 // -------------------------
+                 FlagOTGOP = FlagOTGE.replace('OkToGivePhonePH', 'false');
+              
+                 // Chat - Ok to give out Phone
+                 // ---------------------------
+                 FlagOTGOPChat = FlagOTGEChat.replace('OkToGivePhonePH', 'false');
+            
+                 // Multi - Ok to give out Phone
+                 // ----------------------------
+                 FlagOTGOPMulti = FlagOTGEMulti.replace('OkToGivePhonePH', 'false');
+                 
+                 }
+             
+             
+            
+             //=======================================================================================================================================//
+             
+            
+             // Add External Account Id
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String GetAccountIDForJSON = GetAccountInfo.get(0).Id;
+             
+             // RS - External Account Id
+             // ------------------------
+             String AddExternalAccountId = FlagOTGOP.replace('SFAccountIdPH', GetAccountIDForJSON);
+             
+             // Chat - External Account Id
+             // --------------------------
+             String AddExternalAccountIdChat = FlagOTGOPChat.replace('SFAccountIdPH', GetAccountIDForJSON);
+            
+             // Multi - External Account Id
+             // ---------------------------
+             String AddExternalAccountIdMulti = FlagOTGOPMulti.replace('SFAccountIdPH', GetAccountIDForJSON);
+             
+             //=======================================================================================================================================//
+             
+             // Add Address Line 2
+             // ----------------------------------------------------------------------------------------------------------------------------------------  
+             String AddAddressLine2RS = AddExternalAccountId;
+             String AddAddressLine2Chat = AddExternalAccountIdChat;
+             String AddAddressLine2Multi = AddExternalAccountIdMulti;
+            
+             If(AddressLine2 != ''){
+             
+             // RS - Address Line 2
+             // -------------------
+             AddAddressLine2RS = AddExternalAccountId.replace('BillingStreet2PH', AddressLine2);
+             
+             // Chat - Address Line 2
+             // ---------------------
+             AddAddressLine2Chat = AddExternalAccountIdChat.replace('BillingStreet2PH', AddressLine2);
+             
+             // Multi - Address Line 2
+             // ----------------------
+             AddAddressLine2Multi = AddExternalAccountIdMulti.replace('BillingStreet2PH', AddressLine2);
+             
+             }
+             Else{
+                 
+                  // RS - Address Line 2
+                  // -------------------
+                  AddAddressLine2RS = AddExternalAccountId.replace('BillingStreet2PH', '');
+             
+                  // Chat - Address Line 2
+                  // ---------------------
+                  AddAddressLine2Chat = AddExternalAccountIdChat.replace('BillingStreet2PH', '');
+             
+                  // Multi - Address Line 2
+                  // ----------------------
+                  AddAddressLine2Multi = AddExternalAccountIdMulti.replace('BillingStreet2PH', '');
+                 
+                 
+                 }
+            
+             //=======================================================================================================================================//
+             
+             // Add Requester
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String RequesterFirstName = userinfo.getFirstName();
+             String RequesterLastName = userinfo.getLastName();
+             String RequesterFullName = RequesterFirstName + ' ' + RequesterLastName;
+            
+             // RS - Add Requester
+             // ------------------
+             String AddRequesterNameRS = AddAddressLine2RS.replace('RequesterPH', RequesterFullName);
+             
+             // Chat - Add Requester
+             // --------------------
+             String AddRequesterNameChat = AddAddressLine2Chat.replace('RequesterPH', RequesterFullName);
+              
+             // Multi - Add Requester
+             // ---------------------
+             String AddRequesterNameMulti = AddAddressLine2Multi.replace('RequesterPH', RequesterFullName);
+            
+            
+             //=======================================================================================================================================//
+             
+            
+             // Add Industry
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AddIndustryRS = '';
+             String AddIndustryChat = '';
+             String AddIndustryMulti = '';
+            
+             If(GetAccountInfo.get(0).Industry != Null){
+             String GetIndustry = GetAccountInfo.get(0).Industry;
+            
+             // RS - Add Industry
+             // -----------------
+             AddIndustryRS = AddRequesterNameRS.replace('IndustryPH', GetIndustry);
+            
+             // Chat - Add Industry
+             // -------------------
+             AddIndustryChat = AddRequesterNameChat.replace('IndustryPH', GetIndustry);
+             
+             // Multi - Add Industry
+             // --------------------
+             AddIndustryMulti = AddRequesterNameMulti.replace('IndustryPH', GetIndustry);
+             }
+             Else{
+                 
+                 // RS - Add Industry
+                 // -----------------
+                 AddIndustryRS = AddRequesterNameRS.replace('IndustryPH', '');
+            
+                 // Chat - Add Industry
+                 // -------------------
+                 AddIndustryChat = AddRequesterNameChat.replace('IndustryPH', '');
+             
+                 // Multi - Add Industry
+                 // --------------------
+                 AddIndustryMulti = AddRequesterNameMulti.replace('IndustryPH', '');
+                 
+                 }
+             //=======================================================================================================================================//
+             
+             
+             // Additional Contacts Logic
+             // ----------------------------------------------------------------------------------------------------------------------------------------
+             String AdditionalContactsRS = '';
+             String AdditionalContactsChat = '';
+             String AdditionalContactsMulti = '';
+            
+             // Ok to Give Out Boolean Variables
+             // --------------------------------
+             String OkToGivePhone = '';
+             String OkToGiveEmail = '';
+             String NotFirstContactFlagOktoGiveEmails = '';
+             String NotFirstContactFlagOktoGivePhone = '';
+            
+             // Phone Logic 2.0 Variables - Additional Contact Phone 1
+             // -------------------------
+             String GetAdditionalContactPhoneLoop = '';
+             String AdditionalContactConvertToStringLoop = '';
+             String ACRemoveFirstOne = '';
+             String ACRemovePlus52 = '';
+             String ACWhiteSpaceRemoval = '';
+             String ACRemoveSpecialCharacters = '';
+            
+             // Phone Logic 2.0 Variables - Additional Contact Phone 2
+             // -------------------------
+             String ConvertPhone2toString = '';
+             String ACPhone2RemoveFirstOne = '';
+             String ACPhone2RemovePlus52 = '';
+             String ACPhone2WhiteSpaceRemoval = '';
+             String ACPhone2RemoveSpecialCharacters = '';
+            
+             // Phone Logic 2.0 Variables - Additional Contact Phone 3
+             // -------------------------
+             String ConvertPhone3toString = '';
+             String ACPhone3RemoveFirstOne = '';
+             String ACPhone3RemovePlus52 = '';
+             String ACPhone3WhiteSpaceRemoval = '';
+             String ACPhone3RemoveSpecialCharacters = '';
+             
+             
+             String FirstContact = '';
+             String FinalAdditionalNumbers = '';
+
+             
+             List<String> AddContactsJSONBuild = new List<String>();
+            
+             If(!GetAdditionalContacts.IsEmpty()){
+                  
+               System.debug('List size / Additional Contacts to add: ' + GetAdditionalContacts.size());
+               
+               Integer ContactListSize = GetAdditionalContacts.size();
+                 
+               For(Integer i=0;i<ContactListSize;i++){
+                  
+                   
+                  // Additional Email Addresses Logic
+                  // -------------------------------- 
+                  List<String> AdditionalContactMultEmailAddresses = new List<String>();
+                  
+                  If(GetAdditionalContacts.get(i).Alternate_Email_1__c != Null){
+                      
+                    AdditionalContactMultEmailAddresses.add('"' + GetAdditionalContacts.get(i).Alternate_Email_1__c + '"');
+                      
+                  }
+                  Else{
+                      System.debug('Additional Email 1 is null');
+                      }
+                   
+                   
+                  If(GetAdditionalContacts.get(i).Alternate_Email_2__c != Null){
+                      
+                    AdditionalContactMultEmailAddresses.add('"' + GetAdditionalContacts.get(i).Alternate_Email_2__c + '"');
+                      
+                  }
+                  Else{
+                      System.debug('Additional Email 2 is null');
+                      }
+                   
+                  String AllAlternateEmail = string.join(AdditionalContactMultEmailAddresses, ',');
+                   
+                  String FinalAlternateEmail = AllAlternateEmail;  
+                      
+                  System.debug('Alternate Email Address String: ' + FinalAlternateEmail);
+                   
+                  String NotFirstContact = '{ "given_name": "' + GetAdditionalContacts.get(i).FirstName + '", "family_name": "' + GetAdditionalContacts.get(i).LastName + '", "phone_numbers": [AdditionalPhonesPH], "email_address": ["'+ 
+                                           GetAdditionalContacts.get(i).Email +'"AdditionalEmailsPH], "ok_to_give_out_phone_number": OkToGivePhonePH, "ok_to_give_out_email_address": OkToGiveEmailPH}';   
+                  
+                  // Additional Contact Multi Phone Logic
+                  // ------------------------------------ 
+                  List<String> AdditionalContactMultiPhone = new List<String>();
+                  
+                  If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                     GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                    
+                       If(GetAdditionalContacts.get(i).Phone_2__c != Null){
+                      
+                         String GetPhone2 = GetAdditionalContacts.get(i).Phone_2__c;
+                         ConvertPhone2toString = GetPhone2.toLowerCase();
+                         ACPhone2RemovePlus52 = ConvertPhone2toString.replace('+52', '');
+                         ACPhone2WhiteSpaceRemoval = ACPhone2RemovePlus52.deleteWhitespace();
+                         ACPhone2RemoveSpecialCharacters = ACPhone2WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                           If(ACPhone2RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 2: ' + ACPhone2RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+1' + ACPhone2RemoveFirstOne + '"');
+                       
+                       }
+                       Else{
+                            System.debug('Phone 2 is null');
+                           }
+                   
+                       If(GetAdditionalContacts.get(i).Phone_3__c != Null){
+                      
+                         String GetPhone3 = GetAdditionalContacts.get(i).Phone_3__c;
+                         ConvertPhone3toString = GetPhone3.toLowerCase();
+                         ACPhone3RemovePlus52 = ConvertPhone3toString.replace('+52', '');
+                         ACPhone3WhiteSpaceRemoval = ACPhone3RemovePlus52.deleteWhitespace();
+                         ACPhone3RemoveSpecialCharacters = ACPhone3WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                         If(ACPhone3RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 2: ' + ACPhone3RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+1' + ACPhone3RemoveFirstOne + '"');
+                           
+
+                       }
+                       Else{
+                            System.debug('Phone 3 is null');
+                           }
+                   
+                       String CombinedAdditionalNumbers = string.join(AdditionalContactMultiPhone, ',');
+                   
+                       FinalAdditionalNumbers = CombinedAdditionalNumbers;
+                   
+                       System.debug('All Additional Phone Numbers: ' + FinalAdditionalNumbers);
+
+                  }
+
+                  Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                      
+                       If(GetAdditionalContacts.get(i).Phone_2__c != Null){
+                      
+                          String GetPhone2 = GetAdditionalContacts.get(i).Phone_2__c;
+                         ConvertPhone2toString = GetPhone2.toLowerCase();
+                         ACPhone2RemovePlus52 = ConvertPhone2toString.replace('+52', '');
+                         ACPhone2WhiteSpaceRemoval = ACPhone2RemovePlus52.deleteWhitespace();
+                         ACPhone2RemoveSpecialCharacters = ACPhone2WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                           If(ACPhone2RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 2: ' + ACPhone2RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+52' + ACPhone2RemoveFirstOne + '"');
+                       
+                       }
+                       Else{
+                            System.debug('Phone 2 is null');
+                           }
+                   
+                       If(GetAdditionalContacts.get(i).Phone_3__c != Null){
+                      
+                         String GetPhone3 = GetAdditionalContacts.get(i).Phone_3__c;
+                         ConvertPhone3toString = GetPhone3.toLowerCase();
+                         ACPhone3RemovePlus52 = ConvertPhone3toString.replace('+52', '');
+                         ACPhone3WhiteSpaceRemoval = ACPhone3RemovePlus52.deleteWhitespace();
+                         ACPhone3RemoveSpecialCharacters = ACPhone3WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                         If(ACPhone3RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 3: ' + ACPhone3RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+52' + ACPhone3RemoveFirstOne + '"');
+                       
+                       }
+                       Else{
+                            System.debug('Phone 3 is null');
+                           }
+                   
+                       String CombinedAdditionalNumbers = string.join(AdditionalContactMultiPhone, ',');
+                   
+                       FinalAdditionalNumbers = CombinedAdditionalNumbers;
+                   
+                       System.debug('All Additional Phone Numbers: ' + FinalAdditionalNumbers);
+
+
+                  }
+
+                  Else{
+                      
+                       If(GetAdditionalContacts.get(i).Phone_2__c != Null){
+                      
+                         String GetPhone2 = GetAdditionalContacts.get(i).Phone_2__c;
+                         ConvertPhone2toString = GetPhone2.toLowerCase();
+                         ACPhone2RemovePlus52 = ConvertPhone2toString.replace('+52', '');
+                         ACPhone2WhiteSpaceRemoval = ACPhone2RemovePlus52.deleteWhitespace();
+                         ACPhone2RemoveSpecialCharacters = ACPhone2WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                           If(ACPhone2RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone2RemoveFirstOne = ACPhone2RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 2: ' + ACPhone2RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+' + ACPhone2RemoveFirstOne + '"');
+                       
+                       }
+                       Else{
+                            System.debug('Phone 2 is null');
+                           }
+                   
+                       If(GetAdditionalContacts.get(i).Phone_3__c != Null){
+                      
+                         String GetPhone3 = GetAdditionalContacts.get(i).Phone_3__c;
+                         ConvertPhone3toString = GetPhone3.toLowerCase();
+                         ACPhone3RemovePlus52 = ConvertPhone3toString.replace('+52', '');
+                         ACPhone3WhiteSpaceRemoval = ACPhone3RemovePlus52.deleteWhitespace();
+                         ACPhone3RemoveSpecialCharacters = ACPhone3WhitespaceRemoval.replaceAll('[^0-9]', '');
+                           
+                         If(ACPhone3RemoveSpecialCharacters.startsWith('1')){
+              
+                           System.debug('Phone Started with 1');
+              
+                           ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                         }
+                         Else{
+              
+                             System.debug('Phone did not start with 1');
+              
+                             ACPhone3RemoveFirstOne = ACPhone3RemoveSpecialCharacters;
+                   
+                             }
+                         
+                      
+                         System.debug('Phone 3: ' + ACPhone3RemoveFirstOne);
+                      
+                         AdditionalContactMultiPhone.add('"+' + ACPhone3RemoveFirstOne + '"');
+                       
+                       }
+                       Else{
+                            System.debug('Phone 3 is null');
+                           }
+                   
+                       String CombinedAdditionalNumbers = string.join(AdditionalContactMultiPhone, ',');
+                   
+                       FinalAdditionalNumbers = CombinedAdditionalNumbers;
+                   
+                       System.debug('All Additional Phone Numbers: ' + FinalAdditionalNumbers);
+
+
+                  }
+                   
+                   
+                  // Additional Contact - Phone Logic
+                  // --------------------------------
+                  If(GetAdditionalContacts.get(i).Phone != Null){
+                   
+                  GetAdditionalContactPhoneLoop = GetAdditionalContacts.get(i).Phone;
+                  AdditionalContactConvertToStringLoop = GetAdditionalContactPhoneLoop.toLowerCase();
+                  ACRemovePlus52 = AdditionalContactConvertToStringLoop.replace('+52', '');
+                  ACWhiteSpaceRemoval = ACRemovePlus52.deleteWhitespace();
+                  ACRemoveSpecialCharacters = ACWhitespaceRemoval.replaceAll('[^0-9]', '');
+                      
+                  System.debug('Semi-formatted: ' + ACRemoveSpecialCharacters);
+        
+                  If(ACRemoveSpecialCharacters.startsWith('1')){
+              
+                    System.debug('Phone Started with 1');
+              
+                    ACRemoveFirstOne = ACRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+                  }
+                  Else{
+              
+                       System.debug('Phone did not start with 1');
+              
+                       ACRemoveFirstOne = ACRemoveSpecialCharacters;
+                   
+                      }
+                      
+                  
+                  If(GetAdditionalContacts.get(i).OK_to_give_out_phone__c == True){
+                    
+                    System.debug('Ok to give out phone for additional contact ' + i + ' is true');
+                    OkToGivePhone = 'true';
+                      
+                  }
+                  Else{
+                      System.debug('Ok to give out phone for additional contact ' + i + ' is false');
+                      OkToGivePhone = 'false';
+                      }
+                   
+                  If(GetAdditionalContacts.get(i).OK_to_give_out_email_address__c == True){
+                    
+                    System.debug('Ok to give out email for additonal contact ' + i + ' is true');
+                    OkToGiveEmail = 'true';
+                      
+                  }
+                  Else{
+                      System.debug('Ok to give out email for additonal contact ' + i + ' is false');
+                      OkToGiveEmail = 'false';
+                      }
+                   
+                  If(i == 0){
+                      
+                      If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                         GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') ||GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                             
+                         FirstContact = ',"additional_contacts": [{ "given_name": "' + GetAdditionalContacts.get(i).FirstName + '", "family_name": "' + GetAdditionalContacts.get(i).LastName + '", "phone_numbers": ["+1'+ 
+                                     ACRemoveFirstOne +'"AdditionalPhonesPH], "email_address": ["'+ GetAdditionalContacts.get(i).Email +'",AdditionalEmailsPH], "ok_to_give_out_phone_number": '+ OkToGivePhone +', "ok_to_give_out_email_address": '+ OkToGiveEmail +'}';  
+
+
+                      }
+
+                      Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                          
+                          FirstContact = ',"additional_contacts": [{ "given_name": "' + GetAdditionalContacts.get(i).FirstName + '", "family_name": "' + GetAdditionalContacts.get(i).LastName + '", "phone_numbers": ["+52'+ 
+                                     ACRemoveFirstOne +'"AdditionalPhonesPH], "email_address": ["'+ GetAdditionalContacts.get(i).Email +'",AdditionalEmailsPH], "ok_to_give_out_phone_number": '+ OkToGivePhone +', "ok_to_give_out_email_address": '+ OkToGiveEmail +'}';  
+
+
+                      }
+
+                      Else{
+                          
+                          FirstContact = ',"additional_contacts": [{ "given_name": "' + GetAdditionalContacts.get(i).FirstName + '", "family_name": "' + GetAdditionalContacts.get(i).LastName + '", "phone_numbers": ["+'+ 
+                                     ACRemoveFirstOne +'"AdditionalPhonesPH], "email_address": ["'+ GetAdditionalContacts.get(i).Email +'",AdditionalEmailsPH], "ok_to_give_out_phone_number": '+ OkToGivePhone +', "ok_to_give_out_email_address": '+ OkToGiveEmail +'}';  
+                      
+                          }
+
+                      
+                      String FirstContactAddEmails = '';
+                      String FirstContactAddPhones = '';
+                      
+                      If(FinalAlternateEmail != ''){
+                          
+                        System.debug('Adding Alternate Emails');
+                          
+                        FirstContactAddEmails = FirstContact.replace('AdditionalEmailsPH', FinalAlternateEmail);  
+                            
+                        
+                         
+                          
+                      }
+                      Else{
+                          
+                          System.debug('No Additional Email Addresses');
+                          
+                          FirstContactAddEmails = FirstContact.replace(',AdditionalEmailsPH', ''); 
+                          
+                          }
+                      
+                      
+                      If(FinalAdditionalNumbers != ''){
+                          
+                        FirstContactAddPhones = FirstContactAddEmails.replace('AdditionalPhonesPH', ',' + FinalAdditionalNumbers);
+                          
+                        
+                          
+                      }
+                      Else{
+                          
+                          FirstContactAddPhones = FirstContactAddEmails.replace('AdditionalPhonesPH', '');
+                          
+                          
+                          
+                          }
+                      
+                      System.debug(FirstContactAddPhones); 
+                        
+                      AddContactsJSONBuild.add(FirstContactAddPhones);
+                      
+                        
+                  }
+                  Else{
+                      
+                      String NotFirstContactAddEmails = '';
+                      String NotFirstContactAddPhones = '';
+                      
+                      If(FinalAlternateEmail != ''){
+                          
+                        System.debug('Adding Alternate Emails');  
+                        
+                        NotFirstContactFlagOktoGiveEmails = NotFirstContact.replace('OkToGiveEmailPH', OkToGiveEmail);
+                          
+                        NotFirstContactAddEmails = NotFirstContactFlagOktoGiveEmails.replace('AdditionalEmailsPH', ',' + FinalAlternateEmail);
+                          
+                        
+                          
+                          
+                      }
+                      Else{
+                          
+                          System.debug('No Additional Email Addresses');
+                          
+                          NotFirstContactFlagOktoGiveEmails = NotFirstContact.replace('OkToGiveEmailPH', OkToGiveEmail);
+                          
+                          NotFirstContactAddEmails = NotFirstContactFlagOktoGiveEmails.replace('AdditionalEmailsPH', '' );
+                          
+                           
+                          
+                          }
+                      
+                      
+                      If(FinalAdditionalNumbers != ''){
+                        
+                        System.debug('Adding Additional Phones');
+                        
+                        // Add international logic  
+                          
+                        NotFirstContactFlagOktoGivePhone = NotFirstContactAddEmails.replace('OkToGivePhonePH', OkToGivePhone);
+                          
+                        If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                           GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+
+                            NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH','"+1' + ACRemoveFirstOne + '"' + ',' + FinalAdditionalNumbers);
+
+                        }
+
+                        Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+
+                            NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH','"+52' + ACRemoveFirstOne + '"' + ',' + FinalAdditionalNumbers);
+
+                        }
+
+                        Else{
+
+                            NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH','"+' + ACRemoveFirstOne + '"' + ',' + FinalAdditionalNumbers);
+
+                        }
+                          
+                          
+                          
+                      }
+                      Else{
+                          
+                          // Add international logic
+                          
+                          NotFirstContactFlagOktoGivePhone = NotFirstContactAddEmails.replace('OkToGivePhonePH', OkToGivePhone);
+                          
+                          If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                             GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                                
+                             NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH', '"+1' + ACRemoveFirstOne + '"');
+
+                          }
+
+                          Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                              
+                             NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH', '"+52' + ACRemoveFirstOne + '"');
+
+                          }
+
+                          Else{
+                              
+                             NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH', '"+' + ACRemoveFirstOne + '"');
+
+                              }
+                          
+                          
+                          }
+                      
+                      System.debug(NotFirstContactAddPhones); 
+                        
+                      AddContactsJSONBuild.add(NotFirstContactAddPhones);
+                      
+
+                      }  
+                       
+                  }
+                  Else{
+                      
+                      // Ok to give out Boolean Logic
+                      // ----------------------------
+                      If(GetAdditionalContacts.get(i).OK_to_give_out_phone__c == True){
+                        
+                        System.debug('Ok to give out phone for additonal contact ' + i + 'is true');
+                        OkToGivePhone = 'true';
+                      
+                      }
+                      Else{
+                           System.debug('Ok to give out phone for additonal contact ' + i + 'is false');
+                           OkToGivePhone = 'false';
+                          }
+                   
+                      If(GetAdditionalContacts.get(i).OK_to_give_out_email_address__c == True){
+                        
+                        System.debug('Ok to give out email for additonal contact ' + i + 'is true');
+                        OkToGiveEmail = 'true';
+                      
+                      }
+                      Else{
+                           System.debug('Ok to give out email for additonal contact ' + i + 'is false');
+                           OkToGiveEmail = 'false';
+                          }
+                      
+                      String FirstContactAddEmails = '';
+                      String FirstContactAddPhones = '';
+                      
+                      If(i == 0){
+                        
+                        FirstContact = ',"additional_contacts": [{ "given_name": "' + GetAdditionalContacts.get(i).FirstName + '", "family_name": "' + GetAdditionalContacts.get(i).LastName + '", "phone_numbers": [AdditionalPhonesPH], "email_address": ["'+ 
+                                              GetAdditionalContacts.get(i).Email +'",AdditionalEmailsPH], "ok_to_give_out_phone_number": '+ OkToGivePhone +', "ok_to_give_out_email_address": '+ OkToGiveEmail +'}';  
+                          
+                        If(FinalAlternateEmail != ''){
+                          
+                          System.debug('Adding Alternate Emails');
+                            
+                          FirstContactAddEmails = FirstContact.replace('AdditionalEmailsPH', FinalAlternateEmail);
+                            
+                        }
+                        Else{
+                            
+                            System.debug('No Alternate Emails');  
+                            
+                            FirstContactAddEmails = FirstContact.replace(',AdditionalEmailsPH', '');
+                            
+                            }
+                          
+                        If(FinalAdditionalNumbers != ''){
+                            
+                          System.debug('Adding Additional Phones ' + FinalAdditionalNumbers + ' Line 2243');
+                          
+                          FirstContactAddPhones = FirstContactAddEmails.replace('AdditionalPhonesPH', FinalAdditionalNumbers);
+                            
+                        }
+                        Else{
+                            FirstContactAddPhones = FirstContactAddEmails.replace('AdditionalPhonesPH', '""');
+                            }
+                        
+                        System.debug(FirstContact); 
+                        
+                        AddContactsJSONBuild.add(FirstContactAddPhones);   
+                        
+                      }
+                      Else{
+                          
+                          String NotFirstContactAddEmails = '';
+                          String NotFirstContactAddPhones = '';
+                          
+                          If(FinalAlternateEmail != ''){
+                              
+                            System.debug('Adding Alternate Emails');
+                              
+                            NotFirstContactFlagOktoGiveEmails = NotFirstContact.replace('OkToGiveEmailPH', OkToGiveEmail);
+                              
+                            NotFirstContactAddEmails = NotFirstContactFlagOktoGiveEmails.replace('AdditionalEmailsPH', ',' + FinalAlternateEmail);  
+                             
+
+                          }
+                          Else{
+                              
+                              System.debug('No Alternate Emails');  
+                              
+                              NotFirstContactFlagOktoGiveEmails = NotFirstContact.replace('OkToGiveEmailPH', OkToGiveEmail);
+                              
+                              NotFirstContactAddEmails =  NotFirstContactFlagOktoGiveEmails.replace('AdditionalEmailsPH', '');  
+                              
+                              }
+                          
+                          If(FinalAdditionalNumbers != ''){
+                            
+                            System.debug('Adding Alternate Phones');
+                              
+                            NotFirstContactFlagOktoGivePhone = NotFirstContactAddEmails.replace('OkToGivePhonePH', OkToGivePhone);  
+                              
+                            NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH', FinalAdditionalNumbers); 
+                              
+                          }
+                          Else{
+                              NotFirstContactFlagOktoGivePhone = NotFirstContactAddEmails.replace('OkToGivePhonePH', OkToGivePhone);
+                              NotFirstContactAddPhones = NotFirstContactFlagOktoGivePhone.replace('AdditionalPhonesPH', ''); 
+                              }
+                          
+                          System.debug(NotFirstContactAddPhones);
+                          
+                          AddContactsJSONBuild.add(NotFirstContactAddPhones);
+                          
+                          }  
+                      
+                      
+                  }
+                   
+               }
+               
+               String AllAdditionalContacts = String.join(AddContactsJSONBuild, ',');
+                 
+               String RemoveAdditionalPhonePH = AllAdditionalContacts.replace('AdditionalPhonesPH', '');
+                 
+               String RemoveAdditionalEmailPH = RemoveAdditionalPhonePH.replace('AdditionalEmailsPH', '');
+               
+               String FinalString = RemoveAdditionalEmailPH + ']';
+               
+               System.debug('All Additional Contacts: ' + FinalString);
+                 
+               // RS - Additional Contacts
+               // ------------------------
+               AdditionalContactsRS = AddIndustryRS.replace('AdditionalContactsPH', FinalString);
+                   
+               // Chat - Additional Contacts
+               // --------------------------
+               AdditionalContactsChat = AddIndustryChat.replace('AdditionalContactsPH', FinalString);
+                
+               // Multi - Additional Contacts
+               // ---------------------------
+               AdditionalContactsMulti = AddIndustryMulti.replace('AdditionalContactsPH', FinalString);
+                   
+                    
+             }
+             Else{
+                 System.debug('No Additional Contacts to Sync');
+                 System.debug('List size: ' + GetAdditionalContacts.size());
+                 
+                 AdditionalContactsRS = AddIndustryRS.replace('AdditionalContactsPH', '');
+                 AdditionalContactsChat = AddIndustryChat.replace('AdditionalContactsPH', '');
+                 AdditionalContactsMulti = AddIndustryMulti.replace('AdditionalContactsPH', '');
+                 
+                 }
+            
+            
+             //=======================================================================================================================================//
+             
+             // Additional Published Number Logic
+             // --------------------------------------------------------------------------------------------------------------------------------------//
+             
+             String AdditionalPublishedPhoneRS = '';
+             String AdditionalPublishedPhoneChat = ''; 
+             String AdditionalPublishedPhoneMulti = '';
+            
+             If(!String.isEmpty(GetAccountInfo.get(0).Additional_Phone__c)){
+               
+               String GetAdditionalPhone = GetAccountInfo.get(0).Additional_Phone__c;
+               String ConvertAdditionalPhoneToString = GetAdditionalPhone.toLowerCase();
+               String APRemoveFirstOne = '';
+               String APWhiteSpaceRemoval = ConvertAdditionalPhoneToString.deleteWhitespace();
+               String APRemoveSpecialCharacters = APWhiteSpaceRemoval.replaceAll('[^0-9]', '');
+                 
+               System.debug('Semi-formatted: ' + APRemoveSpecialCharacters);
+        
+               If(APRemoveSpecialCharacters.startsWith('1')){
+              
+                 System.debug('Additional Phone Started with 1');
+              
+                 APRemoveFirstOne = APRemoveSpecialCharacters.replaceFirst('[1]{1}', '');
+              
+              
+               }
+               Else{
+              
+                   System.debug('Additional Phone did not start with 1');
+              
+                   APRemoveFirstOne = APRemoveSpecialCharacters;
+                  
+                  } 
+                 
+               System.debug('Formatted Additional Phone: ' + APRemoveFirstOne);
+               
+               // add international logic
+               If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('USA') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('US') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('United States Of America') ||
+                  GetAccountInfo.get(0).BillingCountry.equalsIgnorecase('U.S.') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Canada') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CAN') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('CA')){
+                      
+                     AdditionalPublishedPhoneRS = AdditionalContactsRS.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+1'+ APRemoveFirstOne +'"}]');
+                     AdditionalPublishedPhoneChat = AdditionalContactsChat.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+1'+ APRemoveFirstOne +'"}]');
+                     AdditionalPublishedPhoneMulti = AdditionalContactsMulti.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+1'+ APRemoveFirstOne +'"}]');
+
+               }
+
+               Else If(GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('Mexico') || GetAccountInfo.get(0).BillingCountry.equalsIgnoreCase('MX')){
+                   
+                    AdditionalPublishedPhoneRS = AdditionalContactsRS.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+52'+ APRemoveFirstOne +'"}]');
+                    AdditionalPublishedPhoneChat = AdditionalContactsChat.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+52'+ APRemoveFirstOne +'"}]');
+                    AdditionalPublishedPhoneMulti = AdditionalContactsMulti.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+52'+ APRemoveFirstOne +'"}]');
+
+               }
+
+               Else{
+                   
+                    AdditionalPublishedPhoneRS = AdditionalContactsRS.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+'+ APRemoveFirstOne +'"}]');
+                    AdditionalPublishedPhoneChat = AdditionalContactsChat.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+'+ APRemoveFirstOne +'"}]');
+                    AdditionalPublishedPhoneMulti = AdditionalContactsMulti.replace('AdditionalPNPH', ',"additional_prop":[{"company_published_number": "+'+ APRemoveFirstOne +'"}]');
+
+               }  
+                 
+                 
+             }
+             Else{
+                 System.debug('Additional Phone is blank');
+                 
+                 
+                 AdditionalPublishedPhoneRS = AdditionalContactsRS.replace('AdditionalPNPH', '');
+                 AdditionalPublishedPhoneChat = AdditionalContactsChat.replace('AdditionalPNPH', '');
+                 AdditionalPublishedPhoneMulti = AdditionalContactsMulti.replace('AdditionalPNPH', '');
+                 
+                 }
+            
+            
+             //=======================================================================================================================================//
+             
+             // How Forwarding Logic
+             // --------------------------------------------------------------------------------------------------------------------------------------//
+             String HowforwardingRS = '';
+             String HowforwardingChat = '';
+             String HowforwardingMulti = '';
+            
+             If(GetOpportunityInfo.get(0).Phone_Provider__c != Null){
+                 
+               String GetHowForwarding = GetOpportunityInfo.get(0).Phone_Provider__c;
+               String SerializeHowForwardingLineBreaks = GetHowForwarding.replace('\n', '\\n');
+               String SerializeHowForwardingCarriageReturns = SerializeHowForwardingLineBreaks.replace('\r', '\\r');
+               String SerializeHowForwardingRemoveIndents = SerializeHowForwardingCarriageReturns.replaceAll('\t', '');
+                 
+               HowforwardingRS = AdditionalPublishedPhoneRS.replace('HowForwardingPH', SerializeHowForwardingRemoveIndents);
+               HowforwardingChat = AdditionalPublishedPhoneChat.replace('HowForwardingPH', SerializeHowForwardingRemoveIndents); 
+               HowforwardingMulti = AdditionalPublishedPhoneMulti.replace('HowForwardingPH', SerializeHowForwardingRemoveIndents);
+                   
+             }
+             Else{
+                 
+                 HowforwardingRS = AdditionalPublishedPhoneRS.replace('HowForwardingPH', '');
+                 HowforwardingChat = AdditionalPublishedPhoneChat.replace('HowForwardingPH', ''); 
+                 HowforwardingMulti = AdditionalPublishedPhoneMulti.replace('HowForwardingPH', '');
+                 
+                 }
+            
+             //=======================================================================================================================================//
+             
+             // Zoura Billing Account Id Logic
+             //---------------------------------------------------------------------------------------------------------------------------------------//
+             String ZuoraBillingAccountIdRS = '';
+             String ZuoraBillingAccountIdChat = '';
+             String ZuoraBillingAccountIdMulti = '';
+            
+             If(!DoesBillingAccountExist.IsEmpty()){
+                 
+               String GetZuoraBillingAccountId = DoesBillingAccountExist.get(0).Zuora__Zuora_Id__c;  
+                
+               ZuoraBillingAccountIdRS =  HowforwardingRS.replace('ZuoraBillingActIdPH', GetZuoraBillingAccountId);
+               ZuoraBillingAccountIdChat = HowforwardingChat.replace('ZuoraBillingActIdPH', GetZuoraBillingAccountId);
+               ZuoraBillingAccountIdMulti =  HowforwardingMulti.replace('ZuoraBillingActIdPH', GetZuoraBillingAccountId);
+                 
+                 
+             }
+             Else{
+                 
+               ZuoraBillingAccountIdRS =  HowforwardingRS.replace('ZuoraBillingActIdPH', 'abc123');
+               ZuoraBillingAccountIdChat = HowforwardingChat.replace('ZuoraBillingActIdPH', 'abc123');
+               ZuoraBillingAccountIdMulti =  HowforwardingMulti.replace('ZuoraBillingActIdPH', 'abc123');
+                 
+                 
+             }
+             
+             //=======================================================================================================================================//
+             
+             // Zuora Subscription Id Logic
+             // --------------------------------------------------------------------------------------------------------------------------------------//
+             String ZuoraSubIdRS = '';
+             String ZuoraSubIdChat = '';
+             String ZuoraSubIdMulti = '';
+             
+             If(!DoesBillingAccountExist.IsEmpty()){
+               
+               // SOQL Query for Zuora Subscription
+               //----------------------------------
+               List<Zuora__Subscription__c> GetZuoraSub = [Select Id, Zuora__CustomerAccount__c, Name, Zuora__Zuora_Id__c 
+                                                           From Zuora__Subscription__c
+                                                           Where Zuora__CustomerAccount__c = : DoesBillingAccountExist.get(0).Id];
+               
+               If(!GetZuoraSub.IsEmpty()){
+               
+               // - Only Passing Billing Account Zoura Id for this phase
+               // 1. When Zuora Sub Id needs to be passed (Uncomment line below)
+               // 2. In replace method replace abc123 with Get ZuoraSubId for this if statement
+               // =============================================================================
+               
+               // String GetZuoraSubID = GetZuoraSub.get(0).Name;
+                 
+               ZuoraSubIdRS = ZuoraBillingAccountIdRS.replace('ZuoraSubIdPH', 'abc123');
+               ZuoraSubIdChat = ZuoraBillingAccountIdChat.replace('ZuoraSubIdPH', 'abc123');
+               ZuoraSubIdMulti = ZuoraBillingAccountIdMulti.replace('ZuoraSubIdPH', 'abc123');
+               }
+               Else{
+                   
+                   ZuoraSubIdRS = ZuoraBillingAccountIdRS.replace('ZuoraSubIdPH', 'abc123');
+                   ZuoraSubIdChat = ZuoraBillingAccountIdChat.replace('ZuoraSubIdPH', 'abc123');
+                   ZuoraSubIdMulti = ZuoraBillingAccountIdMulti.replace('ZuoraSubIdPH', 'abc123');
+                   
+                   }
+                 
+             }
+             Else{
+                 
+               ZuoraSubIdRS = ZuoraBillingAccountIdRS.replace('ZuoraSubIdPH', 'abc123');
+               ZuoraSubIdChat = ZuoraBillingAccountIdChat.replace('ZuoraSubIdPH', 'abc123');
+               ZuoraSubIdMulti = ZuoraBillingAccountIdMulti.replace('ZuoraSubIdPH', 'abc123');
+                 
+                 
+             }
+            
+             //=======================================================================================================================================//
+             
+             // Callout based on opportunity Product
+             // ------------------------------------
+             If(!DoesBillingAccountExist.IsEmpty()){
+             
+             If(OpProductType.startsWith('Receptionist')){
+                 
+                 System.debug('Creating PRL Account of type: Receptionist');
+                 
+                 String JSONMARKUP = ZuoraSubIdRS;                 
+             
+                 System.debug('Verifying RS JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+             }
+             Else If(OpProductType.startsWith('Chat')){
+                 
+                 System.debug('Creating PRL Account of type: Chat');
+                     
+                 String JSONMARKUP = ZuoraSubIdChat;
+                                
+                 System.debug('Verifying Chat JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+                 
+             }
+             Else If(OpProductType.startsWith('Multi Service')){
+                 
+                 System.debug('Creating PRL Account of type: Multi Service');
+                     
+                 String JSONMARKUP = ZuoraSubIdMulti;
+                                
+                 System.debug('Verifying Chat JSON String: ' + JSONMARKUP);
+                 
+                 GetAccountInfo.get(0).PRL_Account_Create_JSON__c = JSONMARKUP;
+                 
+                 Update GetAccountInfo.get(0);
+               
+                 CallPRLAccountCreate.FurtureCallout(JSONMARKUP, SFAccountId);
+                 
+                 
+             }
+             Else{
+                 
+                 System.debug('Unable to determine product type');
+                 
+                 }            
+            
+             }
+             Else{
+                 
+                 System.debug('Zuora Billing Account Does Not Exist! Cancel PRL Account Creation');
+                 
+                 GetAccountInfo.get(0).PRL_API_Callout_Response__c = 'No Zuora Billing Account';
+                 
+                 Update GetAccountInfo.get(0);
+                 
+                 String AccountId = GetAccountInfo.get(0).Id;
+                 
+                 CallPRLAccountSendNotif.SendFailureNotification(AccountId);
+                 
+                 
+                 
+                 }
+
+            
+        } 
+        
+    }
+    
+    
+    @future(Callout = True)
+    public static void FurtureCallout(String JSONMARKUP, String SFAccountId){
+        
+        System.debug(JSONMARKUP + ' ' + SFAccountId + ' passed to future callout');
+        
+        if(system.Test.isRunningTest()){
+                                 System.debug('Test is running! Will not execute callout.');
+                                }
+                                Else{
+                                    PRLAccountsIntegration.CreatePRLAccounts(JSONMARKUP, SFAccountId);
+                                    }
+        
+        
+    }
+    
+    
+
+}
