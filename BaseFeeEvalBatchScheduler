@@ -1,0 +1,9 @@
+global class BaseFeeEvalBatchScheduler implements Schedulable{
+    
+    Global void execute(SchedulableContext sc){
+        
+        Id BatchId = Database.executeBatch(new BaseFeeEvalBatch(), 40);
+        
+    }
+
+}
