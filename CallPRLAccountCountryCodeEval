@@ -1,0 +1,1685 @@
+Global class CallPRLAccountCountryCodeEval{
+    
+    Global static void CheckForCountry(String CheckCountryCode, String ForeignAccountId){       
+        
+               // Decision logic of countries and thier Alpha 2 Abbreviation
+               //===========================================================
+               
+               String CountryCodeDecision = '';
+               
+               If(CheckCountryCode.equalsIgnoreCase('Afganistan') || CheckCountryCode.equalsIgnoreCase('AF') || CheckCountryCode.equalsIgnoreCase('AFG') ||
+                 CheckCountryCode.equalsIgnoreCase('004')){
+                     
+                 CountryCodeDecision = 'AF';
+                     
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Aland Islands') || CheckCountryCode.equalsIgnoreCase('AX') || CheckCountryCode.equalsIgnoreCase('ALA') ||
+                       CheckCountryCode.equalsIgnoreCase('248')){
+                           
+                  CountryCodeDecision = 'AX';
+                       
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Albania') || CheckCountryCode.equalsIgnoreCase('AL') || CheckCountryCode.equalsIgnoreCase('ALB') ||
+                       CheckCountryCode.equalsIgnoreCase('008')){
+                           
+                  CountryCodeDecision = 'AL';
+                    
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Algeria') || CheckCountryCode.equalsIgnoreCase('DZ') || CheckCountryCode.equalsIgnoreCase('DZA') ||
+                       CheckCountryCode.equalsIgnoreCase('012')){
+                           
+                  CountryCodeDecision = 'DZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('American Samoa') || CheckCountryCode.equalsIgnoreCase('AS') || CheckCountryCode.equalsIgnoreCase('ASM') ||
+                       CheckCountryCode.equalsIgnoreCase('016')){
+                           
+                  CountryCodeDecision = 'AS';
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Andorra') || CheckCountryCode.equalsIgnoreCase('AD') || CheckCountryCode.equalsIgnoreCase('AND') ||
+                       CheckCountryCode.equalsIgnoreCase('020')){
+                           
+                   CountryCodeDecision = 'AD';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Angola') || CheckCountryCode.equalsIgnoreCase('AO') || CheckCountryCode.equalsIgnoreCase('AGO') ||
+                       CheckCountryCode.equalsIgnoreCase('024')){
+                           
+                   CountryCodeDecision = 'AO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Anguilla') || CheckCountryCode.equalsIgnoreCase('AI') || CheckCountryCode.equalsIgnoreCase('AIA') ||
+                       CheckCountryCode.equalsIgnoreCase('660')){
+                           
+                   CountryCodeDecision = 'AI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Antartica') || CheckCountryCode.equalsIgnoreCase('AQ') || CheckCountryCode.equalsIgnoreCase('ATA') ||
+                       CheckCountryCode.equalsIgnoreCase('010')){
+                           
+                   CountryCodeDecision = 'AQ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Antigua and Barbuda') || CheckCountryCode.equalsIgnoreCase('AG') || CheckCountryCode.equalsIgnoreCase('ATG') ||
+                       CheckCountryCode.equalsIgnoreCase('028')){
+                           
+                   CountryCodeDecision = 'AG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Argentina') || CheckCountryCode.equalsIgnoreCase('AR') || CheckCountryCode.equalsIgnoreCase('ARG') ||
+                       CheckCountryCode.equalsIgnoreCase('032')){
+                           
+                   CountryCodeDecision = 'AR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Armenia') || CheckCountryCode.equalsIgnoreCase('AM') || CheckCountryCode.equalsIgnoreCase('ARM') ||
+                       CheckCountryCode.equalsIgnoreCase('051')){
+                           
+                   CountryCodeDecision = 'AM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Aruba') || CheckCountryCode.equalsIgnoreCase('AW') || CheckCountryCode.equalsIgnoreCase('ABW') ||
+                       CheckCountryCode.equalsIgnoreCase('533')){
+                           
+                   CountryCodeDecision = 'AW';                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Austria') || CheckCountryCode.equalsIgnoreCase('AT') || CheckCountryCode.equalsIgnoreCase('AUT') ||
+                       CheckCountryCode.equalsIgnoreCase('040')){
+                           
+                   CountryCodeDecision = 'AT';
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Australia') || CheckCountryCode.equalsIgnoreCase('AU') || CheckCountryCode.equalsIgnoreCase('AUS') ||
+                       CheckCountryCode.equalsIgnoreCase('036')){
+                           
+                   CountryCodeDecision = 'AU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Azerbaijan') || CheckCountryCode.equalsIgnoreCase('AZ') || CheckCountryCode.equalsIgnoreCase('AZE') ||
+                       CheckCountryCode.equalsIgnoreCase('031')){
+                           
+                   CountryCodeDecision = 'AZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bahamas') || CheckCountryCode.equalsIgnoreCase('BS') || CheckCountryCode.equalsIgnoreCase('BHS') ||
+                       CheckCountryCode.equalsIgnoreCase('044')){
+                           
+                   CountryCodeDecision = 'BS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bahrain') || CheckCountryCode.equalsIgnoreCase('BH') || CheckCountryCode.equalsIgnoreCase('BHR') ||
+                       CheckCountryCode.equalsIgnoreCase('048')){
+                           
+                   CountryCodeDecision = 'BH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bangladesh') || CheckCountryCode.equalsIgnoreCase('BD') || CheckCountryCode.equalsIgnoreCase('BGD') ||
+                       CheckCountryCode.equalsIgnoreCase('050')){
+                           
+                   CountryCodeDecision = 'BD';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Barbados') || CheckCountryCode.equalsIgnoreCase('BB') || CheckCountryCode.equalsIgnoreCase('BRB') ||
+                       CheckCountryCode.equalsIgnoreCase('052')){
+                           
+                   CountryCodeDecision = 'BB';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Belarus') || CheckCountryCode.equalsIgnoreCase('BY') || CheckCountryCode.equalsIgnoreCase('BLR') ||
+                       CheckCountryCode.equalsIgnoreCase('112')){
+                           
+                   CountryCodeDecision = 'BY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Belgium') || CheckCountryCode.equalsIgnoreCase('BE') || CheckCountryCode.equalsIgnoreCase('BEL') ||
+                       CheckCountryCode.equalsIgnoreCase('056')){
+                           
+                   CountryCodeDecision = 'BE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Belize') || CheckCountryCode.equalsIgnoreCase('BZ') || CheckCountryCode.equalsIgnoreCase('BLZ') ||
+                       CheckCountryCode.equalsIgnoreCase('084')){
+                           
+                   CountryCodeDecision = 'BZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Benin') || CheckCountryCode.equalsIgnoreCase('BJ') || CheckCountryCode.equalsIgnoreCase('BEN') ||
+                       CheckCountryCode.equalsIgnoreCase('204')){
+                           
+                   CountryCodeDecision = 'BJ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bermuda') || CheckCountryCode.equalsIgnoreCase('BM') || CheckCountryCode.equalsIgnoreCase('BMU') ||
+                       CheckCountryCode.equalsIgnoreCase('060')){
+                           
+                   CountryCodeDecision = 'BM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bhutan') || CheckCountryCode.equalsIgnoreCase('BT') || CheckCountryCode.equalsIgnoreCase('BTN') ||
+                       CheckCountryCode.equalsIgnoreCase('064')){
+                           
+                   CountryCodeDecision = 'BT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bolivia') || CheckCountryCode.equalsIgnoreCase('BO') || CheckCountryCode.equalsIgnoreCase('BOL') ||
+                       CheckCountryCode.equalsIgnoreCase('068')){
+                           
+                   CountryCodeDecision = 'BO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bosnia and Herzegovina') || CheckCountryCode.equalsIgnoreCase('BA') || CheckCountryCode.equalsIgnoreCase('BIH') ||
+                       CheckCountryCode.equalsIgnoreCase('070') || CheckCountryCode.equalsIgnoreCase('Bosnia') || CheckCountryCode.equalsIgnoreCase('Herzegovina')){
+                           
+                   CountryCodeDecision = 'BA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Botswana') || CheckCountryCode.equalsIgnoreCase('BW') || CheckCountryCode.equalsIgnoreCase('BWA') ||
+                       CheckCountryCode.equalsIgnoreCase('072')){
+                           
+                   CountryCodeDecision = 'BW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bouvet Island') || CheckCountryCode.equalsIgnoreCase('BV') || CheckCountryCode.equalsIgnoreCase('BVT') ||
+                       CheckCountryCode.equalsIgnoreCase('074')){
+                           
+                   CountryCodeDecision = 'BV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Brazil') || CheckCountryCode.equalsIgnoreCase('BR') || CheckCountryCode.equalsIgnoreCase('BRA') ||
+                       CheckCountryCode.equalsIgnoreCase('076')){
+                           
+                   CountryCodeDecision = 'BR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('British Virgin Islands') || CheckCountryCode.equalsIgnoreCase('VG') || CheckCountryCode.equalsIgnoreCase('VGB') ||
+                       CheckCountryCode.equalsIgnoreCase('092')){
+                           
+                   CountryCodeDecision = 'VG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('British Indian Ocean Territory') || CheckCountryCode.equalsIgnoreCase('IO') || CheckCountryCode.equalsIgnoreCase('IOT') ||
+                       CheckCountryCode.equalsIgnoreCase('086')){
+                           
+                   CountryCodeDecision = 'IO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Brunei Darussalam') || CheckCountryCode.equalsIgnoreCase('BN') || CheckCountryCode.equalsIgnoreCase('BRN') ||
+                       CheckCountryCode.equalsIgnoreCase('096')){
+                           
+                   CountryCodeDecision = 'BN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Bulgaria') || CheckCountryCode.equalsIgnoreCase('BG') || CheckCountryCode.equalsIgnoreCase('BGR') ||
+                       CheckCountryCode.equalsIgnoreCase('100')){
+                           
+                   CountryCodeDecision = 'BG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Burkina Faso') || CheckCountryCode.equalsIgnoreCase('BF') || CheckCountryCode.equalsIgnoreCase('BFA') ||
+                       CheckCountryCode.equalsIgnoreCase('854')){
+                           
+                   CountryCodeDecision = 'BF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Burundi') || CheckCountryCode.equalsIgnoreCase('BI') || CheckCountryCode.equalsIgnoreCase('BDI') ||
+                       CheckCountryCode.equalsIgnoreCase('108')){
+                           
+                   CountryCodeDecision = 'BI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cambodia') || CheckCountryCode.equalsIgnoreCase('KH') || CheckCountryCode.equalsIgnoreCase('KHM') ||
+                       CheckCountryCode.equalsIgnoreCase('116')){
+                           
+                   CountryCodeDecision = 'KH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cameroon') || CheckCountryCode.equalsIgnoreCase('CM') || CheckCountryCode.equalsIgnoreCase('CMR') ||
+                       CheckCountryCode.equalsIgnoreCase('120')){
+                           
+                   CountryCodeDecision = 'CM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cape Verde') || CheckCountryCode.equalsIgnoreCase('CV') || CheckCountryCode.equalsIgnoreCase('CPV') ||
+                       CheckCountryCode.equalsIgnoreCase('132')){
+                           
+                   CountryCodeDecision = 'CV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cayman Islands') || CheckCountryCode.equalsIgnoreCase('KY') || CheckCountryCode.equalsIgnoreCase('CYM') ||
+                       CheckCountryCode.equalsIgnoreCase('136')){
+                           
+                   CountryCodeDecision = 'KY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Central Africa Republic') || CheckCountryCode.equalsIgnoreCase('CF') || CheckCountryCode.equalsIgnoreCase('CAF') ||
+                       CheckCountryCode.equalsIgnoreCase('140')){
+                           
+                   CountryCodeDecision = 'CF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Chad') || CheckCountryCode.equalsIgnoreCase('TD') || CheckCountryCode.equalsIgnoreCase('TCD') ||
+                       CheckCountryCode.equalsIgnoreCase('148')){
+                           
+                   CountryCodeDecision = 'TD';
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Chile') || CheckCountryCode.equalsIgnoreCase('CL') || CheckCountryCode.equalsIgnoreCase('CHL') ||
+                       CheckCountryCode.equalsIgnoreCase('152')){
+                           
+                   CountryCodeDecision = 'CL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('China') || CheckCountryCode.equalsIgnoreCase('CN') || CheckCountryCode.equalsIgnoreCase('CHN') ||
+                       CheckCountryCode.equalsIgnoreCase('156')){
+                           
+                   CountryCodeDecision = 'CN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Hong Kong') || CheckCountryCode.equalsIgnoreCase('HK') || CheckCountryCode.equalsIgnoreCase('HKG') ||
+                       CheckCountryCode.equalsIgnoreCase('344') || CheckCountryCode.equalsIgnoreCase('SAR China')){
+                           
+                   CountryCodeDecision = 'HK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Christmas Island') || CheckCountryCode.equalsIgnoreCase('CX') || CheckCountryCode.equalsIgnoreCase('CXR') ||
+                       CheckCountryCode.equalsIgnoreCase('162')){
+                           
+                   CountryCodeDecision = 'CX';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cocos Islands') || CheckCountryCode.equalsIgnoreCase('CC') || CheckCountryCode.equalsIgnoreCase('CCK') ||
+                       CheckCountryCode.equalsIgnoreCase('166') || CheckCountryCode.equalsIgnoreCase('Keeling Islands')){
+                           
+                   CountryCodeDecision = 'CC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Columbia') || CheckCountryCode.equalsIgnoreCase('CO') || CheckCountryCode.equalsIgnoreCase('COL') ||
+                       CheckCountryCode.equalsIgnoreCase('170')){
+                           
+                   CountryCodeDecision = 'CO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Comoros') || CheckCountryCode.equalsIgnoreCase('KM') || CheckCountryCode.equalsIgnoreCase('COM') ||
+                       CheckCountryCode.equalsIgnoreCase('174')){
+                           
+                   CountryCodeDecision = 'KM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Congo') || CheckCountryCode.equalsIgnoreCase('CG') || CheckCountryCode.equalsIgnoreCase('COG') ||
+                       CheckCountryCode.equalsIgnoreCase('178') || CheckCountryCode.equalsIgnoreCase('Brazzaville') || CheckCountryCode.equalsIgnoreCase('Kinshasa') ||
+                       CheckCountryCode.equalsIgnoreCase('CD') || CheckCountryCode.equalsIgnoreCase('COD') || CheckCountryCode.equalsIgnoreCase('180')){
+                           
+                   CountryCodeDecision = 'CG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cook Islands') || CheckCountryCode.equalsIgnoreCase('CK') || CheckCountryCode.equalsIgnoreCase('COK') ||
+                       CheckCountryCode.equalsIgnoreCase('184')){
+                           
+                   CountryCodeDecision = 'CK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Costa Rica') || CheckCountryCode.equalsIgnoreCase('CR') || CheckCountryCode.equalsIgnoreCase('CRI') ||
+                       CheckCountryCode.equalsIgnoreCase('188')){
+                           
+                   CountryCodeDecision = 'CR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cote dIvoire') || CheckCountryCode.equalsIgnoreCase('CI') || CheckCountryCode.equalsIgnoreCase('CIV') ||
+                       CheckCountryCode.equalsIgnoreCase('384')){
+                           
+                   CountryCodeDecision = 'CI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Croatia') || CheckCountryCode.equalsIgnoreCase('HR') || CheckCountryCode.equalsIgnoreCase('HRV') ||
+                       CheckCountryCode.equalsIgnoreCase('191')){
+                           
+                   CountryCodeDecision = 'HR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cuba') || CheckCountryCode.equalsIgnoreCase('CU') || CheckCountryCode.equalsIgnoreCase('CUB') ||
+                       CheckCountryCode.equalsIgnoreCase('192')){
+                           
+                   CountryCodeDecision = 'CU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Cyprus') || CheckCountryCode.equalsIgnoreCase('CY') || CheckCountryCode.equalsIgnoreCase('CYP') ||
+                       CheckCountryCode.equalsIgnoreCase('196')){
+                           
+                   CountryCodeDecision = 'CY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Czech Republic') || CheckCountryCode.equalsIgnoreCase('CZ') || CheckCountryCode.equalsIgnoreCase('CZE') ||
+                       CheckCountryCode.equalsIgnoreCase('203')){
+                           
+                   CountryCodeDecision = 'CZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Denmark') || CheckCountryCode.equalsIgnoreCase('DK') || CheckCountryCode.equalsIgnoreCase('DNK') ||
+                       CheckCountryCode.equalsIgnoreCase('208')){
+                           
+                   CountryCodeDecision = 'DK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Djibouti') || CheckCountryCode.equalsIgnoreCase('DJ') || CheckCountryCode.equalsIgnoreCase('DJI') ||
+                       CheckCountryCode.equalsIgnoreCase('262')){
+                           
+                   CountryCodeDecision = 'DJ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Dominica') || CheckCountryCode.equalsIgnoreCase('DM') || CheckCountryCode.equalsIgnoreCase('DMA') ||
+                       CheckCountryCode.equalsIgnoreCase('212')){
+                           
+                   CountryCodeDecision = 'DM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Dominican Republic') || CheckCountryCode.equalsIgnoreCase('DO') || CheckCountryCode.equalsIgnoreCase('DOM') ||
+                       CheckCountryCode.equalsIgnoreCase('214')){
+                           
+                   CountryCodeDecision = 'DO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Ecuador') || CheckCountryCode.equalsIgnoreCase('EC') || CheckCountryCode.equalsIgnoreCase('ECU') ||
+                       CheckCountryCode.equalsIgnoreCase('218')){
+                           
+                   CountryCodeDecision = 'EC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Egypt') || CheckCountryCode.equalsIgnoreCase('EG') || CheckCountryCode.equalsIgnoreCase('EGY') ||
+                       CheckCountryCode.equalsIgnoreCase('818')){
+                           
+                   CountryCodeDecision = 'EG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('El Salvador') || CheckCountryCode.equalsIgnoreCase('SV') || CheckCountryCode.equalsIgnoreCase('SLV') ||
+                       CheckCountryCode.equalsIgnoreCase('222')){
+                           
+                   CountryCodeDecision = 'SV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Equatorial Guinea') || CheckCountryCode.equalsIgnoreCase('GQ') || CheckCountryCode.equalsIgnoreCase('GNQ') ||
+                       CheckCountryCode.equalsIgnoreCase('226')){
+                           
+                   CountryCodeDecision = 'GQ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Eritrea') || CheckCountryCode.equalsIgnoreCase('ER') || CheckCountryCode.equalsIgnoreCase('ERI') ||
+                       CheckCountryCode.equalsIgnoreCase('232')){
+                           
+                   CountryCodeDecision = 'ER';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Estonia') || CheckCountryCode.equalsIgnoreCase('EE') || CheckCountryCode.equalsIgnoreCase('EST') ||
+                       CheckCountryCode.equalsIgnoreCase('233')){
+                           
+                   CountryCodeDecision = 'EE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Ethiopia') || CheckCountryCode.equalsIgnoreCase('ET') || CheckCountryCode.equalsIgnoreCase('ETH') ||
+                       CheckCountryCode.equalsIgnoreCase('231')){
+                           
+                   CountryCodeDecision = 'ET';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Falkland Islands') || CheckCountryCode.equalsIgnoreCase('FK') || CheckCountryCode.equalsIgnoreCase('FLK') ||
+                       CheckCountryCode.equalsIgnoreCase('238') || CheckCountryCode.equalsIgnoreCase('Malvinas')){
+                           
+                   CountryCodeDecision = 'FK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Faroe Islands') || CheckCountryCode.equalsIgnoreCase('FO') || CheckCountryCode.equalsIgnoreCase('FRO') ||
+                       CheckCountryCode.equalsIgnoreCase('234')){
+                           
+                   CountryCodeDecision = 'FO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Fiji') || CheckCountryCode.equalsIgnoreCase('FJ') || CheckCountryCode.equalsIgnoreCase('FJI') ||
+                       CheckCountryCode.equalsIgnoreCase('242')){
+                           
+                   CountryCodeDecision = 'FJ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Finland') || CheckCountryCode.equalsIgnoreCase('FI') || CheckCountryCode.equalsIgnoreCase('FIN') ||
+                       CheckCountryCode.equalsIgnoreCase('246')){
+                           
+                   CountryCodeDecision = 'FI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('France') || CheckCountryCode.equalsIgnoreCase('FR') || CheckCountryCode.equalsIgnoreCase('FRA') ||
+                       CheckCountryCode.equalsIgnoreCase('250')){
+                           
+                   CountryCodeDecision = 'FR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('French Guiana') || CheckCountryCode.equalsIgnoreCase('GF') || CheckCountryCode.equalsIgnoreCase('GUF') ||
+                       CheckCountryCode.equalsIgnoreCase('254')){
+                           
+                   CountryCodeDecision = 'GF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('French Polynesia') || CheckCountryCode.equalsIgnoreCase('PF') || CheckCountryCode.equalsIgnoreCase('PYF') ||
+                       CheckCountryCode.equalsIgnoreCase('258')){
+                           
+                   CountryCodeDecision = 'PC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('French Southern Territories') || CheckCountryCode.equalsIgnoreCase('TF') || CheckCountryCode.equalsIgnoreCase('ATF') ||
+                       CheckCountryCode.equalsIgnoreCase('260')){
+                           
+                   CountryCodeDecision = 'TF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Gabon') || CheckCountryCode.equalsIgnoreCase('GA') || CheckCountryCode.equalsIgnoreCase('GAB') ||
+                       CheckCountryCode.equalsIgnoreCase('266')){
+                           
+                   CountryCodeDecision = 'GA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Gambia') || CheckCountryCode.equalsIgnoreCase('GM') || CheckCountryCode.equalsIgnoreCase('GMB') ||
+                       CheckCountryCode.equalsIgnoreCase('270')){
+                           
+                   CountryCodeDecision = 'GM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Georgia') || CheckCountryCode.equalsIgnoreCase('GE') || CheckCountryCode.equalsIgnoreCase('GEO') ||
+                       CheckCountryCode.equalsIgnoreCase('268')){
+                           
+                   CountryCodeDecision = 'GE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Germany') || CheckCountryCode.equalsIgnoreCase('DE') || CheckCountryCode.equalsIgnoreCase('DEU') ||
+                       CheckCountryCode.equalsIgnoreCase('276')){
+                           
+                   CountryCodeDecision = 'DE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Ghana') || CheckCountryCode.equalsIgnoreCase('GH') || CheckCountryCode.equalsIgnoreCase('GHA') ||
+                       CheckCountryCode.equalsIgnoreCase('288')){
+                           
+                   CountryCodeDecision = 'GH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Gibraltar') || CheckCountryCode.equalsIgnoreCase('GI') || CheckCountryCode.equalsIgnoreCase('GIB') ||
+                       CheckCountryCode.equalsIgnoreCase('292')){
+                           
+                   CountryCodeDecision = 'GI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Greece') || CheckCountryCode.equalsIgnoreCase('GR') || CheckCountryCode.equalsIgnoreCase('GRC') ||
+                       CheckCountryCode.equalsIgnoreCase('300')){
+                           
+                   CountryCodeDecision = 'GR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Greenland') || CheckCountryCode.equalsIgnoreCase('GL') || CheckCountryCode.equalsIgnoreCase('GRL') ||
+                       CheckCountryCode.equalsIgnoreCase('304')){
+                           
+                   CountryCodeDecision = 'GL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Grenada') || CheckCountryCode.equalsIgnoreCase('GD') || CheckCountryCode.equalsIgnoreCase('GRD') ||
+                       CheckCountryCode.equalsIgnoreCase('308')){
+                           
+                   CountryCodeDecision = 'GD';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guadeloupe') || CheckCountryCode.equalsIgnoreCase('GP') || CheckCountryCode.equalsIgnoreCase('GLP') ||
+                       CheckCountryCode.equalsIgnoreCase('312')){
+                           
+                   CountryCodeDecision = 'GP';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guam') || CheckCountryCode.equalsIgnoreCase('GU') || CheckCountryCode.equalsIgnoreCase('GUM') ||
+                       CheckCountryCode.equalsIgnoreCase('316')){
+                           
+                   CountryCodeDecision = 'GU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guatemala') || CheckCountryCode.equalsIgnoreCase('GT') || CheckCountryCode.equalsIgnoreCase('GTM') ||
+                       CheckCountryCode.equalsIgnoreCase('320')){
+                           
+                   CountryCodeDecision = 'GT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guernsey') || CheckCountryCode.equalsIgnoreCase('GG') || CheckCountryCode.equalsIgnoreCase('GGY') ||
+                       CheckCountryCode.equalsIgnoreCase('831')){
+                           
+                   CountryCodeDecision = 'GG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guinea') || CheckCountryCode.equalsIgnoreCase('GN') || CheckCountryCode.equalsIgnoreCase('GIN') ||
+                       CheckCountryCode.equalsIgnoreCase('324')){
+                           
+                   CountryCodeDecision = 'GN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guinea-Bissau') || CheckCountryCode.equalsIgnoreCase('GW') || CheckCountryCode.equalsIgnoreCase('GNB') ||
+                       CheckCountryCode.equalsIgnoreCase('624')){
+                           
+                   CountryCodeDecision = 'GW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Guyana') || CheckCountryCode.equalsIgnoreCase('GY') || CheckCountryCode.equalsIgnoreCase('GUY') ||
+                       CheckCountryCode.equalsIgnoreCase('328')){
+                           
+                   CountryCodeDecision = 'GY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Haiti') || CheckCountryCode.equalsIgnoreCase('HT') || CheckCountryCode.equalsIgnoreCase('HTI') ||
+                       CheckCountryCode.equalsIgnoreCase('332')){
+                           
+                   CountryCodeDecision = 'HT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Heard and Mcdonald Islands') || CheckCountryCode.equalsIgnoreCase('HM') || CheckCountryCode.equalsIgnoreCase('HMD') ||
+                       CheckCountryCode.equalsIgnoreCase('334')){
+                           
+                   CountryCodeDecision = 'HM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Holy See') || CheckCountryCode.equalsIgnoreCase('VA') || CheckCountryCode.equalsIgnoreCase('VAT') ||
+                       CheckCountryCode.equalsIgnoreCase('336') || CheckCountryCode.equalsIgnoreCase('Vatican')){
+                           
+                   CountryCodeDecision = 'VA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Honduras') || CheckCountryCode.equalsIgnoreCase('HN') || CheckCountryCode.equalsIgnoreCase('HND') ||
+                       CheckCountryCode.equalsIgnoreCase('340')){
+                           
+                   CountryCodeDecision = 'HN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Hungary') || CheckCountryCode.equalsIgnoreCase('HU') || CheckCountryCode.equalsIgnoreCase('HUN') ||
+                       CheckCountryCode.equalsIgnoreCase('348')){
+                           
+                   CountryCodeDecision = 'HU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Iran') || CheckCountryCode.equalsIgnoreCase('IR') || CheckCountryCode.equalsIgnoreCase('IRN') ||
+                       CheckCountryCode.equalsIgnoreCase('364')){
+                           
+                   CountryCodeDecision = 'IR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Iraq') || CheckCountryCode.equalsIgnoreCase('IQ') || CheckCountryCode.equalsIgnoreCase('IRQ') ||
+                       CheckCountryCode.equalsIgnoreCase('364')){
+                           
+                   CountryCodeDecision = 'IQ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Ireland') || CheckCountryCode.equalsIgnoreCase('IE') || CheckCountryCode.equalsIgnoreCase('IRL') ||
+                       CheckCountryCode.equalsIgnoreCase('372')){
+                           
+                   CountryCodeDecision = 'IE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Isle of Man') || CheckCountryCode.equalsIgnoreCase('IM') || CheckCountryCode.equalsIgnoreCase('IMN') ||
+                       CheckCountryCode.equalsIgnoreCase('833')){
+                           
+                   CountryCodeDecision = 'IM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Israel') || CheckCountryCode.equalsIgnoreCase('IL') || CheckCountryCode.equalsIgnoreCase('ISR') ||
+                       CheckCountryCode.equalsIgnoreCase('376')){
+                           
+                   CountryCodeDecision = 'IL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Italy') || CheckCountryCode.equalsIgnoreCase('IT') || CheckCountryCode.equalsIgnoreCase('ITA') ||
+                       CheckCountryCode.equalsIgnoreCase('380')){
+                           
+                   CountryCodeDecision = 'IT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Jamaica') || CheckCountryCode.equalsIgnoreCase('JM') || CheckCountryCode.equalsIgnoreCase('JAM') ||
+                       CheckCountryCode.equalsIgnoreCase('388')){
+                           
+                   CountryCodeDecision = 'JM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Japan') || CheckCountryCode.equalsIgnoreCase('JP') || CheckCountryCode.equalsIgnoreCase('JPN') ||
+                       CheckCountryCode.equalsIgnoreCase('392')){
+                           
+                   CountryCodeDecision = 'JP';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Jersey') || CheckCountryCode.equalsIgnoreCase('JE') || CheckCountryCode.equalsIgnoreCase('JEY') ||
+                       CheckCountryCode.equalsIgnoreCase('832')){
+                           
+                   CountryCodeDecision = 'JE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Jordan') || CheckCountryCode.equalsIgnoreCase('JO') || CheckCountryCode.equalsIgnoreCase('JOR') ||
+                       CheckCountryCode.equalsIgnoreCase('400')){
+                           
+                   CountryCodeDecision = 'JO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Kazakhstan') || CheckCountryCode.equalsIgnoreCase('KZ') || CheckCountryCode.equalsIgnoreCase('KAZ') ||
+                       CheckCountryCode.equalsIgnoreCase('398')){
+                           
+                   CountryCodeDecision = 'KZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Kenya') || CheckCountryCode.equalsIgnoreCase('KE') || CheckCountryCode.equalsIgnoreCase('KEN') ||
+                       CheckCountryCode.equalsIgnoreCase('404')){
+                           
+                   CountryCodeDecision = 'KE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Kiribati') || CheckCountryCode.equalsIgnoreCase('KI') || CheckCountryCode.equalsIgnoreCase('KIR') ||
+                       CheckCountryCode.equalsIgnoreCase('296')){
+                           
+                   CountryCodeDecision = 'KI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('North Korea') || CheckCountryCode.equalsIgnoreCase('KP') || CheckCountryCode.equalsIgnoreCase('PRK') ||
+                       CheckCountryCode.equalsIgnoreCase('408')){
+                           
+                   CountryCodeDecision = 'KP';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('South Korea') || CheckCountryCode.equalsIgnoreCase('KR') || CheckCountryCode.equalsIgnoreCase('KOR') ||
+                       CheckCountryCode.equalsIgnoreCase('410')){
+                           
+                   CountryCodeDecision = 'KR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Kawait') || CheckCountryCode.equalsIgnoreCase('KW') || CheckCountryCode.equalsIgnoreCase('KWT') ||
+                       CheckCountryCode.equalsIgnoreCase('414')){
+                           
+                   CountryCodeDecision = 'KW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Kyrgyzstan') || CheckCountryCode.equalsIgnoreCase('KG') || CheckCountryCode.equalsIgnoreCase('KGZ') ||
+                       CheckCountryCode.equalsIgnoreCase('417')){
+                           
+                   CountryCodeDecision = 'KG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Lao PDR') || CheckCountryCode.equalsIgnoreCase('LA') || CheckCountryCode.equalsIgnoreCase('LAO') ||
+                       CheckCountryCode.equalsIgnoreCase('418') || CheckCountryCode.equalsIgnoreCase('Lao') || CheckCountryCode.equalsIgnoreCase('PDR')){
+                           
+                   CountryCodeDecision = 'LA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Latvia') || CheckCountryCode.equalsIgnoreCase('LV') || CheckCountryCode.equalsIgnoreCase('LVA') ||
+                       CheckCountryCode.equalsIgnoreCase('428')){
+                           
+                   CountryCodeDecision = 'LV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Lebanon') || CheckCountryCode.equalsIgnoreCase('LB') || CheckCountryCode.equalsIgnoreCase('LBN') ||
+                       CheckCountryCode.equalsIgnoreCase('422')){
+                           
+                   CountryCodeDecision = 'LB';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Lesotho') || CheckCountryCode.equalsIgnoreCase('LS') || CheckCountryCode.equalsIgnoreCase('LSO') ||
+                       CheckCountryCode.equalsIgnoreCase('426')){
+                           
+                   CountryCodeDecision = 'LS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Liberia') || CheckCountryCode.equalsIgnoreCase('LR') || CheckCountryCode.equalsIgnoreCase('LBR') ||
+                       CheckCountryCode.equalsIgnoreCase('430')){
+                           
+                   CountryCodeDecision = 'LR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Lybia') || CheckCountryCode.equalsIgnoreCase('LY') || CheckCountryCode.equalsIgnoreCase('LBY') ||
+                       CheckCountryCode.equalsIgnoreCase('434')){
+                           
+                   CountryCodeDecision = 'LY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Liechtenstein') || CheckCountryCode.equalsIgnoreCase('LI') || CheckCountryCode.equalsIgnoreCase('LIE') ||
+                       CheckCountryCode.equalsIgnoreCase('438')){
+                           
+                   CountryCodeDecision = 'LI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Lithuania') || CheckCountryCode.equalsIgnoreCase('LT') || CheckCountryCode.equalsIgnoreCase('LTU') ||
+                       CheckCountryCode.equalsIgnoreCase('440')){
+                           
+                   CountryCodeDecision = 'LT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Luxembourg') || CheckCountryCode.equalsIgnoreCase('LU') || CheckCountryCode.equalsIgnoreCase('LUX') ||
+                       CheckCountryCode.equalsIgnoreCase('442')){
+                           
+                   CountryCodeDecision = 'LU';
+                   
+                   
+               }
+        	   Else If(CheckCountryCode.equalsIgnoreCase('Macedonia') || CheckCountryCode.equalsIgnoreCase('MK') || CheckCountryCode.equalsIgnoreCase('MKD') ||
+                       CheckCountryCode.equalsIgnoreCase('807') || CheckCountryCode.equalsIgnoreCase('Republic of Macedonia')){
+                           
+                   CountryCodeDecision = 'MK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Madagascar') || CheckCountryCode.equalsIgnoreCase('MG') || CheckCountryCode.equalsIgnoreCase('MDG') ||
+                       CheckCountryCode.equalsIgnoreCase('450')){
+                           
+                   CountryCodeDecision = 'MG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Malawi') || CheckCountryCode.equalsIgnoreCase('MW') || CheckCountryCode.equalsIgnoreCase('MWI') ||
+                       CheckCountryCode.equalsIgnoreCase('454')){
+                           
+                   CountryCodeDecision = 'MW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Malaysia') || CheckCountryCode.equalsIgnoreCase('MY') || CheckCountryCode.equalsIgnoreCase('MYS') ||
+                       CheckCountryCode.equalsIgnoreCase('458')){
+                           
+                   CountryCodeDecision = 'LU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Maldives') || CheckCountryCode.equalsIgnoreCase('MV') || CheckCountryCode.equalsIgnoreCase('MDV') ||
+                       CheckCountryCode.equalsIgnoreCase('462')){
+                           
+                   CountryCodeDecision = 'MV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mali') || CheckCountryCode.equalsIgnoreCase('ML') || CheckCountryCode.equalsIgnoreCase('MLI') ||
+                       CheckCountryCode.equalsIgnoreCase('466')){
+                           
+                   CountryCodeDecision = 'ML';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Malta') || CheckCountryCode.equalsIgnoreCase('MT') || CheckCountryCode.equalsIgnoreCase('MLT') ||
+                       CheckCountryCode.equalsIgnoreCase('470')){
+                           
+                   CountryCodeDecision = 'MT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Marshall Ilands') || CheckCountryCode.equalsIgnoreCase('MH') || CheckCountryCode.equalsIgnoreCase('MHL') ||
+                       CheckCountryCode.equalsIgnoreCase('584')){
+                           
+                   CountryCodeDecision = 'MH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Martinique') || CheckCountryCode.equalsIgnoreCase('MQ') || CheckCountryCode.equalsIgnoreCase('MTQ') ||
+                       CheckCountryCode.equalsIgnoreCase('474')){
+                           
+                   CountryCodeDecision = 'MQ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mauritania') || CheckCountryCode.equalsIgnoreCase('MR') || CheckCountryCode.equalsIgnoreCase('MRT') ||
+                       CheckCountryCode.equalsIgnoreCase('478')){
+                           
+                   CountryCodeDecision = 'MR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mauritius') || CheckCountryCode.equalsIgnoreCase('MU') || CheckCountryCode.equalsIgnoreCase('MUS') ||
+                       CheckCountryCode.equalsIgnoreCase('480')){
+                           
+                   CountryCodeDecision = 'MU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mayotte') || CheckCountryCode.equalsIgnoreCase('YT') || CheckCountryCode.equalsIgnoreCase('MYT') ||
+                       CheckCountryCode.equalsIgnoreCase('175')){
+                           
+                   CountryCodeDecision = 'YT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Micronesia') || CheckCountryCode.equalsIgnoreCase('FM') || CheckCountryCode.equalsIgnoreCase('FSM') ||
+                       CheckCountryCode.equalsIgnoreCase('583') || CheckCountryCode.equalsIgnoreCase('Federated States of Micronesia')){
+                           
+                   CountryCodeDecision = 'FM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Moldova') || CheckCountryCode.equalsIgnoreCase('MD') || CheckCountryCode.equalsIgnoreCase('MDA') ||
+                       CheckCountryCode.equalsIgnoreCase('498')){
+                           
+                   CountryCodeDecision = 'YT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Monaco') || CheckCountryCode.equalsIgnoreCase('MC') || CheckCountryCode.equalsIgnoreCase('MCO') ||
+                       CheckCountryCode.equalsIgnoreCase('492')){
+                           
+                   CountryCodeDecision = 'MC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mongolia') || CheckCountryCode.equalsIgnoreCase('MN') || CheckCountryCode.equalsIgnoreCase('MNG') ||
+                       CheckCountryCode.equalsIgnoreCase('496')){
+                           
+                   CountryCodeDecision = 'MN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Montenegro') || CheckCountryCode.equalsIgnoreCase('ME') || CheckCountryCode.equalsIgnoreCase('MNE') ||
+                       CheckCountryCode.equalsIgnoreCase('499')){
+                           
+                   CountryCodeDecision = 'ME';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Montserrat') || CheckCountryCode.equalsIgnoreCase('MS') || CheckCountryCode.equalsIgnoreCase('MSR') ||
+                       CheckCountryCode.equalsIgnoreCase('500')){
+                           
+                   CountryCodeDecision = 'MS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Morocco') || CheckCountryCode.equalsIgnoreCase('MA') || CheckCountryCode.equalsIgnoreCase('MAR') ||
+                       CheckCountryCode.equalsIgnoreCase('504')){
+                           
+                   CountryCodeDecision = 'MA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Mozambique') || CheckCountryCode.equalsIgnoreCase('MZ') || CheckCountryCode.equalsIgnoreCase('MOZ') ||
+                       CheckCountryCode.equalsIgnoreCase('508')){
+                           
+                   CountryCodeDecision = 'MZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Myanmar') || CheckCountryCode.equalsIgnoreCase('MM') || CheckCountryCode.equalsIgnoreCase('MMR') ||
+                       CheckCountryCode.equalsIgnoreCase('104')){
+                           
+                   CountryCodeDecision = 'MM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Namibia') || CheckCountryCode.equalsIgnoreCase('NA') || CheckCountryCode.equalsIgnoreCase('NAM') ||
+                       CheckCountryCode.equalsIgnoreCase('516')){
+                           
+                   CountryCodeDecision = 'NA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Nauru') || CheckCountryCode.equalsIgnoreCase('NR') || CheckCountryCode.equalsIgnoreCase('NRU') ||
+                       CheckCountryCode.equalsIgnoreCase('520')){
+                           
+                   CountryCodeDecision = 'NR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Nepal') || CheckCountryCode.equalsIgnoreCase('NP') || CheckCountryCode.equalsIgnoreCase('NPL') ||
+                       CheckCountryCode.equalsIgnoreCase('524')){
+                           
+                   CountryCodeDecision = 'NP';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Netherlands') || CheckCountryCode.equalsIgnoreCase('NL') || CheckCountryCode.equalsIgnoreCase('NLD') ||
+                       CheckCountryCode.equalsIgnoreCase('528')){
+                           
+                   CountryCodeDecision = 'NL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Netherlands Antilles') || CheckCountryCode.equalsIgnoreCase('AN') || CheckCountryCode.equalsIgnoreCase('ANT') ||
+                       CheckCountryCode.equalsIgnoreCase('530') || CheckCountryCode.equalsIgnoreCase('Antilles')){
+                           
+                   CountryCodeDecision = 'AN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('New Caledonia') || CheckCountryCode.equalsIgnoreCase('NC') || CheckCountryCode.equalsIgnoreCase('NCL') ||
+                       CheckCountryCode.equalsIgnoreCase('540')){
+                           
+                   CountryCodeDecision = 'NC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('New Zealand') || CheckCountryCode.equalsIgnoreCase('NZ') || CheckCountryCode.equalsIgnoreCase('NZL') ||
+                       CheckCountryCode.equalsIgnoreCase('554')){
+                           
+                   CountryCodeDecision = 'NZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Nicaragua') || CheckCountryCode.equalsIgnoreCase('NI') || CheckCountryCode.equalsIgnoreCase('NIC') ||
+                       CheckCountryCode.equalsIgnoreCase('558')){
+                           
+                   CountryCodeDecision = 'NI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Niger') || CheckCountryCode.equalsIgnoreCase('NE') || CheckCountryCode.equalsIgnoreCase('NER') ||
+                       CheckCountryCode.equalsIgnoreCase('562')){
+                           
+                   CountryCodeDecision = 'NE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Nigeria') || CheckCountryCode.equalsIgnoreCase('NG') || CheckCountryCode.equalsIgnoreCase('NGA') ||
+                       CheckCountryCode.equalsIgnoreCase('566')){
+                           
+                   CountryCodeDecision = 'NG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Niue') || CheckCountryCode.equalsIgnoreCase('NU') || CheckCountryCode.equalsIgnoreCase('NIU') ||
+                       CheckCountryCode.equalsIgnoreCase('570')){
+                           
+                   CountryCodeDecision = 'NU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Norfolk Isladn') || CheckCountryCode.equalsIgnoreCase('NF') || CheckCountryCode.equalsIgnoreCase('NFK') ||
+                       CheckCountryCode.equalsIgnoreCase('574')){
+                           
+                   CountryCodeDecision = 'NF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Northern Mariana Islands') || CheckCountryCode.equalsIgnoreCase('MP') || CheckCountryCode.equalsIgnoreCase('MNP') ||
+                       CheckCountryCode.equalsIgnoreCase('580') || CheckCountryCode.equalsIgnoreCase('Mariana Islands')){
+                           
+                   CountryCodeDecision = 'MP';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Norway') || CheckCountryCode.equalsIgnoreCase('NO') || CheckCountryCode.equalsIgnoreCase('NOR') ||
+                       CheckCountryCode.equalsIgnoreCase('578')){
+                           
+                   CountryCodeDecision = 'NO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Oman') || CheckCountryCode.equalsIgnoreCase('OM') || CheckCountryCode.equalsIgnoreCase('OMN') ||
+                       CheckCountryCode.equalsIgnoreCase('512')){
+                           
+                   CountryCodeDecision = 'OLM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Pakistan') || CheckCountryCode.equalsIgnoreCase('PK') || CheckCountryCode.equalsIgnoreCase('PAK') ||
+                       CheckCountryCode.equalsIgnoreCase('586')){
+                           
+                   CountryCodeDecision = 'PK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Palau') || CheckCountryCode.equalsIgnoreCase('PW') || CheckCountryCode.equalsIgnoreCase('PLW') ||
+                       CheckCountryCode.equalsIgnoreCase('585')){
+                           
+                   CountryCodeDecision = 'PW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Palenstinian Territory') || CheckCountryCode.equalsIgnoreCase('PS') || CheckCountryCode.equalsIgnoreCase('PSE') ||
+                       CheckCountryCode.equalsIgnoreCase('275') || CheckCountryCode.equalsIgnoreCase('Palenstine')){
+                           
+                   CountryCodeDecision = 'PS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Panama') || CheckCountryCode.equalsIgnoreCase('PA') || CheckCountryCode.equalsIgnoreCase('PAN') ||
+                       CheckCountryCode.equalsIgnoreCase('591')){
+                           
+                   CountryCodeDecision = 'PA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Papua New Guinea') || CheckCountryCode.equalsIgnoreCase('PG') || CheckCountryCode.equalsIgnoreCase('PNG') ||
+                       CheckCountryCode.equalsIgnoreCase('598')){
+                           
+                   CountryCodeDecision = 'PG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Paraguay') || CheckCountryCode.equalsIgnoreCase('PY') || CheckCountryCode.equalsIgnoreCase('PRY') ||
+                       CheckCountryCode.equalsIgnoreCase('600')){
+                           
+                   CountryCodeDecision = 'PY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Peru') || CheckCountryCode.equalsIgnoreCase('PE') || CheckCountryCode.equalsIgnoreCase('PER') ||
+                       CheckCountryCode.equalsIgnoreCase('604')){
+                           
+                   CountryCodeDecision = 'PE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Philippines') || CheckCountryCode.equalsIgnoreCase('PH') || CheckCountryCode.equalsIgnoreCase('PHL') ||
+                       CheckCountryCode.equalsIgnoreCase('608')){
+                           
+                   CountryCodeDecision = 'PH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Pitcairn') || CheckCountryCode.equalsIgnoreCase('PN') || CheckCountryCode.equalsIgnoreCase('PCN') ||
+                       CheckCountryCode.equalsIgnoreCase('612')){
+                           
+                   CountryCodeDecision = 'PN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Poland') || CheckCountryCode.equalsIgnoreCase('PL') || CheckCountryCode.equalsIgnoreCase('POL') ||
+                       CheckCountryCode.equalsIgnoreCase('616')){
+                           
+                   CountryCodeDecision = 'PL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Portugal') || CheckCountryCode.equalsIgnoreCase('PT') || CheckCountryCode.equalsIgnoreCase('PRT') ||
+                       CheckCountryCode.equalsIgnoreCase('620')){
+                           
+                   CountryCodeDecision = 'PT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Puerto Rico') || CheckCountryCode.equalsIgnoreCase('PR') || CheckCountryCode.equalsIgnoreCase('PRI') ||
+                       CheckCountryCode.equalsIgnoreCase('630')){
+                           
+                   CountryCodeDecision = 'PR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Qatar') || CheckCountryCode.equalsIgnoreCase('QA') || CheckCountryCode.equalsIgnoreCase('QAT') ||
+                       CheckCountryCode.equalsIgnoreCase('634')){
+                           
+                   CountryCodeDecision = 'QA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Reunion') || CheckCountryCode.equalsIgnoreCase('RE') || CheckCountryCode.equalsIgnoreCase('REU') ||
+                       CheckCountryCode.equalsIgnoreCase('638')){
+                           
+                   CountryCodeDecision = 'RE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Romania') || CheckCountryCode.equalsIgnoreCase('RO') || CheckCountryCode.equalsIgnoreCase('ROU') ||
+                       CheckCountryCode.equalsIgnoreCase('642')){
+                           
+                   CountryCodeDecision = 'RO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Russian Federation') || CheckCountryCode.equalsIgnoreCase('RU') || CheckCountryCode.equalsIgnoreCase('RUS') ||
+                       CheckCountryCode.equalsIgnoreCase('608') || CheckCountryCode.equalsIgnoreCase('Russia')){
+                           
+                   CountryCodeDecision = 'RU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Rwanda') || CheckCountryCode.equalsIgnoreCase('RW') || CheckCountryCode.equalsIgnoreCase('RWA') ||
+                       CheckCountryCode.equalsIgnoreCase('646')){
+                           
+                   CountryCodeDecision = 'RW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint-Barthelemy') || CheckCountryCode.equalsIgnoreCase('BL') || CheckCountryCode.equalsIgnoreCase('BLM') ||
+                       CheckCountryCode.equalsIgnoreCase('652')){
+                           
+                   CountryCodeDecision = 'RO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint Helena') || CheckCountryCode.equalsIgnoreCase('SH') || CheckCountryCode.equalsIgnoreCase('SHN') ||
+                       CheckCountryCode.equalsIgnoreCase('654')){
+                           
+                   CountryCodeDecision = 'SH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint Kitts and Nevis') || CheckCountryCode.equalsIgnoreCase('KN') || CheckCountryCode.equalsIgnoreCase('KNA') ||
+                       CheckCountryCode.equalsIgnoreCase('659')){
+                           
+                   CountryCodeDecision = 'KN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint Lucia') || CheckCountryCode.equalsIgnoreCase('LC') || CheckCountryCode.equalsIgnoreCase('LCA') ||
+                       CheckCountryCode.equalsIgnoreCase('662')){
+                           
+                   CountryCodeDecision = 'LC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint-Martin') || CheckCountryCode.equalsIgnoreCase('MF') || CheckCountryCode.equalsIgnoreCase('MAF') ||
+                       CheckCountryCode.equalsIgnoreCase('663') || CheckCountryCode.equalsIgnoreCase('Saint Martin')){
+                           
+                   CountryCodeDecision = 'MF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint Pierre and Miquelon') || CheckCountryCode.equalsIgnoreCase('PM') || CheckCountryCode.equalsIgnoreCase('SPM') ||
+                       CheckCountryCode.equalsIgnoreCase('666') || CheckCountryCode.equalsIgnoreCase('Saint Pierre') || CheckCountryCode.equalsIgnoreCase('Miquelon')){
+                           
+                   CountryCodeDecision = 'PM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saint Vincent and Grenadines') || CheckCountryCode.equalsIgnoreCase('VC') || CheckCountryCode.equalsIgnoreCase('VCT') ||
+                       CheckCountryCode.equalsIgnoreCase('670') || CheckCountryCode.equalsIgnoreCase('Saint Vincent') || CheckCountryCode.equalsIgnoreCase('Grenadines')){
+                           
+                   CountryCodeDecision = 'VC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Samoa') || CheckCountryCode.equalsIgnoreCase('WS') || CheckCountryCode.equalsIgnoreCase('WSM') ||
+                       CheckCountryCode.equalsIgnoreCase('882')){
+                           
+                   CountryCodeDecision = 'WS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('San Marino') || CheckCountryCode.equalsIgnoreCase('SM') || CheckCountryCode.equalsIgnoreCase('SMR') ||
+                       CheckCountryCode.equalsIgnoreCase('674')){
+                           
+                   CountryCodeDecision = 'SM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Sao Tome and Principe') || CheckCountryCode.equalsIgnoreCase('ST') || CheckCountryCode.equalsIgnoreCase('STP') ||
+                       CheckCountryCode.equalsIgnoreCase('678') || CheckCountryCode.equalsIgnoreCase('Sao Tome') || CheckCountryCode.equalsIgnoreCase('Principe')){
+                           
+                   CountryCodeDecision = 'ST';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Saudi Arabia') || CheckCountryCode.equalsIgnoreCase('SA') || CheckCountryCode.equalsIgnoreCase('SAU') ||
+                       CheckCountryCode.equalsIgnoreCase('682')){
+                           
+                   CountryCodeDecision = 'SA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Senegal') || CheckCountryCode.equalsIgnoreCase('SN') || CheckCountryCode.equalsIgnoreCase('SEN') ||
+                       CheckCountryCode.equalsIgnoreCase('686')){
+                           
+                   CountryCodeDecision = 'SN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Serbia') || CheckCountryCode.equalsIgnoreCase('RS') || CheckCountryCode.equalsIgnoreCase('SRB') ||
+                       CheckCountryCode.equalsIgnoreCase('688')){
+                           
+                   CountryCodeDecision = 'RS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Seychelles') || CheckCountryCode.equalsIgnoreCase('SC') || CheckCountryCode.equalsIgnoreCase('SYC') ||
+                       CheckCountryCode.equalsIgnoreCase('690')){
+                           
+                   CountryCodeDecision = 'SC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Sierra Leone') || CheckCountryCode.equalsIgnoreCase('SL') || CheckCountryCode.equalsIgnoreCase('SLE') ||
+                       CheckCountryCode.equalsIgnoreCase('694')){
+                           
+                   CountryCodeDecision = 'SL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Singapore') || CheckCountryCode.equalsIgnoreCase('SG') || CheckCountryCode.equalsIgnoreCase('SGP') ||
+                       CheckCountryCode.equalsIgnoreCase('702')){
+                           
+                   CountryCodeDecision = 'SG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Slovakia') || CheckCountryCode.equalsIgnoreCase('SK') || CheckCountryCode.equalsIgnoreCase('SVK') ||
+                       CheckCountryCode.equalsIgnoreCase('703')){
+                           
+                   CountryCodeDecision = 'SK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Slovenia') || CheckCountryCode.equalsIgnoreCase('SI') || CheckCountryCode.equalsIgnoreCase('SVN') ||
+                       CheckCountryCode.equalsIgnoreCase('705')){
+                           
+                   CountryCodeDecision = 'SI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Solomon Islands') || CheckCountryCode.equalsIgnoreCase('SB') || CheckCountryCode.equalsIgnoreCase('SLB') ||
+                       CheckCountryCode.equalsIgnoreCase('090')){
+                           
+                   CountryCodeDecision = 'SB';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Somalia') || CheckCountryCode.equalsIgnoreCase('SO') || CheckCountryCode.equalsIgnoreCase('SOM') ||
+                       CheckCountryCode.equalsIgnoreCase('706')){
+                           
+                   CountryCodeDecision = 'SO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('South Africa') || CheckCountryCode.equalsIgnoreCase('ZA') || CheckCountryCode.equalsIgnoreCase('ZAF') ||
+                       CheckCountryCode.equalsIgnoreCase('710')){
+                           
+                   CountryCodeDecision = 'ZA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('South Georgia and the South Sandwich Islands') || CheckCountryCode.equalsIgnoreCase('GS') || CheckCountryCode.equalsIgnoreCase('SGS') ||
+                       CheckCountryCode.equalsIgnoreCase('239') || CheckCountryCode.equalsIgnoreCase('South Sandwich Islands') || CheckCountryCode.equalsIgnoreCase('South Georgia')){
+                           
+                   CountryCodeDecision = 'GS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('South Sudan') || CheckCountryCode.equalsIgnoreCase('SS') || CheckCountryCode.equalsIgnoreCase('SSD') ||
+                       CheckCountryCode.equalsIgnoreCase('728')){
+                           
+                   CountryCodeDecision = 'SS';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Spain') || CheckCountryCode.equalsIgnoreCase('ES') || CheckCountryCode.equalsIgnoreCase('ESP') ||
+                       CheckCountryCode.equalsIgnoreCase('724')){
+                           
+                   CountryCodeDecision = 'ES';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Sri Lanka') || CheckCountryCode.equalsIgnoreCase('LK') || CheckCountryCode.equalsIgnoreCase('LKA') ||
+                       CheckCountryCode.equalsIgnoreCase('144')){
+                           
+                   CountryCodeDecision = 'LK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Sudan') || CheckCountryCode.equalsIgnoreCase('SD') || CheckCountryCode.equalsIgnoreCase('SDN') ||
+                       CheckCountryCode.equalsIgnoreCase('736')){
+                           
+                   CountryCodeDecision = 'SD';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Suriname') || CheckCountryCode.equalsIgnoreCase('SR') || CheckCountryCode.equalsIgnoreCase('SUR') ||
+                       CheckCountryCode.equalsIgnoreCase('740')){
+                           
+                   CountryCodeDecision = 'SO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Svalbard and Jan Mayen Islands') || CheckCountryCode.equalsIgnoreCase('SJ') || CheckCountryCode.equalsIgnoreCase('SJM') ||
+                       CheckCountryCode.equalsIgnoreCase('744') || CheckCountryCode.equalsIgnoreCase('Svalbard') || CheckCountryCode.equalsIgnoreCase('Jan Mayen Islands')){
+                           
+                   CountryCodeDecision = 'SJ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Swaziland') || CheckCountryCode.equalsIgnoreCase('SZ') || CheckCountryCode.equalsIgnoreCase('SWZ') ||
+                       CheckCountryCode.equalsIgnoreCase('748')){
+                           
+                   CountryCodeDecision = 'SZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Sweden') || CheckCountryCode.equalsIgnoreCase('SE') || CheckCountryCode.equalsIgnoreCase('SWE') ||
+                       CheckCountryCode.equalsIgnoreCase('752')){
+                           
+                   CountryCodeDecision = 'SE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Switzerland') || CheckCountryCode.equalsIgnoreCase('CH') || CheckCountryCode.equalsIgnoreCase('CHE') ||
+                       CheckCountryCode.equalsIgnoreCase('756')){
+                           
+                   CountryCodeDecision = 'CH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Syrian') || CheckCountryCode.equalsIgnoreCase('SY') || CheckCountryCode.equalsIgnoreCase('SYR') ||
+                       CheckCountryCode.equalsIgnoreCase('736') || CheckCountryCode.equalsIgnoreCase('Syrian Arab Republic')){
+                           
+                   CountryCodeDecision = 'SY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Taiwan') || CheckCountryCode.equalsIgnoreCase('TW') || CheckCountryCode.equalsIgnoreCase('TWN') ||
+                       CheckCountryCode.equalsIgnoreCase('158')){
+                           
+                   CountryCodeDecision = 'TW';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tajikistan') || CheckCountryCode.equalsIgnoreCase('TJ') || CheckCountryCode.equalsIgnoreCase('TJK') ||
+                       CheckCountryCode.equalsIgnoreCase('762')){
+                           
+                   CountryCodeDecision = 'TJ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tanzania') || CheckCountryCode.equalsIgnoreCase('TZ') || CheckCountryCode.equalsIgnoreCase('TZA') ||
+                       CheckCountryCode.equalsIgnoreCase('834')){
+                           
+                   CountryCodeDecision = 'TZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Thailand') || CheckCountryCode.equalsIgnoreCase('TH') || CheckCountryCode.equalsIgnoreCase('THA') ||
+                       CheckCountryCode.equalsIgnoreCase('764')){
+                           
+                   CountryCodeDecision = 'TH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Timor-Leste') || CheckCountryCode.equalsIgnoreCase('TL') || CheckCountryCode.equalsIgnoreCase('TLS') ||
+                       CheckCountryCode.equalsIgnoreCase('626')){
+                           
+                   CountryCodeDecision = 'TL';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Togo') || CheckCountryCode.equalsIgnoreCase('TG') || CheckCountryCode.equalsIgnoreCase('TGO') ||
+                       CheckCountryCode.equalsIgnoreCase('768')){
+                           
+                   CountryCodeDecision = 'TG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tokelau') || CheckCountryCode.equalsIgnoreCase('TK') || CheckCountryCode.equalsIgnoreCase('TKL') ||
+                       CheckCountryCode.equalsIgnoreCase('772')){
+                           
+                   CountryCodeDecision = 'TK';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tonga') || CheckCountryCode.equalsIgnoreCase('TO') || CheckCountryCode.equalsIgnoreCase('TON') ||
+                       CheckCountryCode.equalsIgnoreCase('776')){
+                           
+                   CountryCodeDecision = 'TO';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Trinidad') || CheckCountryCode.equalsIgnoreCase('TT') || CheckCountryCode.equalsIgnoreCase('TTO') ||
+                       CheckCountryCode.equalsIgnoreCase('780') || CheckCountryCode.equalsIgnoreCase('Tobago')){
+                           
+                   CountryCodeDecision = 'TT';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tunisia') || CheckCountryCode.equalsIgnoreCase('TN') || CheckCountryCode.equalsIgnoreCase('TUN') ||
+                       CheckCountryCode.equalsIgnoreCase('788')){
+                           
+                   CountryCodeDecision = 'TN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Turkey') || CheckCountryCode.equalsIgnoreCase('TR') || CheckCountryCode.equalsIgnoreCase('TUR') ||
+                       CheckCountryCode.equalsIgnoreCase('792')){
+                           
+                   CountryCodeDecision = 'TR';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Turkmenistan') || CheckCountryCode.equalsIgnoreCase('TM') || CheckCountryCode.equalsIgnoreCase('TKM') ||
+                       CheckCountryCode.equalsIgnoreCase('795')){
+                           
+                   CountryCodeDecision = 'TM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Turks') || CheckCountryCode.equalsIgnoreCase('TC') || CheckCountryCode.equalsIgnoreCase('TCA') ||
+                       CheckCountryCode.equalsIgnoreCase('796') || CheckCountryCode.equalsIgnoreCase('Caicos Islands')){
+                           
+                   CountryCodeDecision = 'TC';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Tuvala') || CheckCountryCode.equalsIgnoreCase('TV') || CheckCountryCode.equalsIgnoreCase('TUV') ||
+                       CheckCountryCode.equalsIgnoreCase('798')){
+                           
+                   CountryCodeDecision = 'TV';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Uganda') || CheckCountryCode.equalsIgnoreCase('UG') || CheckCountryCode.equalsIgnoreCase('UGA') ||
+                       CheckCountryCode.equalsIgnoreCase('800')){
+                           
+                   CountryCodeDecision = 'UG';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Ukraine') || CheckCountryCode.equalsIgnoreCase('UA') || CheckCountryCode.equalsIgnoreCase('UKR') ||
+                       CheckCountryCode.equalsIgnoreCase('804')){
+                           
+                   CountryCodeDecision = 'UA';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('United Arab Emirates') || CheckCountryCode.equalsIgnoreCase('AE') || CheckCountryCode.equalsIgnoreCase('ARE') ||
+                       CheckCountryCode.equalsIgnoreCase('784')){
+                           
+                   CountryCodeDecision = 'AE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('United Kingdom') || CheckCountryCode.equalsIgnoreCase('GB') || CheckCountryCode.equalsIgnoreCase('GBR') ||
+                       CheckCountryCode.equalsIgnoreCase('826')){
+                           
+                   CountryCodeDecision = 'GB';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Uruguay') || CheckCountryCode.equalsIgnoreCase('UY') || CheckCountryCode.equalsIgnoreCase('URY') ||
+                       CheckCountryCode.equalsIgnoreCase('858')){
+                           
+                   CountryCodeDecision = 'UY';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Uzbekistan') || CheckCountryCode.equalsIgnoreCase('UZ') || CheckCountryCode.equalsIgnoreCase('UZB') ||
+                       CheckCountryCode.equalsIgnoreCase('860')){
+                           
+                   CountryCodeDecision = 'UZ';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Vanuatu') || CheckCountryCode.equalsIgnoreCase('VU') || CheckCountryCode.equalsIgnoreCase('VUT') ||
+                       CheckCountryCode.equalsIgnoreCase('548')){
+                           
+                   CountryCodeDecision = 'VU';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Venezuela') || CheckCountryCode.equalsIgnoreCase('VE') || CheckCountryCode.equalsIgnoreCase('VEN') ||
+                       CheckCountryCode.equalsIgnoreCase('862') || CheckCountryCode.equalsIgnoreCase('Bolivarian Republic')){
+                           
+                   CountryCodeDecision = 'VE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Viet Nam') || CheckCountryCode.equalsIgnoreCase('VN') || CheckCountryCode.equalsIgnoreCase('VNM') ||
+                       CheckCountryCode.equalsIgnoreCase('704')){
+                           
+                   CountryCodeDecision = 'VN';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Virgin Islands') || CheckCountryCode.equalsIgnoreCase('VI') || CheckCountryCode.equalsIgnoreCase('VIR') || CheckCountryCode.equalsIgnoreCase('USVI') || CheckCountryCode.equalsIgnoreCase('Virgin Islands, U.S.') ||
+                       CheckCountryCode.equalsIgnoreCase('US-VI') || CheckCountryCode.equalsIgnoreCase('850') || CheckCountryCode.equalsIgnoreCase('US Virgin Islands') || CheckCountryCode.equalsIgnoreCase('Virgin Islands, US')){
+                           
+                   CountryCodeDecision = 'VI';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Wallis Island') || CheckCountryCode.equalsIgnoreCase('WF') || CheckCountryCode.equalsIgnoreCase('WLF') ||
+                       CheckCountryCode.equalsIgnoreCase('876') || CheckCountryCode.equalsIgnoreCase('Futana Island')){
+                           
+                   CountryCodeDecision = 'WF';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Western Sahara') || CheckCountryCode.equalsIgnoreCase('EH') || CheckCountryCode.equalsIgnoreCase('ESH') ||
+                       CheckCountryCode.equalsIgnoreCase('732')){
+                           
+                   CountryCodeDecision = 'EH';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Yemen') || CheckCountryCode.equalsIgnoreCase('YE') || CheckCountryCode.equalsIgnoreCase('YEM') ||
+                       CheckCountryCode.equalsIgnoreCase('887')){
+                           
+                   CountryCodeDecision = 'YE';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Zambia') || CheckCountryCode.equalsIgnoreCase('ZM') || CheckCountryCode.equalsIgnoreCase('ZMB') ||
+                       CheckCountryCode.equalsIgnoreCase('894')){
+                           
+                   CountryCodeDecision = 'ZM';
+                   
+                   
+               }
+               Else If(CheckCountryCode.equalsIgnoreCase('Zimbabwe') || CheckCountryCode.equalsIgnoreCase('ZW') || CheckCountryCode.equalsIgnoreCase('ZWE') ||
+                       CheckCountryCode.equalsIgnoreCase('716')){
+                           
+                   CountryCodeDecision = 'ZW';
+                   
+                   
+               }
+               Else{  
+                   CountryCodeDecision = 'US';
+                   }
+        
+                  System.debug('Country Code Decision Is: ' + CountryCodeDecision);
+        
+                  List<Account> FindAccount = [Select Id, BillingCountry From Account Where Id = : ForeignAccountId];
+                  
+                  FindAccount.get(0).BillingCountry = CountryCodeDecision;
+        
+                  Update FindAccount.get(0);
+                  
+    }
+        
+
+}
