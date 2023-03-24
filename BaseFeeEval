@@ -1,0 +1,180 @@
+public class BaseFeeEval {
+    
+    // Synopsis:
+    // 
+    // Calculates Base Fee by evaluating Active Subscription and all related Sub Product Types & Charges
+    // 
+    // Triggering Logic: When a Subscription Product Charge Is Created Or Edited
+    // 
+    // Triggering Flows:
+    // 
+    // 1. Zuora Billing Account Base Fee Eval - Update
+    // 
+    // 2. Zuora Billing Account Base Fee Eval
+    // 
+    // 
+    // Object: Subscription Product & Charge
+    // API: Zuora__SubscriptionProductCharge__c
+    // 
+    // Fields Reference: 
+    // 1. Zuora__DiscountPercentage__c
+    // 2. Zuora__Price__c
+    // 3. Zuora__Subscription__c
+    // 
+    // Object: Billing Account
+    // API: Zuora__CustomerAccount__c
+    // 
+    // Fields Reference:
+    // 1. Base_Fee__c
+    // 2. Zuora__Status__c
+    // 
+    // Object: Subscription
+    // API: Zuora_Subscription__c
+    // 
+    // Field References:
+    // 1. Zuora__Status__c
+    
+    // Invokable method to pass billing account Id's to the baseEvalFee Method
+    // - Must store strings in list
+    // -----------------------------------------------------------------------
+    @invocableMethod
+    public static void pushIdentifier(List<String> S1){
+        
+        BaseFeeEval.baseFeeEval(S1);
+        
+    }
+    
+    // Main Future Method for calculating base fee on billing account
+    // --------------------------------------------------------------
+    @future
+    public static void baseFeeEval(List<String> S1){
+        
+        // List to Store Billing accounts that need their base fee updated
+        // ---------------------------------------------------------------
+        List<Zuora__CustomerAccount__c> BillingAccountsToUpdate = new List<Zuora__CustomerAccount__c>();
+        
+        // List to Store Subscription that all Subscription Product Charges are related to
+        // -------------------------------------------------------------------------------
+        List<Zuora__Subscription__c> GetActiveSubscription = new List<Zuora__Subscription__c>();
+        
+        // List to Store Subscription Products & Charges
+        // ---------------------------------------------
+        List<Zuora__SubscriptionProductCharge__c> GetProductsAndCharges = new List<Zuora__SubscriptionProductCharge__c>();
+        
+        // Let to Get Billing Account Related to Subscription
+        // --------------------------------------------------
+        List<Zuora__CustomerAccount__c> GetBillingAccount = new List<Zuora__CustomerAccount__c>();
+        
+        // Placeholder decimal for Base Fee Calculation
+        // --------------------------------------------
+        Decimal TotalPriceBeforeDiscount = 0;
+        
+        // Placeholder decimal for Discount Percentage
+        // -------------------------------------------
+        Decimal TotalDiscount = 0;
+        
+        // Todays Date to evaluate Affective End Date
+        // ------------------------------------------
+        Date TodaysDate = date.today();
+        
+        // Initial FOR Each Loop - Get Active Sub Related to Billing Account and Billing Account
+        // -------------------------------------------------------------------------------------
+        for(String BAS : S1){
+            
+           GetActiveSubscription = [Select Id, Zuora__Status__c, Zuora__CustomerAccount__c 
+                                                                 From Zuora__Subscription__c
+                                                                 Where Zuora__Status__c = 'Active'
+                                                                 AND Zuora__CustomerAccount__c = : BAS
+                                                                 LIMIT 1];
+
+           GetBillingAccount = [Select Id, Base_Fee__c FROM Zuora__CustomerAccount__c WHERE Id =:BAS LIMIT 1];
+                
+        
+        // If Subscription list is not empty - Query All Subscription Product & Charges 
+        // With a Price Greater than 0
+        // -----------------------------------------------------------------------------
+        If(!GetActiveSubscription.isEmpty()){
+            
+            GetProductsAndCharges = [Select Id, Zuora__Subscription__c, Zuora__Price__c, Zuora__DiscountPercentage__c, Zuora__DiscountAmount__c, Zuora__ProductName_Product__c, Zuora__Model__c, Zuora__EffectiveEndDate__c
+                                     FROM Zuora__SubscriptionProductCharge__c
+                                     WHERE Zuora__Subscription__c = : GetActiveSubscription.get(0).Id
+                                     AND Zuora__Price__c > 0
+                                     AND Zuora__Price__c != NULL
+                                     AND Zuora__Model__c != 'Discount-Percentage'
+                                     AND Zuora__Model__c != 'Discount-Fixed Amount'
+                                     AND (Zuora__EffectiveEndDate__c = Null OR Zuora__EffectiveEndDate__c > :TodaysDate)];
+            
+            
+            If(!GetProductsAndCharges.isEmpty()){
+            
+              For(Zuora__SubscriptionProductCharge__c SPC : GetProductsAndCharges){
+                 
+                 If(SPC.Zuora__Price__c != Null && SPC.Zuora__Price__c > 0) {
+                   
+                   System.debug('Adding ' + SPC.Zuora__Price__c);
+                      
+                   TotalPriceBeforeDiscount = TotalPriceBeforeDiscount + SPC.Zuora__Price__c;
+                     
+                 }
+                 Else{
+                     System.debug('Related Subscription Product & Charge ' + SPC.Id + ' Does not have a price');
+                     }
+                  
+                 If(SPC.Zuora__DiscountPercentage__c != NULL) {
+                     
+                   System.debug('Adding ' + SPC.Zuora__DiscountPercentage__c);
+                     
+                   TotalDiscount = TotalDiscount + SPC.Zuora__DiscountPercentage__c;
+                     
+                 }
+                 Else{
+                     System.debug('Related Subscription Product & Charge ' + SPC.Id + ' Does not have a Percent discount');
+                     }
+                  
+                
+              }
+                
+              System.debug('Price before Discount: ' + TotalPriceBeforeDiscount);
+                
+              System.debug('Discount Percent: ' + TotalDiscount);
+                
+              GetBillingAccount.get(0).Base_Fee__c =  TotalPriceBeforeDiscount;
+                
+              
+            }
+            
+        }
+        Else{
+            
+            System.debug('No Active Subscriptions found to perform calculations');
+            
+            }
+        
+        // If Billing Account List is not Empty - Add Billing account list to update list and convert to MAP for Base Fee Update
+        // ---------------------------------------------------------------------------------------------------------------------
+        If(!GetBillingAccount.isEmpty()){
+          
+          System.debug('Updating Base Fee on Billing Account: ' + GetBillingAccount.get(0).Id);
+            
+          Map<Id,Zuora__CustomerAccount__c> BillingAccountsToUpdateMap = new Map<Id, Zuora__CustomerAccount__c>();
+            
+          BillingAccountsToUpdate.add(GetBillingAccount.get(0));
+            
+          BillingAccountsToUpdateMap.putall(BillingAccountsToUpdate);
+        
+          Update BillingAccountsToUpdateMap.values();
+            
+          TotalPriceBeforeDiscount = 0;
+            
+          TotalDiscount = 0;
+            
+        }
+        Else{
+            System.debug('No Billing accounts found to update');
+            }
+            
+        }
+    
+    }
+
+}
