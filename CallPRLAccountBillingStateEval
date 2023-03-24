@@ -1,0 +1,345 @@
+Global class CallPRLAccountBillingStateEval {
+    
+    Global static void CheckBillingState(String CheckBillState, String USAccountId){
+        
+        String BillingStateDecision = '';
+               
+               If(CheckBillState.equalsIgnoreCase('Alaska') || CheckBillState.equalsIgnoreCase('AK')){
+                     
+                 BillingStateDecision = 'AK';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Alabama') || CheckBillState.equalsIgnoreCase('AL')){
+                     
+                 BillingStateDecision = 'AL';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Arizona') || CheckBillState.equalsIgnoreCase('AZ')){
+                     
+                 BillingStateDecision = 'AZ';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Arkansas') || CheckBillState.equalsIgnoreCase('AR')){
+                     
+                 BillingStateDecision = 'AR';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('California') || CheckBillState.equalsIgnoreCase('CA')){
+                     
+                 BillingStateDecision = 'CA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Colorado') || CheckBillState.equalsIgnoreCase('CO')){
+                     
+                 BillingStateDecision = 'CO';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Connecticut') || CheckBillState.equalsIgnoreCase('CT')){
+                     
+                 BillingStateDecision = 'CT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Deleware') || CheckBillState.equalsIgnoreCase('DE')){
+                     
+                 BillingStateDecision = 'DE';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('District of Columbia') || CheckBillState.equalsIgnoreCase('DC')){
+                     
+                 BillingStateDecision = 'DC';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Florida') || CheckBillState.equalsIgnoreCase('FL')){
+                     
+                 BillingStateDecision = 'FL';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Georgia') || CheckBillState.equalsIgnoreCase('GA')){
+                     
+                 BillingStateDecision = 'GA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Hawaii') || CheckBillState.equalsIgnoreCase('HI')){
+                     
+                 BillingStateDecision = 'HI';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Idaho') || CheckBillState.equalsIgnoreCase('ID')){
+                     
+                 BillingStateDecision = 'ID';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Illinois') || CheckBillState.equalsIgnoreCase('IL')){
+                     
+                 BillingStateDecision = 'IL';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Indiana') || CheckBillState.equalsIgnoreCase('IN')){
+                     
+                 BillingStateDecision = 'IN';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Iowa') || CheckBillState.equalsIgnoreCase('IA')){
+                     
+                 BillingStateDecision = 'IA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Kansas') || CheckBillState.equalsIgnoreCase('KS')){
+                     
+                 BillingStateDecision = 'KS';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Ketucky') || CheckBillState.equalsIgnoreCase('KY')){
+                     
+                 BillingStateDecision = 'KY';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Louisiana') || CheckBillState.equalsIgnoreCase('LA')){
+                     
+                 BillingStateDecision = 'LA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Maine') || CheckBillState.equalsIgnoreCase('ME')){
+                     
+                 BillingStateDecision = 'ME';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Maryland') || CheckBillState.equalsIgnoreCase('MD')){
+                     
+                 BillingStateDecision = 'MD';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Massachusetts') || CheckBillState.equalsIgnoreCase('MA')){
+                     
+                 BillingStateDecision = 'MA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Michigan') || CheckBillState.equalsIgnoreCase('MI')){
+                     
+                 BillingStateDecision = 'MI';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Minnesota') || CheckBillState.equalsIgnoreCase('MN')){
+                     
+                 BillingStateDecision = 'MN';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Mississippi') || CheckBillState.equalsIgnoreCase('MS')){
+                     
+                 BillingStateDecision = 'MS';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Missouri') || CheckBillState.equalsIgnoreCase('MO')){
+                     
+                 BillingStateDecision = 'MO';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Montana') || CheckBillState.equalsIgnoreCase('MT')){
+                     
+                 BillingStateDecision = 'MT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Nebraska') || CheckBillState.equalsIgnoreCase('NE')){
+                     
+                 BillingStateDecision = 'NE';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Nevada') || CheckBillState.equalsIgnoreCase('NV')){
+                     
+                 BillingStateDecision = 'NV';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('New Hampshire') || CheckBillState.equalsIgnoreCase('NH')){
+                     
+                 BillingStateDecision = 'NH';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('New Jersey') || CheckBillState.equalsIgnoreCase('NJ')){
+                     
+                 BillingStateDecision = 'NJ';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('New Mexico') || CheckBillState.equalsIgnoreCase('NM')){
+                     
+                 BillingStateDecision = 'NM';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('New York') || CheckBillState.equalsIgnoreCase('NY')){
+                     
+                 BillingStateDecision = 'NY';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('North Carolina') || CheckBillState.equalsIgnoreCase('NC')){
+                     
+                 BillingStateDecision = 'NC';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('North Dakota') || CheckBillState.equalsIgnoreCase('ND')){
+                     
+                 BillingStateDecision = 'ND';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Ohio') || CheckBillState.equalsIgnoreCase('OH')){
+                     
+                 BillingStateDecision = 'OH';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Oklahoma') || CheckBillState.equalsIgnoreCase('OK')){
+                     
+                 BillingStateDecision = 'OK';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Oregon') || CheckBillState.equalsIgnoreCase('OR')){
+                     
+                 BillingStateDecision = 'OR';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Pennsylvania') || CheckBillState.equalsIgnoreCase('PA')){
+                     
+                 BillingStateDecision = 'PA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Rhode Island') || CheckBillState.equalsIgnoreCase('RI')){
+                     
+                 BillingStateDecision = 'RI';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('South Carolina') || CheckBillState.equalsIgnoreCase('SC')){
+                     
+                 BillingStateDecision = 'SC';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('South Dakota') || CheckBillState.equalsIgnoreCase('SD')){
+                     
+                 BillingStateDecision = 'SD';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Tennessee') || CheckBillState.equalsIgnoreCase('TN')){
+                     
+                 BillingStateDecision = 'TN';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Texas') || CheckBillState.equalsIgnoreCase('TX')){
+                     
+                 BillingStateDecision = 'TX';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Utah') || CheckBillState.equalsIgnoreCase('UT')){
+                     
+                 BillingStateDecision = 'UT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Vermont') || CheckBillState.equalsIgnoreCase('VT')){
+                     
+                 BillingStateDecision = 'VT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Virginia') || CheckBillState.equalsIgnoreCase('VA')){
+                     
+                 BillingStateDecision = 'VA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Washington') || CheckBillState.equalsIgnoreCase('WA')){
+                     
+                 BillingStateDecision = 'WA';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('West Virginia') || CheckBillState.equalsIgnoreCase('WV')){
+                     
+                 BillingStateDecision = 'WV';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Wisconsin') || CheckBillState.equalsIgnoreCase('WI')){
+                     
+                 BillingStateDecision = 'WI';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Wyoming') || CheckBillState.equalsIgnoreCase('WY')){
+                     
+                 BillingStateDecision = 'WY';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Newfoundland') || CheckBillState.equalsIgnoreCase('NL')){
+                     
+                 BillingStateDecision = 'NL';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Prince Edward Island') || CheckBillState.equalsIgnoreCase('PE')){
+                     
+                 BillingStateDecision = 'PE';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Nova Scotia') || CheckBillState.equalsIgnoreCase('NS')){
+                     
+                 BillingStateDecision = 'NS';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('New Brunswick') || CheckBillState.equalsIgnoreCase('NB')){
+                     
+                 BillingStateDecision = 'NB';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Quebec') || CheckBillState.equalsIgnoreCase('QC')){
+                     
+                 BillingStateDecision = 'QC';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Ontario') || CheckBillState.equalsIgnoreCase('ON')){
+                     
+                 BillingStateDecision = 'ON';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Manitoba') || CheckBillState.equalsIgnoreCase('MB')){
+                     
+                 BillingStateDecision = 'MB';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Saskatchewan') || CheckBillState.equalsIgnoreCase('SK')){
+                     
+                 BillingStateDecision = 'SK';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Alberta') || CheckBillState.equalsIgnoreCase('AB')){
+                     
+                 BillingStateDecision = 'AB';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('British Columbia') || CheckBillState.equalsIgnoreCase('BC')){
+                     
+                 BillingStateDecision = 'BC';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Yukon') || CheckBillState.equalsIgnoreCase('YT')){
+                     
+                 BillingStateDecision = 'YT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Northwest Territories') || CheckBillState.equalsIgnoreCase('NT')){
+                     
+                 BillingStateDecision = 'NT';
+                     
+               }
+               Else If(CheckBillState.equalsIgnoreCase('Nunavut') || CheckBillState.equalsIgnoreCase('NU')){
+                     
+                 BillingStateDecision = 'NU';
+                     
+               }
+               Else{
+                   System.debug('Unable to determine billing state');
+                   BillingStateDecision = 'US';
+                   }
+        
+        
+                  System.debug('Billing State Decision Is: ' + BillingStateDecision);
+        
+                  List<Account> FindAccount = [Select Id, BillingState From Account Where Id = : USAccountId];
+                  
+                  FindAccount.get(0).BillingState = BillingStateDecision;
+        
+                  Update FindAccount.get(0);
+        
+        
+        
+    }
+
+}
