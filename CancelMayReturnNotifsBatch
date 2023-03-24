@@ -1,0 +1,120 @@
+Global class CancelMayReturnNotifsBatch implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+     
+        String Query = 'Select Id, May_Return__c, Anticipated_Return__c, Account__c, Anticipated_Return_Timeframe__c ' + 
+                       'From Cancel__c ' +
+                       'Where May_Return__c = TRUE ' +
+                       'AND Winback_Email_Notif_Sent__c != TRUE ' +
+                       'AND Anticipated_Return__c != NULL';
+        
+        return Database.getQueryLocator(query);
+       
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Cancel__c> CheckForMayReturnCancels){
+        
+        // List for bulk sending emails
+        // ----------------------------
+        List<EmailMessage> EmailNotifsToSend = new List<EmailMessage>();
+        
+        // List for bulk updating Notification Flag
+        //-----------------------------------------
+        List<Cancel__c> CancelsToUpdateFlag = new List<Cancel__c>();
+        
+        for(Cancel__c C1 : CheckForMayReturnCancels){
+            
+           Integer ThirtyDayTheshhold = (Date.valueOf(System.today())).daysBetween(C1.Anticipated_Return__c);
+            
+           System.debug('Days until Anticipated Return ' + ThirtyDayTheshhold);
+            
+           List<Account> GetRelatedAccount = [Select Id, Name 
+                                              From Account 
+                                              Where Id = :C1.Account__c];
+            
+           if(ThirtyDayTheshhold <= 30 && ThirtyDayTheshhold >= 0){
+           
+             System.debug('Thirty Day Theshhold Met, sending notification');
+               
+             C1.Winback_Email_Notif_Sent__c = TRUE;
+               
+             CancelsToUpdateFlag.add(C1);
+               
+             String[] toAddress = new String[] {'hello@callruby.com'};
+             String[] ccAddress = new String[] {'chris.meeuwen@ruby.com'};
+             Messaging.reserveSingleEmailCapacity(1);
+             Messaging.SingleEmailMessage NotifyHello = new Messaging.SingleEmailMessage();
+             NotifyHello.setToAddresses(toAddress);
+             NotifyHello.setUseSignature(true);
+             NotifyHello.setCcAddresses(ccAddress);
+             NotifyHello.setSenderDisplayName('Winback Opportunity Notifications');
+             NotifyHello.setSubject('Alert - Winback Opportunity');
+             NotifyHello.setPlainTextBody(
+                                          'Hello' +
+                                          '\n' +
+                 						  '\n' +
+                                          '\n' +
+                                          'This email is to notify Sales that the following cancelled account was marked as may return. ' +
+                                          '\n' +
+                                          'Please follow up accordingly.' +
+                                          '\n' +
+                                          '\n' +
+                                          'Account Name: ' + GetRelatedAccount.get(0).Name +
+                                          '\n' +
+                                          '\n' +
+                                          'Link to account: https://ruby.my.salesforce.com/' + GetRelatedAccount.get(0).Id +
+                                          '\n' +
+                                          '\n' +
+                                          'Link to Cancel Record: https://ruby.my.salesforce.com/' + C1.Id +
+                                          '\n' +
+                                          '\n' +
+                                          '\n' +
+                                          '---------------------------------------------------------------------------------------------------' +
+                                          '\n' +
+                                          'Cancel Info: ' +
+                                          '\n' +
+                                          '\n' +
+                                          'Anticipated Return Date: ' + C1.Anticipated_Return__c +
+                                          '\n' +
+                                          '\n' +
+                                          'Anticipated Return Timeframe: ' + C1.Anticipated_Return_Timeframe__c +
+                                          '\n' +
+                                          '\n' +
+                                          '--------------------------------------------------------------------------------------------------'
+                                         );
+               
+             // Send Email Message
+             //-------------------
+             Try{
+                 Messaging.sendEmail(new Messaging.SingleEmailMessage[] { NotifyHello });  
+                }
+                Catch(DMLException e){
+                                      System.debug('An error occured when trying to send email notification: ' + e.getMessage());
+                                     }
+                
+               
+           }
+           Else{
+               System.debug('30 Day Theshhold not met');
+               }
+           
+            
+        }
+        
+        If(!CancelsToUpdateFlag.isEmpty()){
+            
+          update CancelsToUpdateFlag;
+            
+        }
+        Else{
+            System.debug('List CancelsToUpdateFlag is empty. No Cancel Records to Update');
+            }
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
