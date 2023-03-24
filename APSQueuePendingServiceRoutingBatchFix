@@ -1,0 +1,136 @@
+global class APSQueuePendingServiceRoutingBatchFix implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, CreatedDate, OwnerId, Last_Response_Time__c From Case Where OwnerId = \'00G1C000003oeL7\'';
+        
+        return Database.getQueryLocator(query);
+        
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Case> RefactorCasePSRs){
+        
+           List<PendingServiceRouting> PSRToInsert = new List<PendingServiceRouting>();
+
+           List<SkillRequirement> SRToInsert = new List<SkillRequirement>();
+        
+           For(Case C1 : RefactorCasePSRs){
+    
+    
+           System.debug('Case ID: ' + C1.Id);
+    
+           List<PendingServiceRouting> GetPSR = [Select Id, WorkItemId, CustomRequestedDateTime, IsPreferredUserRequired, ServiceChannelId, QueueId, GroupId, RoutingPriority, RoutingModel, OwnerId,
+                                                 CapacityPercentage, CapacityWeight, RoutingType 
+                                                 From PendingServiceRouting 
+                                                 Where WorkItemId = : C1.Id
+                                                 AND RoutingType = 'SkillsBased'
+                                                 Limit 1];
+    
+           
+    
+             If(C1.Last_Response_Time__c != Null){
+          
+               System.debug('Last Response Time not null: ' + C1.Last_Response_Time__c);
+        
+               PendingServiceRouting NewPSR = new PendingServiceRouting(
+    															        //GroupId = '00G1C000003oeLH',
+                                                                        CustomRequestedDateTime = C1.Last_Response_Time__c,
+                                                                        IsPreferredUserRequired = false,
+            													        WorkItemId = C1.Id,
+                                                                        ServiceChannelId = '0N91C000000XZEtSAO',
+            													        RoutingModel = 'LeastActive',
+                                                                        //QueueId = GetPSR.get(0).QueueId,
+                                                                        RoutingPriority = 2,
+            												            OwnerId = '00515000006bBHJAA2',
+                                                                        CapacityPercentage = 60,
+                                                                        CapacityWeight = Null,
+                                                                        RoutingType = 'SkillsBased',
+                                                                        isReadyForRouting = False
+    														            );
+    
+               PSRToInsert.add(NewPSR);
+        
+          
+               If(!GetPSR.IsEmpty()){
+               Delete GetPSR.get(0);
+               }
+          
+           }
+           Else{
+                System.debug('Last Response Time is null. Setting the following PSR Custom Date to Open Date ' + C1.Id);
+          
+                PendingServiceRouting NewPSR = new PendingServiceRouting(
+    															         //GroupId = GetPSR.get(0).GroupId,
+                                                                         CustomRequestedDateTime = C1.CreatedDate,
+                                                                         IsPreferredUserRequired = false,
+            													         WorkItemId = C1.Id,
+                                                                         ServiceChannelId = '0N91C000000XZEtSAO',
+            													         RoutingModel = 'LeastActive',
+                                                                         //QueueId = GetPSR.get(0).QueueId,
+                                                                         RoutingPriority = 2,
+            												             OwnerId = '00515000006bBHJAA2',
+                                                                         CapacityPercentage = 60,
+                                                                         CapacityWeight = Null,
+                                                                         RoutingType = 'SkillsBased',
+                                                                         isReadyForRouting = False
+    														            );
+                
+                PSRToInsert.add(NewPSR);
+          
+                If(!GetPSR.IsEmpty()){
+                Delete GetPSR.get(0);
+                }
+          
+               }
+        
+    
+      }
+
+      If(!PSRToInsert.IsEmpty()){
+    
+    
+        Insert PSRToInsert;
+    
+        For(PendingServiceRouting P1 : PSRToInsert){
+      
+            SkillRequirement NewSR = new SkillRequirement(
+                                                         SkillId = '0C54v000000oM2iCAE',
+                                                         RelatedRecordId = P1.Id
+                                                         );
+          
+            SRToInsert.add(NewSR);
+       
+           
+        } 
+   
+        Insert SRToInsert;
+       
+        For(PendingServiceRouting P2 : PSRToInsert){
+           
+            P2.isReadyForRouting = True;
+       
+            Update P2;
+
+           
+       }
+   
+    
+
+       }
+       Else{
+           System.debug('No PSRs to insert');
+           }
+        
+        
+           
+ 
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+    
+    
+}
