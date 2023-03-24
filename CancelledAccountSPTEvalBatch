@@ -1,0 +1,92 @@
+Global class CancelledAccountSPTEvalBatch implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, Customer_Activation_date__c, Customer_Status__c, Name, OwnerId, Service_Product_Type__c, Chat_Programming_Complete__c, RS_Programming_Complete__c, Chat__c, Reception__c, Grasshopper_Customer__c  ' + 
+                       'From Account ' +
+                       'Where Customer_Status__c = \'Cancelled\'';
+        
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Account> CheckCancelledAccounts){
+        
+           List<Account> AccountsToUpdate = new List<Account>();
+        
+           for(Account A1 : CheckCancelledAccounts){
+        
+           // Verify if Active Account has an active Zoura Subscription
+           // ---------------------------------------------------------
+           List<Zuora__Subscription__c> GetRelatedZouraSub = [Select Id, Zuora__Account__c, Zuora__Status__c, Name,
+                                                              Zuora__SubscriptionStartDate__c, Zuora__SubscriptionEndDate__c,
+                                                              Zuora__TermStartDate__c, Zuora__TermEndDate__c
+                                                              From Zuora__Subscription__c
+                                                              Where Zuora__Account__c = : A1.Id
+                                                              AND Zuora__Status__c = 'Active'];
+               
+            
+           if(!GetRelatedZouraSub.isEmpty()){
+               
+             System.debug('Account is cancelled but still has an active subscription. Leaving service product type until subscription is cancelled');
+               
+           }
+           Else{
+               
+               // Checking Service Product Type Flags for removal
+               // -----------------------------------------------
+               
+               System.debug('Account is cancelled and no active subscriptions. Removing Flags');
+               
+               If(A1.Service_Product_Type__c != 'No Active Subscription'){  
+                 								                          A1.Service_Product_Type__c = 'No Active Subscription';
+                                                                         }
+               									                         Else{
+                   										                     System.debug('Service Product Type already set to Cancelled');
+                   												             }
+               
+               If(A1.Chat__c != False){
+                                       A1.Chat__c = False;
+                                      }
+               						  Else{
+                                           System.debug('Chat Checkbox is already set to False');
+                                          }
+               
+               
+               If(A1.Reception__c != False){
+                                           A1.Reception__c = False;
+                                           }
+               							   Else{
+                                               System.debug('Reception Checkbox is already set to False');
+                                               }
+               
+               
+               // Add to Account List for Bulk Update
+               // -----------------------------------
+               AccountsToUpdate.add(A1);
+               
+               }
+               
+               
+               
+               
+           }
+        
+           If(!AccountsToUpdate.isEmpty()){
+             
+             Update AccountsToUpdate;  
+               
+           }
+           Else{
+               System.debug('No Accounts in List to update');
+               }
+        
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
