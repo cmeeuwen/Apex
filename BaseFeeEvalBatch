@@ -1,0 +1,129 @@
+Global class BaseFeeEvalBatch implements Database.Batchable<sObject>{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, Zuora__Status__c, Base_Fee__c FROM Zuora__CustomerAccount__c WHERE Zuora__Status__c = \'Active\'';
+        
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Zuora__CustomerAccount__c> CheckBillingAccountsBaseFee){
+            
+        // List for storing Billing Accounts to Update
+        // -------------------------------------------
+        List<Zuora__CustomerAccount__c> BillingAccountsToUpdate = new List<Zuora__CustomerAccount__c>();
+        
+        List<Zuora__Subscription__c> GetActiveSubscription = new List<Zuora__Subscription__c>();
+        
+        List<Zuora__SubscriptionProductCharge__c> GetProductsAndCharges = new List<Zuora__SubscriptionProductCharge__c>();
+        
+        // Placeholder decimal for Base Fee Calculation
+        // --------------------------------------------
+        Decimal TotalPriceBeforeDiscount = 0;
+        
+        // Placeholder decimal for Discount Percentage
+        // -------------------------------------------
+        Decimal TotalDiscount = 0;
+        
+        // Todays Date to Evaluate Subscription Product Charge End Dates
+        // -------------------------------------------------------------
+        Date TodaysDate = date.today();
+        
+        For(Zuora__CustomerAccount__c BA : CheckBillingAccountsBaseFee){
+            
+           GetActiveSubscription = [Select Id, Zuora__Status__c, Zuora__CustomerAccount__c 
+                                    From Zuora__Subscription__c
+                                    Where Zuora__Status__c = 'Active'
+                                    AND Zuora__CustomerAccount__c = : BA.Id
+                                    LIMIT 1];
+           
+           If(!GetActiveSubscription.isEmpty()){
+               
+             GetProductsAndCharges = [Select Id, Zuora__Subscription__c, Zuora__Price__c, Zuora__DiscountPercentage__c, Zuora__DiscountAmount__c, Zuora__ProductName_Product__c, Zuora__Model__c, Zuora__EffectiveEndDate__c
+                                     FROM Zuora__SubscriptionProductCharge__c
+                                     WHERE Zuora__Subscription__c = : GetActiveSubscription.get(0).Id
+                                     AND Zuora__Price__c > 0
+                                     AND Zuora__Price__c != NULL
+                                     AND Zuora__Model__c != 'Discount-Percentage'
+                                     AND Zuora__Model__c != 'Discount-Fixed Amount'
+                                     AND (Zuora__EffectiveEndDate__c = Null OR Zuora__EffectiveEndDate__c > :TodaysDate)];
+               
+             If(!GetProductsAndCharges.isEmpty()){
+                 
+               For(Zuora__SubscriptionProductCharge__c SPC : GetProductsAndCharges){
+                 
+                 If(SPC.Zuora__Price__c != Null && SPC.Zuora__Price__c > 0) {
+                   
+                   System.debug('Adding ' + SPC.Zuora__Price__c);
+                      
+                   TotalPriceBeforeDiscount = TotalPriceBeforeDiscount + SPC.Zuora__Price__c;
+                     
+                 }
+                 Else{
+                     System.debug('Related Subscription Product & Charge ' + SPC.Id + ' Does not have a price');
+                     }
+                  
+                 If(SPC.Zuora__DiscountPercentage__c != NULL) {
+                     
+                   System.debug('Adding ' + SPC.Zuora__DiscountPercentage__c);
+                     
+                   TotalDiscount = TotalDiscount + SPC.Zuora__DiscountPercentage__c;
+                     
+                 }
+                 Else{
+                     System.debug('Related Subscription Product & Charge ' + SPC.Id + ' Does not have a Percent discount');
+                     }
+                  
+                
+               }
+               
+               System.debug('Price before Discount: ' + TotalPriceBeforeDiscount);
+                
+               System.debug('Discount Percent: ' + TotalDiscount);
+               
+               BA.Base_Fee__c = TotalPriceBeforeDiscount;  
+                 
+               BillingAccountsToUpdate.add(BA);
+                 
+               TotalPriceBeforeDiscount = 0;
+            
+               TotalDiscount = 0;
+                 
+             }  
+               
+           }
+           Else{
+               System.debug('No Active Subscriptions Found for Billing Account ' + BA.Id);
+               }
+            
+            
+            
+        }
+        
+        // If billing accounts list is not empty - Perform Updates to Evaluated Billing Accounts
+        // -------------------------------------------------------------------------------------
+        If(!BillingAccountsToUpdate.isEmpty()){
+            
+          System.debug('Updating Base Fee on Billing Accounts');
+            
+          Map<Id,Zuora__CustomerAccount__c> BillingAccountsToUpdateMap = new Map<Id, Zuora__CustomerAccount__c>();
+            
+          BillingAccountsToUpdateMap.putall(BillingAccountsToUpdate);
+        
+          Update BillingAccountsToUpdateMap.values();
+            
+            
+        }
+        Else{
+            System.debug('No Billing Accounts to Update!');
+            }
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
