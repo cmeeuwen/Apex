@@ -1,0 +1,10 @@
+global class CancelMayReturnNotifsScheduler implements Schedulable{
+    
+    Global void execute(SchedulableContext sc){
+        
+        CancelMayReturnNotifsBatch CMRNB = new CancelMayReturnNotifsBatch();
+        Id batchId = Database.executeBatch(CMRNB, 40);
+        
+    }
+
+}
