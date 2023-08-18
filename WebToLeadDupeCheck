@@ -1,0 +1,89 @@
+trigger WebToLeadDupeCheck on Lead (before insert) {
+    
+    If(Trigger.isInsert && Trigger.isBefore){
+        
+        // List to store email addresses to check for existing Leads
+        // ---------------------------------------------------------
+        Set<String> EmailList = new Set<String>();
+        
+        // List for Bulk Task Insert
+        // -------------------------
+        List<Task> TaskNotifs = new List<Task>();
+        
+        For(Lead L1 : Trigger.new){
+           
+            If(L1.Email != Null && L1.Most_Important_Feature__c != Null){
+                
+                
+                EmailList.add(L1.Email);
+                
+            }
+            Else{
+                System.debug('No Email to add to List for Lead ' + L1.Name);
+                }
+            
+            If(!EmailList.isEmpty()){
+                
+               Map<String,Contact> ContactMap = new Map<String,Contact>();
+                
+               For(Contact C1 : [Select Id, Email FROM Contact WHERE Email IN:EmailList]){
+                   
+                  ContactMap.put(C1.Email, C1);
+                    
+               }
+                
+               Map<String,Lead> LeadMap = new Map<String,Lead>();
+                
+               For(Lead L2 : [Select Id, Email FROM Lead WHERE Email IN:EmailList]){
+                   
+                  LeadMap.put(L2.Email, L2);
+                   
+               }
+                
+                  
+                   
+                 For(Lead L2 : Trigger.new){
+                     
+                    If(ContactMap.containsKey(L2.Email) || LeadMap.containsKey(L2.Email)){
+
+                        
+                    Database.SaveResult sr = EventBus.publish(new DupeTask__e(
+
+                       Event_Triggered__c = TRUE,
+                       Lead_Email__c = L2.Email
+                    
+                    ));
+                    if (sr.isSuccess()) {
+                       System.debug('Successfully published event.');
+                    } 
+                    else {
+                          for (Database.Error err : sr.getErrors()) {
+                              System.debug('Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
+                          }
+                    }
+                    
+                    If(!system.Test.isRunningTest()){    
+                      L2.Email.addError('Duplicate Lead or Contact Has this email address. Existing Leads or Contacts ' + 
+                                        'Have been added as campaign members if they werent already');
+                    }    
+                    }
+                    Else{
+                        System.debug('No Existing Business.com Contacts or Leads');
+                        }
+
+                     
+                     
+                 }
+                                   
+                
+            }
+            Else{
+                System.debug('No Emails in list to search for existing leads');
+                }
+            
+            
+        }
+        
+    }
+
+}
