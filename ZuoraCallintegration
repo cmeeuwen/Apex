@@ -1,0 +1,45 @@
+public class ZuoraCallIntegration {
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S1){
+        
+          ZuoraCallIntegration.CallZuoraIntegration(S1);       
+                
+    }
+    
+    public static void CallZuoraIntegration(List<String> S1){
+        
+        String ZuoraAccountId = '';
+        
+        For(String Z1 : S1){
+            
+           ZuoraAccountId = Z1;
+              
+        }
+        
+        If(ZuoraAccountId != ''){
+          
+          ZuoraCallIntegration.Callout(ZuoraAccountId);
+              
+        }
+        Else{
+            System.debug('No Zuora Billing Account Id');
+            }
+        
+    }
+    
+    public static void Callout(String ZuoraAccountId){
+        
+      Integer MethodSwitch = 1;
+        
+      if(System.Test.isRunningTest()){
+                                System.debug('Test is running! Will not execute callout.');
+                                }
+                                Else{
+                                ZuoraAPIIntegration.GenerateOAUTHToken(ZuoraAccountId, MethodSwitch);
+                                }
+        
+        
+    }
+
+}
