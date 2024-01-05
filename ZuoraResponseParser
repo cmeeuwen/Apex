@@ -1,0 +1,82 @@
+public class ZuoraResponseParser {
+    
+    public static void ParseResponseforBearerToken(String GrabResponse, String ZuoraAccountId, Integer MethodSwitch){
+        
+        System.debug('Response Passed to Parser Class: ' + GrabResponse);
+        
+        System.debug('Zuora Account: ' + ZuoraAccountId);
+        
+        If(!GrabResponse.contains('status":400') && !GrabResponse.contains('status":500') && !GrabResponse.contains('status":401') && !GrabResponse.contains('status":403') && !GrabResponse.contains('502')){
+            
+          List<String> SplitResponse = GrabResponse.split(',',0);
+        
+          String BearerTokenLoopString = '';
+            
+          For(String S1 : SplitResponse){
+             
+             System.debug('Parsing: ' + S1);
+              
+             If(S1.contains('access_token')){
+                 
+               BearerTokenLoopString = S1;
+                 
+               System.debug(BearerTokenLoopString);
+                 
+             }
+             Else{
+                 System.debug('Unable to Locate Bearer Token in String');
+                 }
+              
+          }
+          
+          If(BearerTokenLoopString != ''){
+            
+          String RemovePrefix = BearerTokenLoopString.replace('access_token', '');
+            
+          System.debug(RemovePrefix);
+            
+          String RemoveQuotes = RemovePrefix.replaceAll('"', '');
+                                                         
+          System.debug(RemoveQuotes);
+            
+            String ZuoraOauth = RemoveQuotes.replace('{:', '');
+            
+            System.debug('Zuora Oauth Bearer Token: ' + ZuoraOauth);
+            
+            If(MethodSwitch == 1){
+              
+              If(Test.isRunningTest()){
+                                      System.debug('Test is running! Will not execute callout.');
+                                      }
+                                      Else{
+                                          ZuoraAPIIntegration.UpdateZuoraAccountBillingCycleDay(ZuoraOauth, ZuoraAccountId);
+                                          }
+            
+            }
+            Else If(MethodSwitch == 2){
+                
+             If(Test.isRunningTest()){
+                                      System.debug('Test is running! Will not execute callout.');
+                                      }
+                                      Else{
+                                          ZuoraAPIIntegration.GetZuoraAccount(ZuoraOauth, ZuoraAccountId);
+                                          }
+                
+            }
+            Else{
+                System.debug('Unable to Determine Method of callout');
+                }
+              
+          }
+          Else{
+              System.debug('Bearer Token not in response!');
+              }
+            
+        }
+        Else{
+            System.debug('Callout Failed: ' + GrabResponse);
+            }
+        
+    }
+
+}
