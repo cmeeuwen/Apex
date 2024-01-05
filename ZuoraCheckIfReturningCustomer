@@ -1,0 +1,77 @@
+public class ZuoraCheckIfReturningCustomer {
+    
+    @invocableMethod
+    public static void PushIdentifier(List<String> S2){
+        
+        ZuoraCheckIfReturningCustomer.CheckIfReturningCustomer(S2);
+                
+    }
+    
+    public static void CheckIfReturningCustomer(List<String> S2){
+        
+        // Locate Accounts Related Zuora Billing Account
+        // ---------------------------------------------
+        For(String BA1 : S2){
+            
+           List<Zuora__CustomerAccount__c> GetBillingAccount = [Select Id, 	Zuora__AccountNumber__c, Zuora__Account__c, Zuora__BillCycleDay__c 
+                                                                From Zuora__CustomerAccount__c 
+                                                                Where Zuora__Account__c = :BA1
+                                                                AND Zuora__BillCycleDay__c != Null];
+            
+        // If billing account is found. Then Check for active subscriptions
+        //-----------------------------------------------------------------    
+        If(!GetBillingAccount.isEmpty()){
+            
+           List<Zuora__Subscription__c> CheckForActiveSubs = [Select Id, Zuora__Account__c, Zuora__CustomerAccount__c, Zuora__Status__c 
+                                                              From Zuora__Subscription__c
+                                                              Where Zuora__CustomerAccount__c = : GetBillingAccount.get(0).Id
+                                                              AND Zuora__Account__c = : BA1
+                                                              AND Zuora__Status__c = 'Active'];
+          
+          // Get Bill Cycle Day from Billing Account for Comparison
+          // ------------------------------------------------------
+          String GetBillCycleDay = GetBillingAccount.get(0).Zuora__BillCycleDay__c;
+          String StripFirst = GetBillCycleDay.replace('st of the month', '');
+          String StripSecond = StripFirst.replace('nd of the month', '');
+          String StripThird = StripSecond.replace('rd of the month', '');
+          String Stripth = StripThird.replace('th of the month', '');
+            
+          System.debug(Stripth);
+            
+          // Get Todays Day of the month
+          // ---------------------------
+          Date TodaysDate = date.today();
+          Integer DayOfTheMonth = TodaysDate.day();
+          String ConvertToString = String.valueOf(DayOfTheMonth);
+          
+          System.debug('Todays day of the month');
+          
+          // If Billing account doesn't have any active subs and Bill 
+          // cycle day of the month does not Todays day of the month
+          // Callout to Zuora API to set bill cycle day
+          // --------------------------------------------------------
+          If(CheckForActiveSubs.isEmpty() && Stripth != ConvertToString){
+              
+              System.debug('Billing Cycle day ' + Stripth + ' Does not equal ' + ConvertToString);
+              
+              List<String> S1 = new List<String>(); 
+              
+              S1.add(GetBillingAccount.get(0).Zuora__AccountNumber__c);
+              
+              ZuoraCallIntegration.PushIdentifier(S1);
+              
+          }
+          Else{
+              System.debug('Active Subscriptions - will not update Billing Cycle Date');
+              }
+            
+        }
+        Else{
+            System.debug('Unable to locate existing billing account');   
+            }
+        
+        }
+        
+    }
+
+}
