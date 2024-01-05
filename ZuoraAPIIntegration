@@ -1,0 +1,240 @@
+public with sharing class ZuoraAPIIntegration {
+     
+    // Endpoint Variable
+    private final static String ZuoraEndpoint = 'https://rest.apisandbox.zuora.com';
+    
+    private final static String ZuoraEndpointProd = 'https://rest.zuora.com';
+    
+    // Zuora API Integration Service Class
+    // 
+    // Synopsis: This class is used to perform restfull callouts for our Zuora API integration
+    // 
+    // 1. Will perform a callout to request a bearer token via oauth2.0 authentication
+    //
+    //     Parameters:
+    //         
+    //     - ZuoraAccountId -
+    //     * Primitive Type: String
+    //     * This is the Zuora Id for the Billing account you wish to work with
+    //     
+    //     - MethodSwitch -
+    //     * Primitive Type: Integer
+    //     * This is what the parser class looks at for deciding which callout to perform
+    // 
+    // 2. Bearer Token is passed to parser class ZuoraResponseParser along with the method switch value (Grab the token to pass to the class that updates the zuora account)
+    // 
+    // 3. Parser Class then passes bearer token and method switch to perform desired callout (Getting account info, update Bill Cycle, Etc....)
+    // 
+    // 
+    //===========================================================================================================================================================================
+    public static HttpResponse GenerateOAUTHToken(String ZuoraAccountId, Integer MethodSwitch){
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('POST');
+        
+        theRequest.setHeader('Content-Type', 'application/x-www-form-urlencoded');
+        
+        theRequest.setHeader('Accept', 'application/json');
+        
+        theRequest.setHeader('client_id', '55a1d541-8c69-493b-bc21-4dabca819201');
+        
+        theRequest.setHeader('client_secret', 'Bz5Ur00//ci2nmGo/9sYD6=V41KRjwIbQhdaYG');
+        
+        //theRequest.setHeader('client_id', '7672232f-63be-4c11-9115-bd710060e17f');
+        
+        //theRequest.setHeader('client_secret', 'eE8PEbDrFOhaTArzh33GpmhIk1EaItOWesyAVM');
+        
+        theRequest.setHeader('grant_type', 'client_credentials');
+        
+        theRequest.setEndpoint(ZuoraEndpointProd + '/oauth/token');
+        
+        //theRequest.setBody('client_id=55a1d541-8c69-493b-bc21-4dabca819201&client_secret=Bz5Ur00//ci2nmGo/9sYD6=V41KRjwIbQhdaYG&grant_type=client_credentials');
+        
+        theRequest.setBody('client_id=7672232f-63be-4c11-9115-bd710060e17f&client_secret=eE8PEbDrFOhaTArzh33GpmhIk1EaItOWesyAVM&grant_type=client_credentials');
+        
+        theRequest.setTimeout(20000);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        system.debug(theResponse.toString());
+        
+        system.debug(theResponse.getBody());
+        
+        String GrabResponse = theResponse.getBody();
+       
+        ZuoraResponseParser.ParseResponseforBearerToken(GrabResponse, ZuoraAccountId, MethodSwitch);
+        
+        return theResponse;
+        
+      }
+    
+    // Get Zuora Account
+    // 
+    // Synopsis: Get Account in Zuora
+    // 
+    // ==============================
+    public static HttpResponse GetZuoraAccount(String ZuoraOauth, String ZuoraAccountId){
+        
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('GET');
+        
+        theRequest.setHeader('Content-Type', 'application/json');
+        
+        therequest.setHeader('Authorization', 'Bearer ' + ZuoraOauth);
+        
+        theRequest.setEndpoint(ZuoraEndpoint + '/v1/accounts/' + ZuoraAccountId);
+        
+        theRequest.setTimeout(20000);
+        
+        System.debug(theRequest);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        system.debug(theResponse.toString());
+        
+        system.debug(theResponse.getBody());
+        
+        System.debug(theResponse.getHeaderKeys());
+        
+        System.debug(theResponse.getBodyAsBlob());
+        
+
+        
+        return theResponse;
+        
+      }
+    
+    
+    // Update Zuora Account Billing Cycle Day
+    // 
+    // Synopsis: Updates Billing Cyckle Day for returning customers
+    // 
+    // =============================================================
+    public static HttpResponse UpdateZuoraAccountBillingCycleDay(String ZuoraOauth, String ZuoraAccountId){
+        
+        Date TodaysDate = date.today();
+    
+        Integer ConvertDateToInt = TodaysDate.day();
+    
+        String ConvertToString = String.valueOf(ConvertDateToInt);
+    
+        String JSONBlob = '{"billCycleDay": "'+ ConvertToString +'", "BcdSettingOption": "ManualSet"}';
+        
+        String JSONBlob2 = '{"billCycleDay": "'+ ConvertToString +'"}';
+        
+        List<Zuora__CustomerAccount__c> GetZuoraExtId = [Select Id, Zuora__Account__c, Zuora__Zuora_Id__c, Zuora__AccountNumber__c
+                                                         From Zuora__CustomerAccount__c
+                                                         WHERE Zuora__AccountNumber__c = : ZuoraAccountId];
+        
+        If(!GetZuoraExtId.IsEmpty()){
+          
+           String ZuoraExtID = GetZuoraExtId.get(0).Zuora__Zuora_Id__c;
+        
+           System.debug('External Id is: ' + ZuoraExtID);
+        
+        // Callout 1 to Remove BCD AutSet Option
+        // -------------------------------------
+        
+        System.debug(JSONBlob);
+        
+        httpRequest theRequest = new httpRequest();
+        
+        theRequest.setMethod('PUT');
+        
+        theRequest.setHeader('Content-Type', 'application/json');
+        
+        therequest.setHeader('Authorization', 'Bearer ' + ZuoraOauth);
+        
+        theRequest.setEndpoint(ZuoraEndpoint + '/v1/object/account/' + ZuoraExtID);
+        
+        theRequest.setTimeout(20000);
+        
+        theRequest.setBody(JSONBlob);
+        
+        System.debug(theRequest);
+        
+        Http http = new Http();
+        
+        HttpResponse theResponse = new httpResponse();
+        
+        theResponse = http.send(theRequest);
+        
+        system.debug(theResponse.toString());
+        
+        system.debug(theResponse.getBody());
+        
+        System.debug(theResponse.getHeaderKeys());
+        
+        System.debug(theResponse.getBodyAsBlob());
+            
+        }
+        
+        // Second Callout for setting BCD
+        //-------------------------------
+        
+        System.debug(JSONBlob2);
+        
+        httpRequest theRequest2 = new httpRequest();
+        
+        theRequest2.setMethod('PUT');
+        
+        theRequest2.setHeader('Content-Type', 'application/json');
+        
+        therequest2.setHeader('Authorization', 'Bearer ' + ZuoraOauth);
+        
+        theRequest2.setEndpoint(ZuoraEndpoint + '/v1/accounts/' + ZuoraAccountId);
+        
+        theRequest2.setTimeout(20000);
+        
+        theRequest2.setBody(JSONBlob2);
+        
+        System.debug(theRequest2);
+        
+        Http http2 = new Http();
+        
+        HttpResponse theResponse2 = new httpResponse();
+        
+        theResponse2 = http2.send(theRequest2);
+        
+        system.debug(theResponse2.toString());
+        
+        system.debug(theResponse2.getBody());
+        
+        System.debug(theResponse2.getHeaderKeys());
+        
+        System.debug(theResponse2.getBodyAsBlob());
+        
+        return theResponse2;
+        
+        
+         
+        
+        
+      }
+    
+    
+    // Cancel Zuora Subscription
+    // 
+    // Synopsis: Cancels Subscription associated with a billing account
+    // 
+    // ================================================================
+    // * Add Logic Here *
+    
+    //=============================================================================================================================================================
+    
+    
+    
+    
+
+}
