@@ -1,0 +1,94 @@
+Global class ZuoraReturningCustomerBCDEvalBatch implements Database.Batchable<sObject>,Database.AllowsCallouts, Database.Stateful{
+    
+    global Database.QueryLocator start(Database.BatchableContext bc){
+        
+        String query = 'Select Id, CreatedDate, kl_quoteStatus__c, StageName, AccountId ' + 
+                       'From Opportunity ' + 
+                       'Where StageName != \'Closed Won\' ' +
+                       'AND StageName != \'Add Line\' ' +
+                       'AND StageName != \'Current Billing\' ' +
+                       'AND StageName != \'Closed Lost\' ';
+        
+        return Database.getQueryLocator(query);
+        
+    }
+    
+    global void execute(Database.BatchableContext bc, List<Opportunity> CheckReturningCustomers){
+        
+        String RelatedAccountId = '';
+        
+        For(Opportunity O1 : CheckReturningCustomers){
+            
+           RelatedAccountId = O1.AccountId;
+            
+           List<Zuora__CustomerAccount__c> GetBillingAccount = [Select Id, 	Zuora__AccountNumber__c, Zuora__Account__c, Zuora__BillCycleDay__c 
+                                                                From Zuora__CustomerAccount__c 
+                                                                Where Zuora__Account__c = :RelatedAccountId
+                                                                AND Zuora__BillCycleDay__c != Null];
+            
+           If(!GetBillingAccount.isEmpty()){
+               
+             List<Zuora__Subscription__c> CheckForActiveSubs = [Select Id, Zuora__Account__c, Zuora__CustomerAccount__c, Zuora__Status__c 
+                                                                From Zuora__Subscription__c
+                                                                Where Zuora__CustomerAccount__c = : GetBillingAccount.get(0).Id
+                                                                AND Zuora__Account__c = : RelatedAccountId
+                                                                AND Zuora__Status__c = 'Active'];
+               
+             // Get Bill Cycle Day from Billing Account for Comparison
+             // ------------------------------------------------------
+             String GetBillCycleDay = GetBillingAccount.get(0).Zuora__BillCycleDay__c;
+             String StripFirst = GetBillCycleDay.replace('st of the month', '');
+             String StripSecond = StripFirst.replace('nd of the month', '');
+             String StripThird = StripSecond.replace('rd of the month', '');
+             String Stripth = StripThird.replace('th of the month', '');
+            
+             System.debug(Stripth);
+            
+             // Get Todays Day of the month
+             // ---------------------------
+             Date TodaysDate = date.today();
+             Integer DayOfTheMonth = TodaysDate.day();
+             String ConvertToString = String.valueOf(DayOfTheMonth);
+               
+             // Quote Processed Date is within 7 days
+             // -------------------------------------
+             DateTime QuoteProcessedDate = O1.CreatedDate;
+             Date ConvertToDatePrimitive = date.valueOf(QuoteProcessedDate);
+             Integer DaysDifference = ConvertToDatePrimitive.daysBetween(TodaysDate);
+               
+             System.debug('Days between today and Created Date: ' + DaysDifference);
+               
+             If(CheckForActiveSubs.isEmpty() && Stripth != ConvertToString && DaysDifference <= 7){
+              
+               System.debug('Billing Cycle day ' + Stripth + ' Does not equal ' + ConvertToString);
+              
+               List<String> S1 = new List<String>(); 
+              
+               S1.add(GetBillingAccount.get(0).Zuora__AccountNumber__c);
+              
+               ZuoraCallIntegration.PushIdentifier(S1);
+                 
+              
+           }
+           Else{
+               System.debug('Active Subscriptions - will not update Billing Cycle Date. -or- Logic has already set Bill Cycle Day for returning customer');
+               }
+               
+               
+           }
+           Else{
+               System.debug('Unable to locate related billing account.');
+               }
+            
+            
+        }
+        
+        
+    }
+    
+    global void finish(Database.BatchableContext bc){
+        
+        
+    }
+
+}
