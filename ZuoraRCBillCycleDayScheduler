@@ -1,0 +1,13 @@
+Global class ZouraRCBillCycleDayScheduler implements Schedulable{
+    
+     Global void execute(SchedulableContext sc){
+        
+        
+        ZuoraReturningCustomerBCDEvalBatch ZRCBCDE = new ZuoraReturningCustomerBCDEvalBatch();
+        Id batchId = Database.executeBatch(ZRCBCDE, 40);
+        
+        
+        
+    }
+
+}
