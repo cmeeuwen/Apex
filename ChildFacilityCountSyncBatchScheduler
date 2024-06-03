@@ -1,0 +1,11 @@
+Global class ChildFacilityCountSyncBatchScheduler implements Schedulable{
+    
+    Global void execute(SchedulableContext sc){
+        
+           ChildFacilityCountSyncBatch CFCSB = new ChildFacilityCountSyncBatch();
+		   Id batchId = Database.executeBatch(CFCSB, 40);
+    
+    
+    }  
+
+}
