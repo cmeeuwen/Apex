@@ -1,0 +1,20 @@
+@isTest
+public class PicklistValueParserTest {
+    
+    @isTest static void TestParsing(){
+        
+        System.Test.startTest();
+        
+        String NewValues = 'Yes;No;Maybe';
+        
+        List<String> Values = new List<String>();
+        
+        Values.add(NewValues);
+            
+        PicklistValueParser.TransformValues(Values);
+        
+        System.Test.stopTest();
+        
+    }
+
+}
