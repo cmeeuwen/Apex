@@ -1,0 +1,69 @@
+@isTest
+public class LinkDocToParentCaseFromResponseTest {
+    
+    @isTest static void TestDocLink(){
+        
+        System.test.startTest();
+        
+        // Create Test Account
+        // ===================
+        Account TestAccount1 = new Account(
+                                          Name = 'Test Account 1'
+                                          );
+        
+        Insert TestAccount1;
+        
+        // Create Test Contact
+        // ===================
+        Contact TestContact1 = new Contact(
+        								  FirstName = 'Jon',
+                                          LastName = 'Doe',
+                                          Phone = '',
+                                          Email = '',
+                                          AccountId = TestAccount1.Id
+                                          );
+        
+        Insert TestContact1;
+        
+        // Create Test Case
+        //=================
+        Case TestCase1 = new Case(
+                                 Subject = 'Test Case for Test Response',
+                                 AccountId = TestAccount1.Id,
+                                 ContactId = TestContact1.Id
+                                 );
+        
+        Insert TestCase1;
+        
+        // Create Test Response
+        // ====================
+        Form_Response__c TestResponse = new Form_Response__c(
+        													Case__c = TestCase1.Id,
+                                                            Input_Type__c = 'Upload File',
+                                                            Status__c = 'Open',
+                                                            Question_Text__c = 'Please Attach a File'
+                                                            );
+        
+        
+        Insert TestResponse;
+        
+        //Create Content Version
+        //======================
+        ContentVersion TestCV = new ContentVersion(
+                                                  Title = 'Test Document',
+                                                  PathOnClient = 'TestDocument.pdf',
+                                                  VersionData = Blob.valueOf('Test Content'),
+                                                  IsMajorVersion = true,
+                                                  FirstPublishLocationId = TestResponse.Id
+                                                  );
+        
+        Insert TestCV;
+        
+        
+        
+        System.test.stopTest();
+        
+        
+    }
+
+}
