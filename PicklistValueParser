@@ -1,0 +1,26 @@
+public class PicklistValueParser {
+    
+    // ========================================================================================
+    // 1. Invocable Apex Class that takes a single string with multiple values separated by ;'s
+    // And parses those values to a List of strings that can be stored in a choice collection 
+    // variable to be used within flows for (Multi-picklists, Picklists, Etc...)
+    // 
+    // Written by: christopher meeuwen
+    // ========================================================================================
+    
+    @invocableMethod
+    public static List<List<String>> TransformValues(List<String> Values){
+        
+        List<String> ParseValues = Values.get(0).split(';');
+        
+        List<List<String>> FinalString = new List<List<String>>();
+        
+        FinalString.Add(ParseValues);
+        
+        return FinalString;
+        
+        
+    }
+    
+    
+}
