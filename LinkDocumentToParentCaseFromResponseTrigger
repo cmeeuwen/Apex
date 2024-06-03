@@ -1,0 +1,17 @@
+trigger LinkDocumentToParentCaseFromResponseTrigger on ContentDocument (after insert) {
+    
+    If(System.Trigger.isInsert && System.Trigger.isAfter){
+        
+        
+        For(ContentDocument CD : System.Trigger.New){
+            
+           String CDId = CD.Id;
+            
+           LinkDocumentToParentCaseFromResponse.LinkDocToParentCase(CDId);          
+            
+            
+        }  
+                
+    }
+
+}
