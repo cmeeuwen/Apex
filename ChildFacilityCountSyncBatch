@@ -1,0 +1,86 @@
+Global class ChildFacilityCountSyncBatch implements Database.Batchable<sObject> {
+    
+     
+     global Database.QueryLocator start(Database.BatchableContext bc){
+         
+         String Query = 'Select Id, Name, Parent_Facility__c, Number_Of_Child_Facilities__c ' +
+                        'From Facility__c ' +
+                        'Where Parent_Facility__c = Null';
+         
+         return Database.getQueryLocator(query);
+         
+     }
+    
+     global void execute(Database.BatchableContext bc, List<Facility__c> CheckParentFacilityRecords){
+         
+         List<Facility__c> ParentFacilitiesToUpdate = New List<Facility__c>();
+         
+         For(Facility__c PF : CheckParentFacilityRecords){
+             
+            System.debug('Checking Facility: ' + PF.Name);
+             
+            List<Facility__c> GetChildFacilities = [Select Id, Parent_Facility__c, Name, Number_Of_Child_Facilities__c
+                                                    From Facility__c
+                                                    Where Parent_Facility__c =: PF.Id];
+             
+            If(!GetChildFacilities.isEmpty()){
+                
+               System.Debug('Child Facilities Detected');
+                
+               Integer NumberOfChildFacilities = 0;
+                
+               For(Facility__c CF : GetChildFacilities){
+                   
+                  NumberOfChildFacilities++;
+                   
+               }
+                
+               System.debug('Total Child Facilities: ' + NumberOfChildFacilities);
+                
+               //If(PF.Number_of_Child_Facilities__c != NumberOfChildFacilities){
+                 
+                 System.debug('Updating Number of Child Facilities for ' + PF.Name);  
+                 PF.Number_of_Child_Facilities__c = NumberOfChildFacilities;
+                 ParentFacilitiesToUpdate.Add(PF);
+                   
+                   
+               //}
+               //Else{
+                   //System.debug('No Change in Number of Child Facilities');
+                   //} 
+                
+            }
+            Else{
+                System.debug('No Child Facilities For Parent Account');
+                
+                PF.Number_of_Child_Facilities__c = 0;
+                ParentFacilitiesToUpdate.Add(PF);
+                
+                }
+             
+         }
+         
+         If(!ParentFacilitiesToUpdate.isEmpty()){
+           
+           System.debug('Parent Facilities to Update: ' + ParentFacilitiesToUpdate.size() );
+             
+           Map<Id,Facility__c> ParentFacilitiesToUpdateMap = new Map<Id, Facility__c>();
+            
+           ParentFacilitiesToUpdateMap.putall(ParentFacilitiesToUpdate);
+        
+           Update ParentFacilitiesToUpdateMap.values();
+             
+             
+         }
+         Else{
+             System.debug('No Parent Facilities to update');
+             }
+        
+     }
+     
+     global void finish(Database.BatchableContext bc){
+        
+        
+     }
+
+}
