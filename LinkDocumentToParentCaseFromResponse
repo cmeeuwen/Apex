@@ -1,0 +1,65 @@
+public class LinkDocumentToParentCaseFromResponse {
+    
+    @future
+    public static void LinkDocToParentCase(String CDId){
+        
+        
+        List<ContentDocumentLink> GetDocLinks = [Select Id, LinkedEntityId, ContentDocumentId, ShareType, Visibility 
+                                                From ContentDocumentLink 
+                                                Where ContentDocumentId =: CDId];
+        
+        If(!GetDocLinks.isEmpty()){
+             
+              System.debug('Doc Links Found');
+            
+             For(ContentDocumentLink CDL : GetDocLinks){
+                 
+                System.debug('Document Linked to: ' + CDL.LinkedEntityId);
+                 
+                String LinkId = CDL.LinkedEntityId;
+                 
+                If(LinkId.startsWith('a1f')){
+                    
+                  System.debug('Linked to response');
+                    
+                  List<Form_Response__c> GetRelatedResponse = [Select Id, Case__c From Form_Response__c Where Id =: LinkId Limit 1];
+                   
+                    If(!GetRelatedResponse.isEmpty()){  
+                      
+                        
+                      ContentDocumentLink CreateLink = new ContentDocumentLink(
+                  														       LinkedEntityId = GetRelatedResponse.get(0).Case__c,
+                                                                               ContentDocumentId = CDId,
+                      													       ShareType = 'I',
+                                                                               Visibility = 'InternalUsers'
+                                                                              );
+                    
+                    
+                      Insert CreateLink;
+                        
+                        
+                    }
+                    Else{
+                        System.debug('Response Not Located');
+                        }
+                    
+                    
+                }
+                Else{
+                    System.debug('Not Linked to Response');
+                    }
+                 
+             }
+              
+                
+            }
+            Else{
+                System.debug('Unable to find Document Link for Document');
+                }  
+        
+        
+        
+    }
+    
+
+}
