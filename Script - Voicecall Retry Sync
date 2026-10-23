@@ -1,0 +1,34 @@
+List<VoiceCall> failedCalls = [
+    SELECT Id
+    FROM VoiceCall
+    WHERE Xplor_Pay_Task_Id__c = null
+      AND BMS__c = 'Xplor Pay'
+      AND CallAcceptDateTime != null
+      AND CreatedDate = LAST_N_DAYS:7
+    LIMIT 200  // Platform Event publish limit per transaction
+];
+
+System.debug('Found ' + failedCalls.size() + ' failed VoiceCalls');
+
+// Build Platform Events
+List<VoiceCall__e> eventsToPublish = new List<VoiceCall__e>();
+for (VoiceCall vc : failedCalls) {
+    eventsToPublish.add(new VoiceCall__e(
+        VoiceCallId__c = vc.Id
+    ));
+}
+
+// Publish events - MuleSoft will pick these up
+if (!eventsToPublish.isEmpty()) {
+    List<Database.SaveResult> results = EventBus.publish(eventsToPublish);
+    
+    Integer successCount = 0;
+for (Database.SaveResult sr : results) {
+    if (sr.isSuccess()) {
+        successCount++;
+    } else {
+        System.debug('Publish failed: ' + sr.getErrors()[0].getMessage());
+    }
+}
+    
+}
